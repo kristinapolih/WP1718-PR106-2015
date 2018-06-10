@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html style="" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Home Page</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet">
+    <link href="/Content/site.css" rel="stylesheet">
+
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+    <style type="text/css">
+        :root #content > #right > .dose > .dosesingle,
+        :root #content > #center > .dose > .dosesingle {
+            display: none !important;
+        }
+    </style>
+
+</head>
+<body style="">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Home">Taksi sluzba</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Home">Home</a></li>
+                </ul>
+                <div class="navbar-form nav navbar-nav" style="float:right" id="login">
+                    <form method="post" action="/api/Login">
+                        <input type="text" name="korisnickoIme" placeholder="Koriscko ime" />
+                        <input type="password" name="sifra" placeholder="Sifra" />
+                        <input type="submit" value="Prijavite se" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content"">
+        <div id="registracija" class="row">
+            <div id="opis" class="col-md-4 col-md-push-0.5">
+                <br /><br /><h1>Taksi sluzba</h1>
+                <p>
+                    Ovo je taksi sluzba koja omogucava da lako i brzo porucite taksi vozilo
+                    na Vasu adresu. Dovoljno je samo da se prijavite na nas sajt i da unesete
+                    adresu na koju dolazi nase vozilo po Vas.
+                </p><br /><br />
+                <img src="Content/TAXI.jpg" height="400" width="600" />
+            </div>
+            <div id="registracija" class="col-md-5" style="float:right">
+                <br /><br /><h1>Registracija</h1><br />
+                <input type="text" name="korisnickoIme" placeholder="Korisnicko ime" required><br /><br />
+                <input type="password" name="lozinka" placeholder="Lozinka"><br /><br />
+                <input type="password" name="ponovljenaLozinka" placeholder="Ponovi lozinku"><br /><br />
+                <input type="text" name="ime" placeholder="Ime"><br /><br />
+                <input type="text" name="prezime" placeholder="Prezime"><br /><br />
+                <input type="radio" name="pol" value="M" checked>Muski
+                <input type="radio" name="pol" value="Z">Zenski<br /><br />
+                <input type="text" name="jmbg" placeholder="JMBG"><br /><br />
+                <input type="tel" name="telefon" placeholder="Kontakt telefon"><br /><br />
+                <input type="email" name="email" placeholder="Email"><br /><br />
+                <input list="uloga" name="uloga" placeholder="Uloga">
+                <datalist id="uloga">
+                    <option value="Musterija" id="1" />
+                    <option value="Dispecer" id="2" />
+                    <option value="Vozac" id="3" />
+                </datalist><br /><br />
+                <input type="text" name="voznja" placeholder="Tip voznje"><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value=" Pošalji "><br /><br />
+            </div>
+        </div>
+    </div>
+    
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/respond.js"></script>
+</body>
+</html>
