@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Projekat.Models
 {
-    public class Korisnik : IKorisnik
+    public class Dispecer : IDispecer
     {
         #region Fileds
         private string korisnickoIme;
@@ -70,7 +70,7 @@ namespace Projekat.Models
         }
         #endregion
 
-        public Korisnik()
+        public Dispecer()
         {
             voznjeIDs = new List<int>();
         }

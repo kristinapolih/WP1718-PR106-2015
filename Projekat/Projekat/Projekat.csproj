@@ -49,6 +49,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Device" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -188,7 +189,24 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Adresa.cs" />
+    <Compile Include="Models\Automobil.cs" />
+    <Compile Include="Models\Common\Enums.cs" />
+    <Compile Include="Models\Common\IAdresa.cs" />
+    <Compile Include="Models\Common\IAutomobil.cs" />
+    <Compile Include="Models\Common\IDispecer.cs" />
+    <Compile Include="Models\Common\IKorisnik.cs" />
+    <Compile Include="Models\Common\ILokacija.cs" />
+    <Compile Include="Models\Common\IMusterija.cs" />
+    <Compile Include="Models\Common\IVozac.cs" />
+    <Compile Include="Models\Common\IVoznja.cs" />
+    <Compile Include="Models\Common\Random.cs" />
+    <Compile Include="Models\Dispecer.cs" />
     <Compile Include="Models\Korisnik.cs" />
+    <Compile Include="Models\Lokacija.cs" />
+    <Compile Include="Models\Musterija.cs" />
+    <Compile Include="Models\Vozac.cs" />
+    <Compile Include="Models\Voznja.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
