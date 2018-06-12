@@ -18,4 +18,15 @@
         Putnicki,
         Kombi
     }
+
+    public enum STATUS_VOZNJE
+    {
+        Kreirana,
+        Formirana,
+        Obradjena,
+        Prihvacena,
+        Otkazana,
+        Neuspesna,
+        Uspesna
+    }
 }

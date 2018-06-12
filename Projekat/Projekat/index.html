@@ -6,15 +6,41 @@
     <title>Home Page</title>
     <link href="/Content/bootstrap.css" rel="stylesheet">
     <link href="/Content/site.css" rel="stylesheet">
-
-    <script src="/Scripts/modernizr-2.6.2.js"></script>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/modernizr-2.8.3.js"></script>
+    <!--<script src="/Scripts/Musterija.js"></script>-->
     <style type="text/css">
         :root #content > #right > .dose > .dosesingle,
         :root #content > #center > .dose > .dosesingle {
             display: none !important;
         }
     </style>
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#prijavise").click(function () {
+                let data = {
+                    KorisnickoIme: $("#korisnickoIme").val(),
+                    Lozinka: $("#lozinka").val()
+                }
+                $.post("/api/korisnik/login", data)
+                    .done(function (data) {
+                        if (data != null) {
+                            if (data == "Pogresno korisnicko ime!") {
+                                $("#message").text(data);
+                            }
+                            else {
+                                $("#username").text(data.KorisnickoIme);
+                                $("#login").hide();
+                                $("#logout").show();
+                                $("#registracijaIOpis").hide();
+                                $("#ulogovan").show();
+                            }
+                        }
+                    });
+            });
+        });
+    </script>
 </head>
 <body style="">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -32,17 +58,20 @@
                     <li><a href="/Home">Home</a></li>
                 </ul>
                 <div class="navbar-form nav navbar-nav" style="float:right" id="login">
-                    <form method="post" action="/api/Login">
-                        <input type="text" name="korisnickoIme" placeholder="Koriscko ime" />
-                        <input type="password" name="sifra" placeholder="Sifra" />
-                        <input type="submit" value="Prijavite se" />
-                    </form>
+                    <input type="text" name="korisnickoIme" placeholder="Koriscko ime" id="korisnickoIme" />
+                    <input type="password" name="lozinka" placeholder="Lozinka" id="lozinka" />
+                    <input type="submit" value="Prijavite se" id="prijavise" /><br/>
+                    <p id="message" style="color:crimson"></p>
+                </div>
+                <div class="navbar-form nav navbar-nav" style="float:right" id="logout" hidden>
+                    <p id="username"></p>
+                    <input type="submit" value="Odjavi se" />
                 </div>
             </div>
         </div>
     </div>
     <div class="container body-content">
-        <div id="registracija" class="row">
+        <div id="registracijaIOpis" class="row">
             <div id="opis" class="col-md-4 col-md-push-0.5">
                 <br /><br /><h1>Taksi sluzba</h1>
                 <p>
@@ -70,8 +99,11 @@
                     <option value="Vozac" id="vozac" />
                 </datalist><br /><br />
                 <input type="text" name="voznja" placeholder="Tip voznje"><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value=" Pošalji "><br /><br />
+                <input type="submit" value="Pošalji" id="posalji"><br /><br />
             </div>
+        </div>
+        <div id="ulogovan" hidden>
+            <p>Jeeej</p>
         </div>
     </div>
     

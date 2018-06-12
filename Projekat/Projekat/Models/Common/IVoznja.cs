@@ -1,9 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Projekat.Models.Common
 {
@@ -15,6 +10,9 @@ namespace Projekat.Models.Common
         IMusterija Musterija { get; set; }
         ILokacija LokacijaOdredista { get; set; }
         IDispecer Dispecer { get; set; }
-
+        IVozac Vozac { get; set; }
+        double Iznos { get; set; }
+        IKomentar Komentar { get; set; }
+        STATUS_VOZNJE StatusVoznje { get; set; }
     }
 }
