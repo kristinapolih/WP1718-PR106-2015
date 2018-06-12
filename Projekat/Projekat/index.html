@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html style="" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+<html style="" class="js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -9,38 +9,13 @@
     <script src="Scripts/jquery-3.3.1.js"></script>
     <script src="Scripts/jquery-1.10.2.js"></script>
     <script src="/Scripts/modernizr-2.8.3.js"></script>
-    <!--<script src="/Scripts/Musterija.js"></script>-->
+    <script src="/Scripts/Musterija.js"></script>
     <style type="text/css">
         :root #content > #right > .dose > .dosesingle,
         :root #content > #center > .dose > .dosesingle {
             display: none !important;
         }
     </style>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#prijavise").click(function () {
-                let data = {
-                    KorisnickoIme: $("#korisnickoIme").val(),
-                    Lozinka: $("#lozinka").val()
-                }
-                $.post("/api/korisnik/login", data)
-                    .done(function (data) {
-                        if (data != null) {
-                            if (data == "Pogresno korisnicko ime!") {
-                                $("#message").text(data);
-                            }
-                            else {
-                                $("#username").text(data.KorisnickoIme);
-                                $("#login").hide();
-                                $("#logout").show();
-                                $("#registracijaIOpis").hide();
-                                $("#ulogovan").show();
-                            }
-                        }
-                    });
-            });
-        });
-    </script>
 </head>
 <body style="">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -58,9 +33,9 @@
                     <li><a href="/Home">Home</a></li>
                 </ul>
                 <div class="navbar-form nav navbar-nav" style="float:right" id="login">
-                    <input type="text" name="korisnickoIme" placeholder="Koriscko ime" id="korisnickoIme" />
+                    <input type="text" name="korisnickoIme" placeholder="Korisnicko ime" id="korisnickoIme" />
                     <input type="password" name="lozinka" placeholder="Lozinka" id="lozinka" />
-                    <input type="submit" value="Prijavite se" id="prijavise" /><br/>
+                    <input type="submit" value="Prijavite se" id="prijavise" /><br />
                     <p id="message" style="color:crimson"></p>
                 </div>
                 <div class="navbar-form nav navbar-nav" style="float:right" id="logout" hidden>
@@ -83,30 +58,59 @@
             </div>
             <div id="registracija" class="col-md-5" style="float:right">
                 <br /><br /><h1>Registracija</h1><br />
-                <input type="text" name="korisnickoIme" placeholder="Korisnicko ime" required><br /><br />
-                <input type="password" name="lozinka" placeholder="Lozinka"><br /><br />
-                <input type="password" name="ponovljenaLozinka" placeholder="Ponovi lozinku"><br /><br />
-                <input type="text" name="ime" placeholder="Ime"><br /><br />
-                <input type="text" name="prezime" placeholder="Prezime"><br /><br />
-                <input type="radio" name="pol" value="M" checked>Muski
-                <input type="radio" name="pol" value="Z">Zenski<br /><br />
-                <input type="text" name="jmbg" placeholder="JMBG"><br /><br />
-                <input type="tel" name="telefon" placeholder="Kontakt telefon"><br /><br />
-                <input type="email" name="email" placeholder="Email"><br /><br />
-                <input list="uloga" name="uloga" placeholder="Uloga">
-                <datalist id="uloga">
-                    <option value="Musterija" id="musterija" />
-                    <option value="Vozac" id="vozac" />
-                </datalist><br /><br />
-                <input type="text" name="voznja" placeholder="Tip voznje"><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Pošalji" id="posalji"><br /><br />
+                <p style="color:crimson" id="errorMessageReg"></p>
+                <div id="kor">
+                    <input type="text" name="korisnickoIme" id="korisnicko" placeholder="Korisnicko ime"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="loz">
+                    <input type="password" name="lozinka" id="lozin" placeholder="Lozinka"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="ploz">
+                    <input type="password" name="ponovljenaLozinka" id="ponovljenaLozinka" placeholder="Ponovi lozinku"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="im">
+                    <input type="text" name="ime" id="ime" placeholder="Ime"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="prez">
+                    <input type="text" name="prezime" id="prezime" placeholder="Prezime"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div >
+                    <input type="radio" name="pol" value="M" checked>Muski
+                    <input type="radio" name="pol" value="Z">Zenski<br />
+                </div><br />
+                <div id="jm">
+                    <input type="text" name="jmbg" id="jmbg" placeholder="JMBG"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="tel">
+                    <input type="tel" name="telefon" id="telefon" placeholder="Kontakt telefon"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="em">
+                    <input type="email" name="email" id="email" placeholder="Email"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="ul">
+                    <input list="uloga" name="uloga" placeholder="Uloga">
+                    <datalist id="uloga">
+                        <option selected value="Musterija" id="musterija" />
+                        <option value="Vozac" id="vozac" />
+                    </datalist><br />
+                </div><br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Registruj se" id="registrujse">
             </div>
-        </div>
-        <div id="ulogovan" hidden>
-            <p>Jeeej</p>
-        </div>
+            </div>
+    <div id="ulogovan" hidden>
+        <p>Jeeej</p>
     </div>
-    
+    </div>
+
     <script src="/Scripts/jquery-1.10.2.js"></script>
     <script src="/Scripts/bootstrap.js"></script>
     <script src="/Scripts/respond.js"></script>

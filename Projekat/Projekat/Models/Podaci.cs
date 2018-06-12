@@ -8,11 +8,11 @@ namespace Projekat.Models
 {
     public static class Podaci
     {
-        private static Dictionary<string, IMusterija> korisnici;
+        private static Dictionary<string, IKorisnik> korisnici;
 
         private static object syncLock = new object();
 
-        public static Dictionary<string, IMusterija> GetKorisnike ()
+        public static Dictionary<string, IKorisnik> GetKorisnike ()
         {
             if(korisnici == null)
             {
@@ -20,7 +20,7 @@ namespace Projekat.Models
                 {
                     if(korisnici == null)
                     {
-                        korisnici = new Dictionary<string, IMusterija>();
+                        korisnici = new Dictionary<string, IKorisnik>();
                     }
                 }
             }

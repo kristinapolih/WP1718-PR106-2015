@@ -6,19 +6,14 @@ namespace Projekat.Controllers
 {
     public class MusterijaController : ApiController
     {
-        /*// GET: Korisnik
-        public ActionResult Index()
+        [Route("api/Musterija/Registracija")]
+        public IHttpActionResult NovaMusterija(Korisnik korisnik)
         {
-            return View();
-        }*/
-
-        public IHttpActionResult NovaMusterija(Musterija musterija)
-        {
-            if(Podaci.GetKorisnike()[musterija.KorisnickoIme] != null)
+            if(Podaci.GetKorisnike()[korisnik.KorisnickoIme] != null)
             {
                 return Conflict();
             }
-            Podaci.GetKorisnike().Add(musterija.KorisnickoIme, musterija);
+            Podaci.GetKorisnike().Add(korisnik.KorisnickoIme, korisnik);
             return Ok();
         }
     }

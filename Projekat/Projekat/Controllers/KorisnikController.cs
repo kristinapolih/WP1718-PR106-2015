@@ -9,12 +9,26 @@ namespace Projekat.Controllers
         [Route("api/Korisnik/Login")]
         public IHttpActionResult Login(LogIn korisnik)
         {
+            IKorisnik k = new Korisnik();
             if(!Podaci.GetKorisnike().ContainsKey(korisnik.KorisnickoIme))
             {
-                return Ok("Pogresno korisnicko ime!");
+                return Ok("Ne postoji korisnik sa ovim Korisnickim imenom!");
             }
-
-            return Ok(korisnik);
+            else if (Podaci.GetKorisnike().TryGetValue(korisnik.KorisnickoIme, out k))
+            {
+                if (k.Lozinka == korisnik.Lozinka)
+                {
+                    return Ok(k);
+                }
+                else
+                {
+                    return Ok("Pogresna Lozinka!");
+                }
+            }
+            else
+            {
+                return Ok("Pogresna lozinka ili korisnicko ime!");
+            }
         }
 
     }
