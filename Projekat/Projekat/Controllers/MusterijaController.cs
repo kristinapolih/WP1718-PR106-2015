@@ -1,17 +1,20 @@
 ﻿using Projekat.Models;
 using Projekat.Models.Common;
+using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Results;
+using System.Web.Script.Serialization;
 
 namespace Projekat.Controllers
 {
     public class MusterijaController : ApiController
     {
-        [Route("api/Musterija/Registracija")]
+        [HttpPost, Route("api/Musterija/Registracija")]
         public IHttpActionResult NovaMusterija(Korisnik korisnik)
         {
-            if(Podaci.GetKorisnike()[korisnik.KorisnickoIme] != null)
+            if(Podaci.GetKorisnike().ContainsKey(korisnik.KorisnickoIme))
             {
-                return Conflict();
+                return Ok("Korisnicko ime vec postoji");
             }
             Podaci.GetKorisnike().Add(korisnik.KorisnickoIme, korisnik);
             return Ok();

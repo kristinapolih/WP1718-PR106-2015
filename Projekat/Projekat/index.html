@@ -26,12 +26,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/Home">Taksi sluzba</a>
+                <input type="submit" class="navbar-brand" value="Taksi sluzba" style="background-color:transparent; border-color:transparent"/>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/Home">Home</a></li>
-                </ul>
+                <input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent" hidden/>
+                
                 <div class="navbar-form nav navbar-nav" style="float:right" id="login">
                     <input type="text" name="korisnickoIme" placeholder="Korisnicko ime" id="korisnickoIme" />
                     <input type="password" name="lozinka" placeholder="Lozinka" id="lozinka" />
@@ -39,8 +38,8 @@
                     <p id="message" style="color:crimson"></p>
                 </div>
                 <div class="navbar-form nav navbar-nav" style="float:right" id="logout" hidden>
-                    <p id="username"></p>
-                    <input type="submit" value="Odjavi se" />
+                    <h1 style="font-size:small; color:floralwhite" id="username"/>
+                    <input type="submit" value="Odjavi se" id="odjavise" hidden/>
                 </div>
             </div>
         </div>
@@ -79,7 +78,7 @@
                     <input type="text" name="prezime" id="prezime" placeholder="Prezime"><br />
                     <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
                 </div>
-                <div >
+                <div>
                     <input type="radio" name="pol" value="M" checked>Muski
                     <input type="radio" name="pol" value="Z">Zenski<br />
                 </div><br />
@@ -99,16 +98,25 @@
                     <input list="uloga" name="uloga" placeholder="Uloga">
                     <datalist id="uloga">
                         <option selected value="Musterija" id="musterija" />
-                        <option value="Vozac" id="vozac" />
+                        <option value="Vozac" id="vozac" hidden />
                     </datalist><br />
                 </div><br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Registruj se" id="registrujse">
             </div>
-            </div>
-    <div id="ulogovan" hidden>
-        <p>Jeeej</p>
-    </div>
+        </div>
+        <div id="registrovan" class="col-md-push-6" hidden>
+            <br /><br /><br />
+            <p id="mess" style="color:crimson"></p><br />
+            <input type="text" name="korisnickoIme" placeholder="Korisnicko ime" id="k" /><br /><br />
+            <input type="password" name="lozinka" placeholder="Lozinka" id="l" /><br /><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
+        </div>
+        <div id="ulogovan" hidden>
+            <br/>
+            <p style="color:crimson"> Jeeej</p>
+        </div>
     </div>
 
     <script src="/Scripts/jquery-1.10.2.js"></script>
