@@ -1,5 +1,7 @@
 ﻿using Projekat.Models.Common;
 using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Projekat.Models
 {
@@ -74,5 +76,6 @@ namespace Projekat.Models
         {
             voznjeIDs = new List<int>();
         }
+        
     }
 }

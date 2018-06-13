@@ -16,22 +16,24 @@
                     else if (data == "Pogresna Lozinka!"){
                         $("#message").text(data);
                     }
+                    else if (data == "Admin") {
+                        $("#username").text(data.KorisnickoIme);
+                        $("#uloga").append(`<option value="Vozac" id="vozac" />`);
+                        $("#registracijaIOpis").show();
+                        $("#login").hide();
+                        $("#logout").show();
+                        sessionStorage.setItem(data.KorisnickoIme, data.Lozinka);
+                    }
                     else {
                         $("#username").text(data.KorisnickoIme);
                         $("#login").hide();
                         $("#logout").show();
                         $("#registracijaIOpis").hide();
                         $("#ulogovan").show();
-                        sessionStorage.setItem(data);
+                        sessionStorage.setItem(data.KorisnickoIme, data.Lozinka);
                     }
                 }
-            });/*
-        $.get("api/Korisnik/Uloga", sessionStorage.key)
-            .done(function (data) {
-                if (data != "") {
-                    sessionStorage[data.KorisnickoIme] = data;
-                }
-            });*/
+            });
     });
 
     $("#registrujse").click(function () {
@@ -186,14 +188,5 @@
                     }
                 }
             });
-        let dat = {
-            uloga: ""
-        }/*
-        $.get("api/Korisnik", sessionStorage.key)
-            .done(function (dat, status) {
-                if (dat != "") {
-                    sessionStorage[data.KorisnickoIme] = dat.uloga;
-                }
-            });*/
     });
 });

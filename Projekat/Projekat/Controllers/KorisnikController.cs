@@ -18,7 +18,14 @@ namespace Projekat.Controllers
             {
                 if (k.Lozinka == korisnik.Lozinka)
                 {
-                    return Ok(k);
+                    if (k.Uloga == ULOGA.Admin)
+                    {
+                        return Ok("Admin");
+                    }
+                    else
+                    {
+                        return Ok(k);
+                    }
                 }
                 else
                 {
@@ -30,15 +37,16 @@ namespace Projekat.Controllers
                 return Ok("Pogresna lozinka ili korisnicko ime!");
             }
         }
-        
-        public string get(string username)
+        [Route("api/Korisnik/Admin")]
+        public IHttpActionResult Admin(string username)
         {
             IKorisnik k = new Korisnik();
             if(Podaci.GetKorisnike().TryGetValue(username, out k))
             {
-                return (k.Uloga.ToString());
+                if(k.Uloga == ULOGA.Admin)
+                    return Ok(ULOGA.Admin.ToString());
             }
-            return "";
+            return Ok("NO");
         }
     }
 }
