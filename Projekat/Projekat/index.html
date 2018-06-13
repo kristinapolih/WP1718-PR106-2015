@@ -29,7 +29,7 @@
                 <input type="submit" class="navbar-brand" value="Taksi sluzba" style="background-color:transparent; border-color:transparent"/>
             </div>
             <div class="navbar-collapse collapse">
-                <input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent" hidden/>
+                &nbsp;&nbsp;<input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent" hidden/>
                 
                 <div class="navbar-form nav navbar-nav" style="float:right" id="login">
                     <input type="text" name="korisnickoIme" placeholder="Korisnicko ime" id="korisnickoIme" />
@@ -38,8 +38,8 @@
                     <p id="message" style="color:crimson"></p>
                 </div>
                 <div class="navbar-form nav navbar-nav" style="float:right" id="logout" hidden>
+                    <input type="submit" value="Odjavi se" id="odjavise" /><br/>
                     <h1 style="font-size:small; color:floralwhite" id="username"/>
-                    <input type="submit" value="Odjavi se" id="odjavise" hidden/>
                 </div>
             </div>
         </div>
@@ -105,12 +105,12 @@
                 <input type="submit" value="Registruj se" id="registrujse">
             </div>
         </div>
-        <div id="registrovan" class="col-md-push-6" hidden>
-            <br /><br /><br />
+        <div align="center" id="registrovan" class="col-md-8" style="vertical-align:central; align-items:center; align-self:center" hidden>
+            <br /><br /><br /><br /><br /><br /><br />
             <p id="mess" style="color:crimson"></p><br />
             <input type="text" name="korisnickoIme" placeholder="Korisnicko ime" id="k" /><br /><br />
             <input type="password" name="lozinka" placeholder="Lozinka" id="l" /><br /><br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
         </div>
         <div id="ulogovan" hidden>

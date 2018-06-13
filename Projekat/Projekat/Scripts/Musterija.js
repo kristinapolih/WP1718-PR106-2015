@@ -25,11 +25,20 @@
                         sessionStorage.setItem(data);
                     }
                 }
-            });
+            });/*
+        $.get("api/Korisnik/Uloga", sessionStorage.key)
+            .done(function (data) {
+                if (data != "") {
+                    sessionStorage[data.KorisnickoIme] = data;
+                }
+            });*/
     });
 
     $("#registrujse").click(function () {
         if ($("#uloga option:selected").val() == "" || $("#uloga option:selected").val() == " ") {
+            $("#uloga option:selected").val("Musterija");
+        }
+        else if ($("#uloga option:selected").val() == "Vozac" && sessionStorage) {
             $("#uloga option:selected").val("Musterija");
         }
         if ($("#email").val() == "" || $("#email").val() == " ") {
@@ -177,5 +186,14 @@
                     }
                 }
             });
+        let dat = {
+            uloga: ""
+        }/*
+        $.get("api/Korisnik", sessionStorage.key)
+            .done(function (dat, status) {
+                if (dat != "") {
+                    sessionStorage[data.KorisnickoIme] = dat.uloga;
+                }
+            });*/
     });
 });

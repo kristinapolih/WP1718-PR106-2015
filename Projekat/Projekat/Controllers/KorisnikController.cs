@@ -30,6 +30,15 @@ namespace Projekat.Controllers
                 return Ok("Pogresna lozinka ili korisnicko ime!");
             }
         }
-
+        
+        public string get(string username)
+        {
+            IKorisnik k = new Korisnik();
+            if(Podaci.GetKorisnike().TryGetValue(username, out k))
+            {
+                return (k.Uloga.ToString());
+            }
+            return "";
+        }
     }
 }
