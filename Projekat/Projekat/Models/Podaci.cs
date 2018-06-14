@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Windows.Forms;
 
 namespace Projekat.Models
 {
@@ -30,7 +31,8 @@ namespace Projekat.Models
 
         public static void LoadAdmins()
         {
-            string path = @"D:\Kris\Projekat\WP1718-PR106-2015\Projekat\Projekat\Content\";
+            string path = Application.StartupPath;
+            path += @"\App_Data\";
             StreamReader streamReader = File.OpenText(path + "Dispeceri.txt");
             string admins = streamReader.ReadToEnd();
             streamReader.Close();

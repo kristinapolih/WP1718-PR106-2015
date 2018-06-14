@@ -1,10 +1,25 @@
 ﻿$(document).ready(function () {
+    window.onload = function refresh() {
+        if (localStorage.getItem("user") != null) {
+            if (localStorage.getItem("Admin") != null) {
+                $("#username").text(localStorage.getItem("Admin"));
+                $("#uloga").append(`<option value="Vozac" id="vozac" />`);
+                $("#registracijaIOpis").show();
+                $("#login").hide();
+                $("#logout").show();
+            }
+        }
+    }
+    var dat = {
+        KorisnickoIme: $("#korisnickoIme").val(),
+        Lozinka: $("#lozinka").val()
+    }
     $("#prijavise").click(function () {
-        let data = {
+        dat = {
             KorisnickoIme: $("#korisnickoIme").val(),
             Lozinka: $("#lozinka").val()
         }
-        $.post("/api/korisnik/login", data)
+        $.post("/api/korisnik/login", dat)
             .done(function (data) {
                 if (data != null) {
                     if (data == "Ne postoji korisnik sa ovim Korisnickim imenom!") {
@@ -13,24 +28,27 @@
                     else if (data == "Pogresna lozinka ili korisnicko ime!") {
                         $("#message").text(data);
                     }
-                    else if (data == "Pogresna Lozinka!"){
+                    else if (data == "Pogresna Lozinka!") {
                         $("#message").text(data);
                     }
                     else if (data == "Admin") {
-                        $("#username").text(data.KorisnickoIme);
+                        $("#username").text( dat.KorisnickoIme);
                         $("#uloga").append(`<option value="Vozac" id="vozac" />`);
                         $("#registracijaIOpis").show();
                         $("#login").hide();
                         $("#logout").show();
-                        sessionStorage.setItem(data.KorisnickoIme, data.Lozinka);
+                        sessionStorage.setItem(dat.KorisnickoIme, dat.Lozinka);
+                        localStorage.setItem("user", dat.KorisnickoIme);
+                        localStorage.setItem("Admin", dat.KorisnickoIme);
                     }
                     else {
-                        $("#username").text(data.KorisnickoIme);
+                        $("#username").text(dat.KorisnickoIme);
                         $("#login").hide();
                         $("#logout").show();
                         $("#registracijaIOpis").hide();
                         $("#ulogovan").show();
-                        sessionStorage.setItem(data.KorisnickoIme, data.Lozinka);
+                        sessionStorage.setItem(dat.KorisnickoIme, dat.Lozinka);
+                        localStorage.setItem(dat.KorisnickoIme, this.body);
                     }
                 }
             });
@@ -38,9 +56,6 @@
 
     $("#registrujse").click(function () {
         if ($("#uloga option:selected").val() == "" || $("#uloga option:selected").val() == " ") {
-            $("#uloga option:selected").val("Musterija");
-        }
-        else if ($("#uloga option:selected").val() == "Vozac" && sessionStorage) {
             $("#uloga option:selected").val("Musterija");
         }
         if ($("#email").val() == "" || $("#email").val() == " ") {
@@ -70,7 +85,7 @@
             if (!intRegex.test(vall)) {
                 $("#telefon").css("border-color", "crimson");
                 $("#tel p").show();
-                $("#tel p").text("Broj telefon moze da sadrzi samo brojeve!");
+                $("#tel p").text("Broj telefona mo&zcaron;e da sadr&zcaron;i samo brojeve!");
                 $("#tel br").hide();
                 $("#telefon").focus();
             }
@@ -145,7 +160,7 @@
             }
             $.post("/api/Musterija/Registracija", data)
                 .done(function (data) {
-                    if (data == "Korisnicko ime vec postoji") {
+                    if (data == "Korisni&ccaron;ko ime vec postoji") {
                         $("#errorMessageReg").text(data);
                         $("#korisnicko").css("border-color", "crimson");
                         $("#kor br").hide();
@@ -161,30 +176,31 @@
     });
 
     $("#prijav").click(function () {
-        let data = {
+        dat = {
             KorisnickoIme: $("#k").val(),
             Lozinka: $("#l").val()
         }
-        $.post("/api/korisnik/login", data)
-            .done(function (data) {
-                if (data != null) {
+        $.post("/api/korisnik/login", dat)
+            .done(function (dat) {
+                if (dat != null) {
                     if (data == "Ne postoji korisnik sa ovim Korisnickim imenom!") {
-                        $("#mess").text(data);
+                        $("#message").text(data);
                     }
                     else if (data == "Pogresna lozinka ili korisnicko ime!") {
-                        $("#mess").text(data);
+                        $("#message").text(data);
                     }
                     else if (data == "Pogresna Lozinka!") {
-                        $("#mess").text(data);
+                        $("#message").text(data);
                     }
                     else {
-                        $("#username").text(data.KorisnickoIme);
+                        $("#username").text(dat.KorisnickoIme);
                         $("#registrovan").hide();
                         $("#logout").show();
                         $("#ulogovan").show();
                         $("#profilButton").show();
                         $("#odjavise").show();
-                        sessionStorage.setItem(data.KorisnickoIme, data.Lozinka);
+                        sessionStorage.setItem(dat.KorisnickoIme, dat.Lozinka);
+                        localStorage.setItem(dat.KorisnickoIme, this.body);
                     }
                 }
             });
