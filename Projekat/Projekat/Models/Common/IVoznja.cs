@@ -7,9 +7,9 @@ namespace Projekat.Models.Common
         DateTime DatumIVremePorudzbine { get; set; }
         ILokacija LokacijaPolazista { get; set; }
         TIP_AUTOMOBILA TipAutomobila { get; set; }
-        IMusterija Musterija { get; set; }
+        IKorisnik Musterija { get; set; }
         ILokacija LokacijaOdredista { get; set; }
-        IDispecer Dispecer { get; set; }
+        IKorisnik Dispecer { get; set; }
         IVozac Vozac { get; set; }
         double Iznos { get; set; }
         IKomentar Komentar { get; set; }

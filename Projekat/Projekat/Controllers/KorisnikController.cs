@@ -6,47 +6,87 @@ namespace Projekat.Controllers
 {
     public class KorisnikController : ApiController
     {
-        [Route("api/Korisnik/Login")]
-        public IHttpActionResult Login(LogIn korisnik)
+        [HttpGet, Route("api/Korisnik/Login")]
+        public IHttpActionResult Login([FromUri]LogIn korisnik)
         {
             IKorisnik k = new Korisnik();
-            if(!Podaci.GetKorisnike().ContainsKey(korisnik.KorisnickoIme))
+            IVozac v = new Vozac();
+            if (!Podaci.GetUlogovane().Contains(korisnik.KorisnickoIme))
             {
-                return Ok("Ne postoji korisnik sa ovim Korisnickim imenom!");
-            }
-            else if (Podaci.GetKorisnike().TryGetValue(korisnik.KorisnickoIme, out k))
-            {
-                if (k.Lozinka == korisnik.Lozinka)
+                if (!Podaci.GetKorisnike().ContainsKey(korisnik.KorisnickoIme))
                 {
-                    if (k.Uloga == ULOGA.Admin)
+                    if (!Podaci.GetDispecere().ContainsKey(korisnik.KorisnickoIme))
                     {
-                        return Ok("Admin");
+                        if (!Podaci.GetVozace().ContainsKey(korisnik.KorisnickoIme))
+                        {
+                            return Ok("Ne postoji korisnik sa ovim Korisnickim imenom!");
+                        }
+                        else if (Podaci.GetVozace().TryGetValue(korisnik.KorisnickoIme, out v))
+                        {
+                            if (v.Lozinka == korisnik.Lozinka)
+                            {
+                                Podaci.GetUlogovane().Add(v.KorisnickoIme);
+                                return Ok(v);
+                            }
+                            else
+                            {
+                                return Ok("Pogresna Lozinka!");
+                            }
+                        }
+                        else
+                        {
+                            return Ok("Pogresna lozinka ili korisnicko ime!");
+                        }
+                    }
+                    else if (Podaci.GetDispecere().TryGetValue(korisnik.KorisnickoIme, out k))
+                    {
+                        if (k.Lozinka == korisnik.Lozinka)
+                        {
+                            Podaci.GetUlogovane().Add(k.KorisnickoIme);
+                            return Ok(k);
+                        }
+                        else
+                        {
+                            return Ok("Pogresna Lozinka!");
+                        }
                     }
                     else
                     {
+                        return Ok("Pogresna lozinka ili korisnicko ime!");
+                    }
+                }
+                else if (Podaci.GetKorisnike().TryGetValue(korisnik.KorisnickoIme, out k))
+                {
+                    if (k.Lozinka == korisnik.Lozinka)
+                    {
+                        Podaci.GetUlogovane().Add(k.KorisnickoIme);
                         return Ok(k);
+                    }
+                    else
+                    {
+                        return Ok("Pogresna Lozinka!");
                     }
                 }
                 else
                 {
-                    return Ok("Pogresna Lozinka!");
+                    return Ok("Pogresna lozinka ili korisnicko ime!");
                 }
             }
             else
             {
-                return Ok("Pogresna lozinka ili korisnicko ime!");
+                return Ok("Vec ste ulogovani!");
             }
         }
-        [Route("api/Korisnik/Admin")]
-        public IHttpActionResult Admin(string username)
+
+
+        [HttpDelete, Route("api/Korisnik/LogOut")]
+        public IHttpActionResult LogOut(LogIn korisnik)
         {
-            IKorisnik k = new Korisnik();
-            if(Podaci.GetKorisnike().TryGetValue(username, out k))
+            if(Podaci.GetUlogovane().Contains(korisnik.KorisnickoIme))
             {
-                if(k.Uloga == ULOGA.Admin)
-                    return Ok(ULOGA.Admin.ToString());
+                Podaci.GetUlogovane().Remove(korisnik.KorisnickoIme);
             }
-            return Ok("NO");
+            return Ok();
         }
     }
 }

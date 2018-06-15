@@ -27,6 +27,7 @@
         Prihvacena,
         Otkazana,
         Neuspesna,
-        Uspesna
+        Uspesna,
+        U_toku
     }
 }

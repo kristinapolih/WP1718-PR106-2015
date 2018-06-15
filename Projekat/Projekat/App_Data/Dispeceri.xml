@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfKorisnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Korisnik>
+    <KorisnickoIme>admin1</KorisnickoIme>
+    <Lozinka>admin1</Lozinka>
+    <Ime>Eliza</Ime>
+    <Prezime>Bennet</Prezime>
+    <Pol>Z</Pol>
+    <JMBG>0210992806040</JMBG>
+    <Telefon>063438752</Telefon>
+    <Email>elizabennet@hushmail.com</Email>
+    <Uloga>Admin</Uloga>
+    <VoznjeIDs />
+  </Korisnik>
+  <Korisnik>
+    <KorisnickoIme>admin</KorisnickoIme>
+    <Lozinka>admin</Lozinka>
+    <Ime>Tomas</Ime>
+    <Prezime>Norrton</Prezime>
+    <Pol>M</Pol>
+    <JMBG>2306987605023</JMBG>
+    <Telefon>0637655325</Telefon>
+    <Email>tomas.nortton@gmail.com</Email>
+    <Uloga>Admin</Uloga>
+    <VoznjeIDs />
+  </Korisnik>
+</ArrayOfKorisnik>

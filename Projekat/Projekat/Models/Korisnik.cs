@@ -67,6 +67,7 @@ namespace Projekat.Models
         public List<int> VoznjeIDs
         {
             get { return voznjeIDs; }
+            set { voznjeIDs = value; }
         }
         #endregion
 

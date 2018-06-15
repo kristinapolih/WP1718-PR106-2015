@@ -198,26 +198,25 @@
     <Compile Include="Models\Common\Enums.cs" />
     <Compile Include="Models\Common\IAdresa.cs" />
     <Compile Include="Models\Common\IAutomobil.cs" />
-    <Compile Include="Models\Common\IDispecer.cs" />
     <Compile Include="Models\Common\IKomentar.cs" />
     <Compile Include="Models\Common\IKorisnik.cs" />
     <Compile Include="Models\Common\ILokacija.cs" />
-    <Compile Include="Models\Common\IMusterija.cs" />
     <Compile Include="Models\Common\IVozac.cs" />
     <Compile Include="Models\Common\IVoznja.cs" />
     <Compile Include="Models\Common\LogIn.cs" />
     <Compile Include="Models\Common\Random.cs" />
-    <Compile Include="Models\Dispecer.cs" />
     <Compile Include="Models\Komentar.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\Lokacija.cs" />
-    <Compile Include="Models\Musterija.cs" />
     <Compile Include="Models\Podaci.cs" />
     <Compile Include="Models\Vozac.cs" />
     <Compile Include="Models\Voznja.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Dispeceri.xml" />
+    <Content Include="App_Data\Musterije.xml" />
+    <Content Include="App_Data\Vozaci.xml" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -265,6 +264,7 @@
     <Content Include="Scripts\Musterija.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Voznja.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -281,7 +281,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Korisnik\" />
   </ItemGroup>
   <ItemGroup>

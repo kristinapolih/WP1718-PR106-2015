@@ -69,6 +69,7 @@ namespace Projekat.Models
         public List<int> VoznjeIDs
         {
             get { return voznjeIDs; }
+            set { voznjeIDs = value; }
         }
         public ILokacija Lokacija
         {
@@ -81,6 +82,11 @@ namespace Projekat.Models
             set { automobil = value; }
         }
         #endregion
+
+        public Vozac()
+        {
+            voznjeIDs = new List<int>();
+        }
 
         public Vozac(ILokacija lokacija, IAutomobil automobil)
         {

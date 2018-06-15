@@ -13,6 +13,6 @@ namespace Projekat.Models.Common
         string Telefon { get; set; }
         string Email { get; set; }
         ULOGA Uloga { get; set; }
-        List<int> VoznjeIDs { get; }
+        List<int> VoznjeIDs { get; set; }
     }
 }

@@ -9,9 +9,9 @@ namespace Projekat.Models
         private DateTime datumIVremePorudzbine;
         private ILokacija lokacijaPolazista;
         private TIP_AUTOMOBILA tipAutomobila;
-        private IMusterija musterija;
+        private IKorisnik musterija;
         private ILokacija lokacijaOdredista;
-        private IDispecer dispecer;
+        private IKorisnik dispecer;
         private IVozac vozac;
         private double iznos;
         private IKomentar komentar;
@@ -34,7 +34,7 @@ namespace Projekat.Models
             get { return tipAutomobila; }
             set { tipAutomobila = value; }
         }
-        public IMusterija Musterija
+        public IKorisnik Musterija
         {
             get { return musterija; }
             set { musterija = value; }
@@ -44,7 +44,7 @@ namespace Projekat.Models
             get { return lokacijaOdredista; }
             set { lokacijaOdredista = value; }
         }
-        public IDispecer Dispecer
+        public IKorisnik Dispecer
         {
             get { return dispecer; }
             set { dispecer = value; }
