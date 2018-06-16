@@ -10,7 +10,7 @@ namespace Projekat.Controllers
         public IHttpActionResult Login([FromUri]LogIn korisnik)
         {
             IKorisnik k = new Korisnik();
-            IVozac v = new Vozac();
+            Vozac v = new Vozac();
             if (!Podaci.GetUlogovane().Contains(korisnik.KorisnickoIme))
             {
                 if (!Podaci.GetKorisnike().ContainsKey(korisnik.KorisnickoIme))

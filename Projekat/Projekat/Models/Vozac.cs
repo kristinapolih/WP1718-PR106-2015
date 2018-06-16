@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Projekat.Models
 {
-    public class Vozac : IVozac
+    public class Vozac 
     {
         #region Fileds
         private string korisnickoIme;
@@ -16,8 +16,8 @@ namespace Projekat.Models
         private string email;
         private ULOGA uloga;
         private List<int> voznjeIDs;
-        private ILokacija lokacija;
-        private IAutomobil automobil;
+        private Lokacija lokacija;
+        private Automobil automobil;
         #endregion
 
         #region Props
@@ -71,12 +71,12 @@ namespace Projekat.Models
             get { return voznjeIDs; }
             set { voznjeIDs = value; }
         }
-        public ILokacija Lokacija
+        public Lokacija Lokacija
         {
             get { return lokacija; }
             set { lokacija = value; }
         }
-        public IAutomobil Automobil
+        public Automobil Automobil
         {
             get { return automobil; }
             set { automobil = value; }
@@ -85,13 +85,6 @@ namespace Projekat.Models
 
         public Vozac()
         {
-            voznjeIDs = new List<int>();
-        }
-
-        public Vozac(ILokacija lokacija, IAutomobil automobil)
-        {
-            this.Automobil = automobil;
-            this.Lokacija = lokacija;
             voznjeIDs = new List<int>();
         }
     }

@@ -7,10 +7,17 @@
     <link href="/Content/bootstrap.css" rel="stylesheet">
     <link href="/Content/site.css" rel="stylesheet">
     <script src="Scripts/jquery-3.3.1.js"></script>
-    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/respond.js"></script>
     <script src="/Scripts/modernizr-2.8.3.js"></script>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="./resources/zeroclipboard/ZeroClipboard.min.js"></script>
+
     <script src="/Scripts/Musterija.js"></script>
-    <script src="/Scripts/Voznja.js"></script>
     <style type="text/css">
         :root #content > #right > .dose > .dosesingle,
         :root #content > #center > .dose > .dosesingle {
@@ -27,14 +34,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <input type="submit" class="navbar-brand" value="Taksi slu&zcaron;ba" style="background-color:transparent; border-color:transparent; color:yellow; padding-right:10px; padding-left:10px"/>
+                <input type="submit" class="navbar-brand" value="Taksi slu&zcaron;ba" style="background-color:transparent; border-color:transparent; color:yellow; padding-right:15px; padding-left:15px"/>
             </div>
             <div class="navbar-collapse collapse">
                 &nbsp;&nbsp;
-                <input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent; padding-right:10px; padding-left:10px" hidden/>
-                
+                <input id="dodajVozacaButton" type="submit" class="nav navbar-nav navbar-brand" value="Dodaj voza&ccaron;a" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                <input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                <input id="dodajVoznjuButton" type="submit" class="nav navbar-nav navbar-brand" value="Poru&ccaron;i voznju" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+
                 <div class="navbar-form nav navbar-nav" style="float:right" id="login" name="login">
-                    <input type="text" name="korisnickoIme" placeholder="Korisni&ccaron;ko ime" id="korisnickoIme"/>
+                    <input type="text" name="korisnickoIme" placeholder="Korisni&ccaron;ko ime" id="korisnickoIme" />
                     <input type="password" name="lozinka" placeholder="Lozinka" id="lozinka" />
                     <input type="submit" value="Prijavite se" id="prijavise" /><br />
                     <p id="message" style="color:crimson"></p>
@@ -46,7 +55,7 @@
                                 <p style="color:floralwhite; font-size:medium" id="username"></p>
                             </td>
                             <td style="padding-left:15px; padding-right:15px">
-                                <input type="submit" value="Odjavi se" id="odjavise"/>
+                                <input type="submit" value="Odjavi se" id="odjavise" />
                             </td>
                         </tr>
                     </table>
@@ -66,7 +75,7 @@
                 <img src="Content/TAXI.jpg" height="400" width="600" />
             </div>
             <div id="registracija" class="col-md-5" style="float:right">
-                <br /><br /><h1>Registracija</h1><br />
+                <br /><br /><h1 id="naslovreg">Registracija</h1><br />
                 <p style="color:crimson" id="errorMessageReg"></p>
                 <div id="kor">
                     <input type="text" name="korisnickoIme" id="korisnicko" placeholder="Korisni&ccaron;ko ime"><br />
@@ -109,6 +118,7 @@
                     <datalist id="uloga">
                         <option selected value="Musterija" id="musterija" />
                     </datalist><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
                 </div><br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Registruj se" id="registrujse">
@@ -123,15 +133,47 @@
             <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
         </div>
         <div id="ulogovan" hidden>
-            <br/>
+            <br />
             <div id="korisnikvoznja" hidden>
 
             </div>
-        </div>
-    </div>
+            <div id="vozacvoznja" hidden>
 
-    <script src="/Scripts/jquery-1.10.2.js"></script>
-    <script src="/Scripts/bootstrap.js"></script>
-    <script src="/Scripts/respond.js"></script>
+            </div>
+            <div id="adminvoznja" hidden>
+
+            </div>
+        </div>
+        <div id="dodajVozacaPolja" hidden>
+            <div id="dodajVozacaRegistracija" class="col-md-5">
+            </div>
+            <div id="dodajVozacaLokacijaAutomobil" class="col-md-5" style="text-align:center; justify-content:center">
+                <br /><p style="font-size:medium"><b>Automobil</b></p>
+                <div id="voz">
+                    <input type="text" id="vozackorime" placeholder="Korisni&ccaron;ko ime voza&ccaron;a"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="god">
+                    <input type="text" id="godiste" placeholder="Godiste"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <div id="tipauta">
+                    <input list="tipautomobila" name="tipautomobila" placeholder="Tip automobila">
+                    <datalist id="tipautomobila">
+                        <option value="Putni&ccaron;ki" id="putnicki" />
+                        <option value="Kombi" id="kombi" />
+                    </datalist><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div><br />
+                <p style="font-size:medium"><b>Lokacija</b></p>
+                <p style="font-size:medium">(odaberite trenutnu lokaciju voza&ccaron;a)</p>
+                <div id="map" hidden>
+                    <p style="color:crimson" hidden>Morate izabrati lokaciju!</p><br />
+                </div><br /><br /><br />
+                <input type="submit" value="Registruj vozaca" id="registrujvozaca">
+            </div>
+        </div>
+        
+    </div>
 </body>
 </html>

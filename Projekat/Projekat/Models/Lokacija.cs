@@ -7,11 +7,11 @@ using System.Web;
 
 namespace Projekat.Models
 {
-    public class Lokacija : ILokacija
+    public class Lokacija 
     {
         #region Fields
         private GeoCoordinate geoCoordinate;
-        private IAdresa adresa;
+        private Adresa adresa;
         #endregion
 
         #region Props
@@ -20,7 +20,7 @@ namespace Projekat.Models
             get { return geoCoordinate; }
             set { geoCoordinate = value; }
         }
-        public IAdresa Adresa
+        public Adresa Adresa
         {
             get { return adresa; }
             set { adresa = value; }
@@ -29,8 +29,6 @@ namespace Projekat.Models
 
         public Lokacija ()
         {
-            GeoCoordinate = new GeoCoordinate();
-            Adresa = new Adresa();
         }
     }
 }

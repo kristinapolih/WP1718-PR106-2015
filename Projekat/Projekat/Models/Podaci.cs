@@ -11,7 +11,7 @@ namespace Projekat.Models
         #region Fileds
         private static Dictionary<string, IKorisnik> dispeceri;
         private static Dictionary<string, IKorisnik> korisnici;
-        private static Dictionary<string, IVozac> vozaci;
+        private static Dictionary<string, Vozac> vozaci;
         private static List<string> ulogovani;
 
         private static object syncLockKorisnici = new object();
@@ -53,7 +53,7 @@ namespace Projekat.Models
             return dispeceri;
         }
 
-        public static Dictionary<string, IVozac> GetVozace()
+        public static Dictionary<string, Vozac> GetVozace()
         {
             if (vozaci == null)
             {
@@ -61,7 +61,7 @@ namespace Projekat.Models
                 {
                     if (vozaci == null)
                     {
-                        vozaci = new Dictionary<string, IVozac>();
+                        vozaci = new Dictionary<string, Vozac>();
                     }
                 }
             }
@@ -121,7 +121,7 @@ namespace Projekat.Models
 
         public static void IzmeniVozaca(string username, IVozac vozac)
         {
-            IVozac menjamo = new Vozac();
+            Vozac menjamo = new Vozac();
 
             lock (new object())
             {
@@ -147,6 +147,10 @@ namespace Projekat.Models
                 menjamo.Telefon = vozac.Telefon;
             if (menjamo.VoznjeIDs.Count < vozac.VoznjeIDs.Count)
                 menjamo.VoznjeIDs = vozac.VoznjeIDs;
+            if (vozac.Lokacija != null)
+                menjamo.Lokacija = vozac.Lokacija;
+            if (vozac.Automobil != null)
+                menjamo.Automobil = vozac.Automobil;
 
             lock (new object())
             {
@@ -259,7 +263,7 @@ namespace Projekat.Models
             }
         }
 
-        public static void DodajVozac(IVozac vozac)
+        public static void DodajVozac(Vozac vozac)
         {
             GetVozace().Add(vozac.KorisnickoIme, vozac);
 
@@ -271,7 +275,7 @@ namespace Projekat.Models
             {
                 using (TextWriter writer = new StreamWriter(path + @"Vozaci.xml"))
                 {
-                    serializer.Serialize(writer, vozac);
+                    serializer.Serialize(writer, vozaci);
                 }
             }
         }

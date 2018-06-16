@@ -6,35 +6,23 @@ using System.Web;
 
 namespace Projekat.Models
 {
-    public class Adresa : IAdresa
+    public class Adresa 
     {
         #region Fields
-        private string ulica;
-        private int broj;
-        private string mesto;
-        private int postanskiFah;
+        private string ulicaIBroj;
+        private string mestoIPostanskiFah;
         #endregion
 
         #region Props
-        public string Ulica
+        public string UlicaIBroj
         {
-            get { return ulica; }
-            set { ulica = value; }
+            get { return ulicaIBroj; }
+            set { ulicaIBroj = value; }
         }
-        public int Broj
+        public string MestoIPostanskiFah
         {
-            get { return broj; }
-            set { broj = value; }
-        }
-        public string Mesto
-        {
-            get { return mesto; }
-            set { mesto = value; }
-        }
-        public int PostanskiFah
-        {
-            get { return postanskiFah; }
-            set { postanskiFah = value; }
+            get { return mestoIPostanskiFah; }
+            set { mestoIPostanskiFah = value; }
         }
         #endregion
 

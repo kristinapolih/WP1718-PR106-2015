@@ -194,6 +194,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Adresa.cs" />
+    <Compile Include="Models\AdrILok.cs" />
     <Compile Include="Models\Automobil.cs" />
     <Compile Include="Models\Common\Enums.cs" />
     <Compile Include="Models\Common\IAdresa.cs" />
@@ -264,7 +265,6 @@
     <Content Include="Scripts\Musterija.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Voznja.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

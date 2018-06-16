@@ -2,10 +2,10 @@
 
 namespace Projekat.Models
 {
-    public class Automobil : IAutomobil
+    public class Automobil
     {
         #region Fields
-        private IVozac vozac;
+        private Vozac vozac;
         private string godisteAutomobila;
         private string brojRegistarskeOznake;
         private string brojTaksiVozila;
@@ -13,7 +13,7 @@ namespace Projekat.Models
         #endregion
 
         #region Props
-        public IVozac Vozac
+        public Vozac Vozac
         {
             get { return vozac; }
             set { vozac = value; }
@@ -43,17 +43,17 @@ namespace Projekat.Models
         public Automobil()
         {
             BrojTaksiVozila = GetNewNumberOfTaxi();
-        }
-
-        public Automobil(IVozac vozac)
-        {
-            this.Vozac = vozac;
-            BrojTaksiVozila = GetNewNumberOfTaxi();
+            BrojRegistarskeOznake = GetNewRegOfTaxi();
         }
 
         public string GetNewNumberOfTaxi()
         {
             return (Common.Random.GetLetter() + Common.Random.GetLetter() + Common.Random.GetNumber() + Common.Random.GetNumber() + Common.Random.GetNumber()).ToString();
+        }
+
+        public string GetNewRegOfTaxi()
+        {
+            return (Common.Random.GetNumber() + Common.Random.GetNumber() + Common.Random.GetNumber() + Common.Random.GetLetter() + Random.GetLetter()).ToString();
         }
     }
 }

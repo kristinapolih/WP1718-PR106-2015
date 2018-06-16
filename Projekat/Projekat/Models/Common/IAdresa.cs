@@ -2,9 +2,7 @@
 {
     public interface IAdresa
     {
-        string Ulica { get; set; }
-        int Broj { get; set; }
-        string Mesto { get; set; }
-        int PostanskiFah { get; set; }
+        string UlicaIBroj { get; set; }
+        string MestoIPostanskiFah { get; set; }
     }
 }

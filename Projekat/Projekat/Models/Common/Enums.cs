@@ -8,9 +8,9 @@
 
     public enum ULOGA
     {
-        Musterija,
         Admin,
-        Vozac
+        Vozac,
+        Musterija
     }
 
     public enum TIP_AUTOMOBILA

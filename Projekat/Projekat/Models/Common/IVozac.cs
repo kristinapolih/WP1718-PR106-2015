@@ -2,7 +2,7 @@
 {
     public interface IVozac : IKorisnik
     {
-        ILokacija Lokacija { get; set; }
-        IAutomobil Automobil { get; set; }
+        Lokacija Lokacija { get; set; }
+        Automobil Automobil { get; set; }
     }
 }
