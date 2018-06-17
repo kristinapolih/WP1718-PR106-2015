@@ -28,7 +28,7 @@ namespace Projekat.Controllers
             }
             else
             {
-                Podaci.GetKorisnike().Add(korisnik.KorisnickoIme, korisnik);
+                Podaci.DodajKorisnik(korisnik);
                 return Ok();
             }
         }
@@ -52,7 +52,7 @@ namespace Projekat.Controllers
             {
                 voz = new Vozac();
                 voz = vozac;
-                //Podaci.DodajVozac(vozac);
+                Podaci.GetSlobodneVozace().Add(voz.KorisnickoIme);
                 return Ok();
             }
         }

@@ -190,6 +190,7 @@
     <Compile Include="Controllers\KorisnikController.cs" />
     <Compile Include="Controllers\MusterijaController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\VoznjaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -197,11 +198,9 @@
     <Compile Include="Models\AdrILok.cs" />
     <Compile Include="Models\Automobil.cs" />
     <Compile Include="Models\Common\Enums.cs" />
-    <Compile Include="Models\Common\IAdresa.cs" />
     <Compile Include="Models\Common\IAutomobil.cs" />
     <Compile Include="Models\Common\IKomentar.cs" />
     <Compile Include="Models\Common\IKorisnik.cs" />
-    <Compile Include="Models\Common\ILokacija.cs" />
     <Compile Include="Models\Common\IVozac.cs" />
     <Compile Include="Models\Common\IVoznja.cs" />
     <Compile Include="Models\Common\LogIn.cs" />

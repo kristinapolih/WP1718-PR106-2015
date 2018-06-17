@@ -6,25 +6,31 @@ namespace Projekat.Models
     public class Voznja : IVoznja
     {
         #region Fields
+        private int iD;
         private DateTime datumIVremePorudzbine;
-        private ILokacija lokacijaPolazista;
+        private Lokacija lokacijaPolazista;
         private TIP_AUTOMOBILA tipAutomobila;
-        private IKorisnik musterija;
-        private ILokacija lokacijaOdredista;
-        private IKorisnik dispecer;
-        private IVozac vozac;
+        private Korisnik musterija;
+        private Lokacija lokacijaOdredista;
+        private Korisnik dispecer;
+        private Vozac vozac;
         private double iznos;
-        private IKomentar komentar;
+        private Komentar komentar;
         private STATUS_VOZNJE statusVoznje;
         #endregion
 
         #region Props
+        public int ID
+        {
+            get { return iD; }
+            set { iD = value; }
+        }
         public DateTime DatumIVremePorudzbine
         {
             get { return datumIVremePorudzbine; }
             set { datumIVremePorudzbine = value; }
         }
-        public ILokacija LokacijaPolazista
+        public Lokacija LokacijaPolazista
         {
             get { return lokacijaPolazista; }
             set { lokacijaPolazista = value; }
@@ -34,22 +40,22 @@ namespace Projekat.Models
             get { return tipAutomobila; }
             set { tipAutomobila = value; }
         }
-        public IKorisnik Musterija
+        public Korisnik Musterija
         {
             get { return musterija; }
             set { musterija = value; }
         }
-        public ILokacija LokacijaOdredista
+        public Lokacija LokacijaOdredista
             {
             get { return lokacijaOdredista; }
             set { lokacijaOdredista = value; }
         }
-        public IKorisnik Dispecer
+        public Korisnik Dispecer
         {
             get { return dispecer; }
             set { dispecer = value; }
         }
-        public IVozac Vozac
+        public Vozac Vozac
         {
             get { return vozac; }
             set { vozac = value; }
@@ -59,7 +65,7 @@ namespace Projekat.Models
             get { return iznos; }
             set { iznos = value; }
         }
-        public IKomentar Komentar
+        public Komentar Komentar
         {
             get { return komentar; }
             set { komentar = value; }

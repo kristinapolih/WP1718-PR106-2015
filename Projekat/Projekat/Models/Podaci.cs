@@ -9,21 +9,28 @@ namespace Projekat.Models
     public static class Podaci
     {
         #region Fileds
-        private static Dictionary<string, IKorisnik> dispeceri;
-        private static Dictionary<string, IKorisnik> korisnici;
+        private static Dictionary<string, Korisnik> dispeceri;
+        private static Dictionary<string, Korisnik> korisnici;
         private static Dictionary<string, Vozac> vozaci;
         private static List<string> ulogovani;
+        private static List<int> slobodneVoznje;
+        private static Dictionary<int, Voznja> sveVoznje;
+        private static List<string> slobodniVozaci;
 
         private static object syncLockKorisnici = new object();
         private static object syncLockAdmins = new object();
         private static object syncLockVozaci = new object();
         private static object syncLockUlogovani = new object();
+        private static object syncSlobodneVoznje = new object();
+        private static object syncSveVoznje = new object();
+        private static object syncSlobodniVozaci = new object();
 
         private static string path = Application.StartupPath + @"\App_Data\";
+        public static int cnt;
         #endregion
 
         #region Singletons
-        public static Dictionary<string, IKorisnik> GetKorisnike ()
+        public static Dictionary<string, Korisnik> GetKorisnike ()
         {
             if(korisnici == null)
             {
@@ -31,14 +38,14 @@ namespace Projekat.Models
                 {
                     if(korisnici == null)
                     {
-                        korisnici = new Dictionary<string, IKorisnik>();
+                        korisnici = new Dictionary<string, Korisnik>();
                     }
                 }
             }
             return korisnici;
         }
 
-        public static Dictionary<string, IKorisnik> GetDispecere()
+        public static Dictionary<string, Korisnik> GetDispecere()
         {
             if (dispeceri == null)
             {
@@ -46,7 +53,7 @@ namespace Projekat.Models
                 {
                     if (dispeceri == null)
                     {
-                        dispeceri = new Dictionary<string, IKorisnik>();
+                        dispeceri = new Dictionary<string, Korisnik>();
                     }
                 }
             }
@@ -68,6 +75,21 @@ namespace Projekat.Models
             return vozaci;
         }
 
+        public static Dictionary<int, Voznja> GetSveVoznje()
+        {
+            if (sveVoznje == null)
+            {
+                lock (syncSveVoznje)
+                {
+                    if (sveVoznje == null)
+                    {
+                        sveVoznje = new Dictionary<int, Voznja>();
+                    }
+                }
+            }
+            return sveVoznje;
+        }
+
         public static List<string> GetUlogovane()
         {
             if (ulogovani == null)
@@ -82,11 +104,41 @@ namespace Projekat.Models
             }
             return ulogovani;
         }
+
+        public static List<int> GetSlobodneVoznje()
+        {
+            if (slobodneVoznje == null)
+            {
+                lock (syncSlobodneVoznje)
+                {
+                    if (slobodneVoznje == null)
+                    {
+                        slobodneVoznje = new List<int>();
+                    }
+                }
+            }
+            return slobodneVoznje;
+        }
+
+        public static List<string> GetSlobodneVozace()
+        {
+            if (slobodniVozaci == null)
+            {
+                lock (syncSlobodniVozaci)
+                {
+                    if (slobodniVozaci == null)
+                    {
+                        slobodniVozaci = new List<string>();
+                    }
+                }
+            }
+            return slobodniVozaci;
+        }
         #endregion
 
-        public static void IzmeniKorisnika(string username, IKorisnik korisnik)
+        public static void IzmeniKorisnika(string username, Korisnik korisnik)
         {
-            IKorisnik menjamo = new Korisnik();
+            Korisnik menjamo = new Korisnik();
 
             lock (new object())
             {
@@ -119,7 +171,7 @@ namespace Projekat.Models
             }
         }
 
-        public static void IzmeniVozaca(string username, IVozac vozac)
+        public static void IzmeniVozaca(string username, Vozac vozac)
         {
             Vozac menjamo = new Vozac();
 
@@ -158,9 +210,9 @@ namespace Projekat.Models
             }
         }
 
-        public static void IzmeniDispecera(string username, IKorisnik dispecer)
+        public static void IzmeniDispecera(string username, Korisnik dispecer)
         {
-            IKorisnik menjamo = new Korisnik();
+            Korisnik menjamo = new Korisnik();
 
             lock (new object())
             {
@@ -192,6 +244,7 @@ namespace Projekat.Models
                 DodajDispecer(menjamo);
             }
         }
+
 
         public static List<Korisnik> CitajKorisnik()
         {
@@ -229,7 +282,8 @@ namespace Projekat.Models
             }
         }
 
-        public static void DodajKorisnik(IKorisnik korisnik)
+
+        public static void DodajKorisnik(Korisnik korisnik)
         {
             GetKorisnike().Add(korisnik.KorisnickoIme, korisnik);
 
@@ -246,7 +300,7 @@ namespace Projekat.Models
             }
         }
 
-        public static void DodajDispecer(IKorisnik dispecer)
+        public static void DodajDispecer(Korisnik dispecer)
         {
             GetDispecere().Add(dispecer.KorisnickoIme, dispecer);
 
@@ -280,28 +334,29 @@ namespace Projekat.Models
             }
         }
 
+
         public static void CitajSve()
         {
+            cnt = 0;
             lock (new object())
             {
-                /*
                 var k = CitajKorisnik();
                 foreach(Korisnik kor in k)
                 {
                     GetKorisnike().Add(kor.KorisnickoIme, kor);
                 }
-                */
+                
                 var d = CitajDispecer();
                 foreach (Korisnik kor in d)
                 {
                     GetDispecere().Add(kor.KorisnickoIme, kor);
                 }
-                /*
+                
                 var v = CitajVozac();
                 foreach (Vozac voz in v)
                 {
-                    GetDispecere().Add(voz.KorisnickoIme, voz);
-                }*/
+                    GetVozace().Add(voz.KorisnickoIme, voz);
+                }
             }
         }
     }

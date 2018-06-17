@@ -9,7 +9,7 @@ namespace Projekat.Controllers
         [HttpGet, Route("api/Korisnik/Login")]
         public IHttpActionResult Login([FromUri]LogIn korisnik)
         {
-            IKorisnik k = new Korisnik();
+            Korisnik k = new Korisnik();
             Vozac v = new Vozac();
             if (!Podaci.GetUlogovane().Contains(korisnik.KorisnickoIme))
             {

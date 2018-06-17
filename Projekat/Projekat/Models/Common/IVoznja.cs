@@ -5,14 +5,14 @@ namespace Projekat.Models.Common
     public interface IVoznja
     {
         DateTime DatumIVremePorudzbine { get; set; }
-        ILokacija LokacijaPolazista { get; set; }
+        Lokacija LokacijaPolazista { get; set; }
         TIP_AUTOMOBILA TipAutomobila { get; set; }
-        IKorisnik Musterija { get; set; }
-        ILokacija LokacijaOdredista { get; set; }
-        IKorisnik Dispecer { get; set; }
-        IVozac Vozac { get; set; }
+        Korisnik Musterija { get; set; }
+        Lokacija LokacijaOdredista { get; set; }
+        Korisnik Dispecer { get; set; }
+        Vozac Vozac { get; set; }
         double Iznos { get; set; }
-        IKomentar Komentar { get; set; }
+        Komentar Komentar { get; set; }
         STATUS_VOZNJE StatusVoznje { get; set; }
     }
 }

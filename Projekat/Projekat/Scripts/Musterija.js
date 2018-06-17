@@ -7,6 +7,7 @@
             var body = this.sessionStorage.getItem("divbody");
             $("#divbody").html(body);
             var divmap = this.sessionStorage.getItem("divmap");
+            $("#map").html("");
             $("#map").html(divmap);
         }
     };
@@ -176,6 +177,115 @@
         return upis;
     }
 
+    function ProveraRegVozaca() {
+        var upis = true;
+        if ($("#dodajVozacaRegistracija #uloga option:selected").val() === "" || $("#dodajVozacaRegistracija #uloga option:selected").val() === " ") {
+            $("#dodajVozacaRegistracija #uloga option:selected").val("Vozac");
+        }
+        if ($("#dodajVozacaRegistracija #email").val() === "" || $("#dodajVozacaRegistracija #email").val() === " ") {
+            $("#dodajVozacaRegistracija #email").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #em p").show();
+            $("#dodajVozacaRegistracija #em br").hide();
+            $("#dodajVozacaRegistracija #email").focus();
+            upis = false;
+        }
+        else {
+            if ($("#dodajVozacaRegistracija #email").val().search('@') === -1) {
+                $("#dodajVozacaRegistracija #email").css("border-color", "crimson");
+                $("#dodajVozacaRegistracija #em p").show();
+                $("#dodajVozacaRegistracija #em p").text("Mora da postoji '@'!");
+                $("#dodajVozacaRegistracija #em br").hide();
+                $("#dodajVozacaRegistracija #email").focus();
+                upis = false;
+            }
+        }
+        if ($("#dodajVozacaRegistracija #telefon").val() === "" || $("#dodajVozacaRegistracija #telefon").val() === " ") {
+            $("#dodajVozacaRegistracija #telefon").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #tel p").show();
+            $("#dodajVozacaRegistracija #tel br").hide();
+            $("#dodajVozacaRegistracija #telefon").focus();
+            upis = false;
+        }
+        else {
+            let intRegex = /^\d+$/;
+            let vall = $("#dodajVozacaRegistracija #telefon").val();
+            if (!intRegex.test(vall)) {
+                $("#dodajVozacaRegistracija #telefon").css("border-color", "crimson");
+                $("#dodajVozacaRegistracija #tel p").show();
+                $("#dodajVozacaRegistracija #tel p").text("Broj telefona mo" + `&zcaron;` + "e da sadr" + `&zcaron;` + "i samo brojeve!");
+                $("#dodajVozacaRegistracija #tel br").hide();
+                $("#dodajVozacaRegistracija #telefon").focus();
+                upis = false;
+            }
+        }
+        if ($("#dodajVozacaRegistracija #jmbg").val() === "" || $("#dodajVozacaRegistracija #jmbg").val() === " ") {
+            $("#dodajVozacaRegistracija #jmbg").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #jm p").show();
+            $("#dodajVozacaRegistracija #jm br").hide();
+            $("#dodajVozacaRegistracija #jmbg").focus();
+            upis = false;
+        }
+        else {
+            let intRegex = /^\d+$/;
+            let vall = $("#dodajVozacaRegistracija #jmbg").val();
+            if ($("#dodajVozacaRegistracija #jmbg").val().length !== 13 || !intRegex.test(vall)) {
+                $("#dodajVozacaRegistracija #jmbg").css("border-color", "crimson");
+                $("#dodajVozacaRegistracija #jm p").show();
+                $("#dodajVozacaRegistracija #jm p").text("JMBG mora da ima 13 cifara, bez slova!");
+                $("#dodajVozacaRegistracija #jm br").hide();
+                $("#dodajVozacaRegistracija #jmbg").focus();
+                upis = false;
+            }
+        }
+        if ($("#dodajVozacaRegistracija #prezime").val() === "" || $("#dodajVozacaRegistracija #prezime").val() === " ") {
+            $("#dodajVozacaRegistracija #prezime").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #prez p").show();
+            $("#dodajVozacaRegistracija #prez br").hide();
+            $("#dodajVozacaRegistracija #prezime").focus();
+            upis = false;
+        }
+        if ($("#dodajVozacaRegistracija #ime").val() === "" || $("#dodajVozacaRegistracija #ime").val() === " ") {
+            $("#dodajVozacaRegistracija #ime").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #im p").show();
+            $("#dodajVozacaRegistracija #im br").hide();
+            $("#dodajVozacaRegistracija #ime").focus();
+            upis = false;
+        }
+        if ($("#dodajVozacaRegistracija #ponovljenaLozinka").val() === "" || $("#dodajVozacaRegistracija #ponovljenaLozinka").val() === " ") {
+            $("#dodajVozacaRegistracija #ponovljenaLozinka").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #ploz p").show();
+            $("#dodajVozacaRegistracija #ploz br").hide();
+            $("#dodajVozacaRegistracija #ponovljenaLozinka").focus();
+            $("#dodajVozacaRegistracija #lozin").val("");
+            upis = false;
+        }
+        if ($("#dodajVozacaRegistracija #lozin").val() === "" || $("#dodajVozacaRegistracija #lozin").val() === " ") {
+            $("#dodajVozacaRegistracija #lozin").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #loz p").show();
+            $("#dodajVozacaRegistracija #loz br").hide();
+            $("#dodajVozacaRegistracija #lozin").focus();
+            $("#dodajVozacaRegistracija #ponovljenaLozinka").val("");
+            upis = false;
+        }
+        if ($("#dodajVozacaRegistracija #lozin").val() !== $("#dodajVozacaRegistracija #ponovljenaLozinka").val()) {
+            $("#dodajVozacaRegistracija #errorMessageReg").text("Lozinka i ponovljena loznika se ne podudaraju!");
+            $("#dodajVozacaRegistracija #lozin").val("");
+            $("#dodajVozacaRegistracija #ponovljenaLozinka").val("");
+            $("#dodajVozacaRegistracija #lozin").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #ponovljenaLozinka").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #lozin").focus();
+            upis = false;
+        }
+        if ($("#dodajVozacaRegistracija #korisnicko").val() === "" || $("#dodajVozacaRegistracija #korisnicko").val() === " ") {
+            $("#dodajVozacaRegistracija #korisnicko").css("border-color", "crimson");
+            $("#dodajVozacaRegistracija #kor p").show();
+            $("#dodajVozacaRegistracija #kor br").hide();
+            $("#dodajVozacaRegistracija #korisnicko").focus();
+            upis = false;
+        }
+        return upis;
+    }
+
     $(document).on("click", "#prijavise", function () {
         let upis = true;
         if ($("#lozinka").val() === "" || $("#lozinka").val() === " ") {
@@ -217,6 +327,7 @@
                             if (result.Uloga === 0) {
                                 $("#uloga").append(`<option value="Vozac" id="vozac" />`);
                                 $("#dodajVozacaButton").show();
+                                $("#dodajVoznjuButton").show();
                             }
                             if (result.Uloga === 2) {
                                 $("#dodajVoznjuButton").show();
@@ -277,6 +388,16 @@
     });
 
     $(document).on("click", "#prijav", function () {
+        $("#uloga option:selected").val(""); 
+        $("#email").val("");
+        $("#telefon").val("");
+        $("#jmbg").val("");
+        $("#prezime").val("");
+        $("#ime").val("");
+        $("#ponovljenaLozinka").val("");
+        $("#lozin").val("");
+        $("#korisnicko").val("");
+
         let upis = true;
         if ($("#l").val() === "" || $("#l").val() === " ") {
             $("#l").css("border-color", "crimson");
@@ -314,9 +435,8 @@
                             $("#mess").text(result);
                         }
                         else {
-                            if (result.Uloga === "Admin") {
-                                $("#uloga").append(`<option value="Vozac" id="vozac" />`);
-                                $("#dodajVozacaButton").show();
+                            if (result.Uloga === 2) {
+                                $("#dodajVoznjuButton").show();
                             }
                             $("#username").text(result.KorisnickoIme);
                             $("#login").hide();
@@ -359,6 +479,9 @@
                 $("#registrovan").hide();
                 $("#dodajVozacaPolja").hide();
                 $("#dodajVozacaButton").hide();
+                $("#headerButtons").hide();
+                $("#dodajVoznjuButton").hide();
+                $("#dodajVoznjuPolja").hide();
                 var divheader = $("#divheader").html();
                 sessionStorage.setItem("divheader", divheader);
                 var divbody = $("#divbody").html();
@@ -377,7 +500,9 @@
         $("#dodajVozacaPolja").show();
         $("#dodajVozacaRegistracija #registrujse").hide();
 
-        $("#map").show();
+        var stringMapa = "<div id=\"map\"></div>";
+        $("#mapaDodajVozaca").html(stringMapa);
+        $("#mapaDodajVozaca").show();
         $("#map").css("height", "300px");
         $("#map").css("width", "100%");
         Mapa();
@@ -388,14 +513,9 @@
         sessionStorage.setItem("divbody", divbody);
         var divmap = $("#map").html();
         sessionStorage.setItem("divmap", divmap);
-        
     });
 
-    $(document).on("click", "#registrujvozaca", function () {//nesto ne radi
-        $("#map").show();
-        $("#map").css("height", "300px");
-        $("#map").css("width", "100%");
-        Mapa();
+    $(document).on("click", "#registrujvozaca", function () {
 
         var upis = true;
         if ($("#tipautomobila option:selected").val() === "" || $("#tipautomobila option:selected").val() === " ") {
@@ -433,8 +553,8 @@
             upis = false;
         }
 
-
-        if (upis) {
+        var prov = ProveraRegVozaca();
+        if (upis && prov) {
             let data = {
                 KorisnickoIme: $("#dodajVozacaRegistracija #korisnicko").val(),
                 Lozinka: $("#dodajVozacaRegistracija #lozin").val(),
@@ -461,8 +581,8 @@
                 data: data,
                 type: "POST",
                 success: function (result) {
-                    if (result === "Vozac sa ovim korisnickim imenom ne postoji!") {
-                        $("#errorMessageReg").text("Voza" + `&ccaron;` + " sa ovim korisni" + `&ccaron;` + "kim imenom ne postoji!");
+                    if (result === "Korisnicko ime vec postoji") {
+                        $("#dodajVozacaRegistracija #errorMessageReg").text("Korisni" + `&ccaron;` + "ko ime vec postoji!");
                         $("#korisnicko").css("border-color", "crimson");
                         $("#kor br").hide();
                         $("#korisnicko").focus();
@@ -475,31 +595,84 @@
                 data: auto,
                 type: "POST",
                 success: function (result) {
-                    if (result === "Vozac sa ovim korisnickim imenom ne postoji!") {
-                        $("#errorMessageReg").text("Voza" + `&ccaron;` + " sa ovim korisni" + `&ccaron;` + "kim imenom ne postoji!");
-                        $("#korisnicko").css("border-color", "crimson");
-                        $("#kor br").hide();
-                        $("#korisnicko").focus();
-                    }
-                    else {
-                        $("#login").hide();
-                        $("#registracijaIOpis").hide();
-                        $("#registrovan").hide();
-                        $("#dodajVozacaPolja").hide();
-                        $("#map").hide();
-                        $("#logout").show();
-                        $("#ulogovan").show();
-                        $("#profilButton").show();
-                        var divheader = $("#divheader").html();
-                        sessionStorage.setItem("divheader", divheader);
-                        var divbody = $("#divbody").html();
-                        sessionStorage.setItem("divbody", divbody);
-                    }
+                    $("#login").hide();
+                    $("#registracijaIOpis").hide();
+                    $("#registrovan").hide();
+                    $("#dodajVozacaPolja").hide();
+                    $("#map").hide();
+                    $("#logout").show();
+                    $("#ulogovan").show();
+                    $("#profilButton").show();
+                    var divheader = $("#divheader").html();
+                    sessionStorage.setItem("divheader", divheader);
+                    var divbody = $("#divbody").html();
+                    sessionStorage.setItem("divbody", divbody);
+                }
+            });
+            $("#mapaDodajVozaca").html("");
+        }
+    });
+
+    $(document).on("click", "#dodajVoznjuButton", function () {
+        $("#registracijaIOpis").hide();
+        $("#registrovan").hide();
+        $("#ulogovan").hide();
+        $("#dodajVozacaPolja").hide();
+        $("#dodajVoznjuPolja").show();
+
+        var stringMapa = "<div id=\"map\" style=\"text-align: center; justify - content: center\"></div>";
+        $("#mapaDodajVoznju").html(stringMapa);
+        $("#mapaDodajVoznju").show();
+        $("#map").css("height", "350px");
+        $("#map").css("width", "100%");
+        Mapa();
+
+        var divheader = $("#divheader").html();
+        sessionStorage.setItem("divheader", divheader);
+        var divbody = $("#divbody").html();
+        sessionStorage.setItem("divbody", divbody);
+        var divmap = $("#map").html();
+        sessionStorage.setItem("divmap", divmap);
+    });
+
+    $(document).on("click", "#narucivoznju", function () {
+        let lok = {
+            KorisnickoIme: $("#username").val(),
+            TipAutomobila: $("#narucivoznju #tipautomobila option:selected").val(),
+            xlong: LokAdr.xx,
+            ylatit: LokAdr.yy,
+            UlicaiBroj: LokAdr.ulica_broj,
+            MestoiPostanski: LokAdr.grad
+        };
+
+        let upis = true;
+        if (LokAdr.xx === null || LokAdr.yy === null || LokAdr.ulica_broj === null || LokAdr.grad === null) {
+            $("#narucivoznju #mapaDodajVoznju #map p").show();
+            upis = false;
+        }
+        if (upis) {
+            $.ajax({
+                url: "api/Voznja/poruciVoznju",
+                data: lok,
+                type: "POST",
+                success: function (result) {
+                    $("#login").hide();
+                    $("#registracijaIOpis").hide();
+                    $("#registrovan").hide();
+                    $("#dodajVozacaPolja").hide();
+                    $("#map").hide();
+                    $("#narucivoznju").hide();
+                    $("#logout").show();
+                    $("#ulogovan").show();
+                    $("#profilButton").show();
+                    var divheader = $("#divheader").html();
+                    sessionStorage.setItem("divheader", divheader);
+                    var divbody = $("#divbody").html();
+                    sessionStorage.setItem("divbody", divbody);
+                    sessionStorage.setItem("divmap", "");
                 }
             });
         }
-        //var prov = Provera();
-        //if (upis /*&& prov*/) {
-
+        $("#mapaDodajVozaca").html("");
     });
 });

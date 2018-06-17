@@ -38,9 +38,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 &nbsp;&nbsp;
-                <input id="dodajVozacaButton" type="submit" class="nav navbar-nav navbar-brand" value="Dodaj voza&ccaron;a" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
-                <input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
-                <input id="dodajVoznjuButton" type="submit" class="nav navbar-nav navbar-brand" value="Poru&ccaron;i voznju" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                    <input id="dodajVozacaButton" type="submit" class="nav navbar-nav navbar-brand" value="Dodaj voza&ccaron;a" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                    <input id="dodajVoznjuButton" type="submit" class="nav navbar-nav navbar-brand" value="Poru&ccaron;i voznju" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                    <input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
 
                 <div class="navbar-form nav navbar-nav" style="float:right" id="login" name="login">
                     <input type="text" name="korisnickoIme" placeholder="Korisni&ccaron;ko ime" id="korisnickoIme" />
@@ -67,11 +67,11 @@
         <div id="registracijaIOpis" class="row">
             <div id="opis" class="col-md-4 col-md-push-0.5">
                 <br /><br /><h1>Taksi sluzba</h1>
-                            <p>
-                                Ovo je taksi slu&zcaron;ba koja omogucava da lako i brzo poru&ccaron;ite taksi vozilo
-                                na Va&scaron;u adresu. Dovoljno je samo da se prijavite na na&scaron; sajt i da unesete
-                                adresu na koju dolazi na&scaron;e vozilo po Vas.
-                            </p><br /><br />
+                <p>
+                    Ovo je taksi slu&zcaron;ba koja omogucava da lako i brzo poru&ccaron;ite taksi vozilo
+                    na Va&scaron;u adresu. Dovoljno je samo da se prijavite na na&scaron; sajt i da unesete
+                    adresu na koju dolazi na&scaron;e vozilo po Vas.
+                </p><br /><br />
                 <img src="Content/TAXI.jpg" height="400" width="600" />
             </div>
             <div id="registracija" class="col-md-5" style="float:right">
@@ -133,6 +133,7 @@
             <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
         </div>
         <div id="ulogovan" hidden>
+            <!--Prikaz na pocetnoj-->
             <br />
             <div id="korisnikvoznja" hidden>
 
@@ -167,11 +168,27 @@
                 </div><br />
                 <p style="font-size:medium"><b>Lokacija</b></p>
                 <p style="font-size:medium">(odaberite trenutnu lokaciju voza&ccaron;a)</p>
-                <div id="map" hidden>
+                <div id="mapaDodajVozaca" hidden>
                     <p style="color:crimson" hidden>Morate izabrati lokaciju!</p><br />
                 </div><br /><br /><br />
-                <input type="submit" value="Registruj vozaca" id="registrujvozaca">
+                <input type="submit" value="Registruj voza&ccaron;a" id="registrujvozaca">
             </div>
+        </div>
+        <div id="dodajVoznjuPolja" style="text-align:center; justify-content:center" class="col-md-7" hidden>
+            <br /><br /><br /><br /><br />
+            <div id="tipautaa">
+                <input list="tipautomobilaa" name="tipautomobilaa" placeholder="Tip automobila">
+                <datalist id="tipautomobilaa">
+                    <option value="Putni&ccaron;ki" id="putnicki" />
+                    <option value="Kombi" id="kombi" />
+                </datalist><br />
+            </div><br />
+            <p style="font-size:medium"><b>Lokacija</b></p>
+            <p style="font-size:medium">(odaberite lokaciju na koju ce taksi vozilo do&cacute;i po Vas)</p>
+            <div id="mapaDodajVoznju" style="text-align:center; justify-content:center" hidden>
+                <p style="color:crimson" hidden>Morate izabrati lokaciju!</p><br />
+            </div><br /><br /><br />
+            <input type="submit" value="Naru&ccaron;i vo&zcaron;nju" id="narucivoznju">
         </div>
         
     </div>
