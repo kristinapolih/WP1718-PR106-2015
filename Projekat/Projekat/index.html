@@ -15,7 +15,6 @@
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
     <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,URL"></script>
-    <script src="./resources/zeroclipboard/ZeroClipboard.min.js"></script>
 
     <script src="/Scripts/Musterija.js"></script>
     <style type="text/css">
@@ -38,9 +37,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 &nbsp;&nbsp;
-                    <input id="dodajVozacaButton" type="submit" class="nav navbar-nav navbar-brand" value="Dodaj voza&ccaron;a" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
-                    <input id="dodajVoznjuButton" type="submit" class="nav navbar-nav navbar-brand" value="Poru&ccaron;i voznju" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
-                    <input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                <input id="dodajVozacaButton" type="submit" class="nav navbar-nav navbar-brand" value="Dodaj voza&ccaron;a" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                <input id="dodajVoznjuButton" type="submit" class="nav navbar-nav navbar-brand" value="Poru&ccaron;i vo&zcaron;nju" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                <input id="blokiraj" type="submit" class="nav navbar-nav navbar-brand" value="Blokiraj" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
+                <input id="profilButton" type="submit" class="nav navbar-nav navbar-brand" value="Profil" style="background-color:transparent; border-color:transparent; padding-right:15px; padding-left:15px" hidden />
 
                 <div class="navbar-form nav navbar-nav" style="float:right" id="login" name="login">
                     <input type="text" name="korisnickoIme" placeholder="Korisni&ccaron;ko ime" id="korisnickoIme" />
@@ -116,7 +116,7 @@
                 <div id="ul">
                     <input list="uloga" name="uloga" placeholder="Uloga">
                     <datalist id="uloga">
-                        <option selected value="Musterija" id="musterija" />
+                        <option selected value="Mu&scaron;terija" id="musterija" />
                     </datalist><br />
                     <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
                 </div><br />
@@ -190,7 +190,34 @@
             </div><br /><br /><br />
             <input type="submit" value="Naru&ccaron;i vo&zcaron;nju" id="narucivoznju">
         </div>
-        
+        <div id="blok" class="row" hidden>
+            <div id="bloksvi" class="col-md-5" style="text-align:center; justify-content:center">
+                <br /><br /><br />
+                <p style="font-size:medium"><b>Svi korisnici</b></p>
+                <div id="bloksvikorisnici"></div>
+                <p style="font-size:medium"><b>Blokiranje korisnika</b></p>
+                <p>(Unesite korisni&ccaron;ko ime koga zelite da blokirate)</p>
+                <p id="errorBlokiraj" style="color:crimson"></p>
+                <div id="korisnickoBlokiraj">
+                    <input type="text" name="korisnickoIme" id="korisckoImeBlokiraj" placeholder="Korisni&ccaron;ko ime"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <input type="submit" value="Blokiraj" id="blokirajKorisnika">
+            </div>
+            <div id="blokblokirani" class="col-md-5">
+                <br /><br /><br />
+                <p style="font-size:medium"><b>Svi blokirani korisnici</b></p>
+                <div id="odbloksvikorisnici"></div>
+                <p style="font-size:medium"><b>Odblokirajte korisnika</b></p>
+                <p>(Unesite korisni&ccaron;ko ime koga zelite da odblokirate)</p>
+                <p id="errorOdlokiraj" style="color:crimson"></p>
+                <div id="korisnickoBlokirani">
+                    <input type="text" name="korisnickoIme" id="korisckoImeBlokirani" placeholder="Korisni&ccaron;ko ime"><br />
+                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                </div>
+                <input type="submit" value="Odblokiraj" id="odblokirajKorisnika">
+            </div>
+        </div>
     </div>
 </body>
 </html>

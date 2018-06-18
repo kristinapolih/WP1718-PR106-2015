@@ -15,6 +15,7 @@ namespace Projekat.Models
         private string telefon;
         private string email;
         private ULOGA uloga;
+        private bool blokiran;
         private List<int> voznjeIDs;
         #endregion
 
@@ -64,6 +65,11 @@ namespace Projekat.Models
             get { return uloga; }
             set { uloga = value; }
         }
+        public bool Blokiran
+        {
+            get { return blokiran; }
+            set { blokiran = value; }
+        }
         public List<int> VoznjeIDs
         {
             get { return voznjeIDs; }
@@ -73,6 +79,7 @@ namespace Projekat.Models
 
         public Korisnik()
         {
+            this.Blokiran = false;
             voznjeIDs = new List<int>();
         }
     }

@@ -1,3 +1,32 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Vozaci>
-</Vozaci>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfVozac xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Vozac>
+    <KorisnickoIme>vozac</KorisnickoIme>
+    <Lozinka>vozac</Lozinka>
+    <Ime>Michael</Ime>
+    <Prezime>Voughn</Prezime>
+    <Pol>M</Pol>
+    <JMBG>0309987456236</JMBG>
+    <Telefon>0631239875</Telefon>
+    <Email>michael.voughn2gmail.com</Email>
+    <Uloga>Vozac</Uloga>
+    <VoznjeIDs />
+    <Lokacija>
+      <Koordinate>
+        <Latitude>45.245670057417527</Latitude>
+        <Longitude>19.849917143583294</Longitude>
+      </Koordinate>
+      <Adresa>
+        <UlicaIBroj>Dr Sime Milosevica undefined</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </Lokacija>
+    <Automobil>
+      <GodisteAutomobila>2010</GodisteAutomobila>
+      <BrojRegistarskeOznake>NS174LJ</BrojRegistarskeOznake>
+      <BrojTaksiVozila>GL175</BrojTaksiVozila>
+      <TipAutomobila>Putnicki</TipAutomobila>
+    </Automobil>
+    <Blokiran>false</Blokiran>
+  </Vozac>
+  </ArrayOfVozac>

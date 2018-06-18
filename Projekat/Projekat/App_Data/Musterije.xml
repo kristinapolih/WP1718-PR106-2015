@@ -1,3 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Musterije>
-</Musterije>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfKorisnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Korisnik>
+    <KorisnickoIme>ella</KorisnickoIme>
+    <Lozinka>ella</Lozinka>
+    <Ime>Ella</Ime>
+    <Prezime>Castle</Prezime>
+    <Pol>Z</Pol>
+    <JMBG>1605988806040</JMBG>
+    <Telefon>0656203703</Telefon>
+    <Email>ella.castle@gmail.com</Email>
+    <Uloga>Musterija</Uloga>
+    <Blokiran>false</Blokiran>
+    <VoznjeIDs />
+  </Korisnik>
+</ArrayOfKorisnik>

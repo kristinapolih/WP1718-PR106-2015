@@ -18,6 +18,7 @@ namespace Projekat.Models
         private List<int> voznjeIDs;
         private Lokacija lokacija;
         private Automobil automobil;
+        private bool blokiran;
         #endregion
 
         #region Props
@@ -81,10 +82,16 @@ namespace Projekat.Models
             get { return automobil; }
             set { automobil = value; }
         }
+        public bool Blokiran
+        {
+            get { return blokiran; }
+            set { blokiran = value; }
+        }
         #endregion
 
         public Vozac()
         {
+            blokiran = false;
             voznjeIDs = new List<int>();
         }
     }

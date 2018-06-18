@@ -9,6 +9,14 @@
             var divmap = this.sessionStorage.getItem("divmap");
             $("#map").html("");
             $("#map").html(divmap);
+            if (sessionStorage.getItem("blokreload")) {
+                BlokReload();
+                sessionStorage.setItem("blokreload", false);
+            }
+            else {
+                sessionStorage.setItem("blokreload", false);
+            }
+            BlokiraneOdjavi();
         }
     };
 
@@ -31,7 +39,7 @@
                     var add = json.address;
                     LokAdr.ulica_broj = add.road; if (add.house_number !== null) {
                         LokAdr.ulica_broj += " " + add.house_number;
-                    } LokAdr.grad = add.city + " " + add.postcode; 
+                    } LokAdr.grad = add.city + " " + add.postcode;
                 });
         }
 
@@ -61,7 +69,7 @@
             map.addInteraction(draw);
         }
         addInteraction();
-    
+
         map.on('click', function (evt) {
             var coord = ol.proj.toLonLat(evt.coordinate); reverseGeocode(coord);
             LokAdr.xx = coord[0]; LokAdr.yy = coord[1];
@@ -286,6 +294,61 @@
         return upis;
     }
 
+    function OdjaviSe() {
+        let dat = {
+            KorisnickoIme: sessionStorage.getItem("user")
+        };
+        $.ajax({
+            url: "api/korisnik/logout",
+            data: dat,
+            type: "DELETE",
+            success: function (result) {
+                $("#l").val("");
+                $("#k").val("");
+                $("#lozinka").val("");
+                $("#korisnickoIme").val("");
+                sessionStorage.setItem("user", "");
+                $("#login").show();
+                $("#registracijaIOpis").show();
+                $("#logout").hide();
+                $("#ulogovan").hide();
+                $("#profilButton").hide();
+                $("#registrovan").hide();
+                $("#dodajVozacaPolja").hide();
+                $("#dodajVozacaButton").hide();
+                $("#headerButtons").hide();
+                $("#dodajVoznjuButton").hide();
+                $("#dodajVoznjuPolja").hide();
+                $("#blokiraj").hide();
+                $("#blok").hide();
+                $("#vozac").html("");
+                var divheader = $("#divheader").html();
+                sessionStorage.setItem("divheader", divheader);
+                var divbody = $("#divbody").html();
+                sessionStorage.setItem("divbody", divbody);
+            }
+        });
+    }
+
+    function BlokiraneOdjavi() {
+        $.ajax({
+            url: "api/Korisnik/GetBlokiraneVozace",
+            data: "",
+            type: "GET",
+            success: function (voz) {
+                if (voz !== "Ne postoje blokirani korisnici!") {
+                    let sessionUser = sessionStorage.getItem("user");
+                    for (var k in voz) {
+                        if (k.KorisnickoIme === sessionUser) {
+                            OdjaviSe();
+                            $("#message").text("Blokirani ste!");
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     $(document).on("click", "#prijavise", function () {
         let upis = true;
         if ($("#lozinka").val() === "" || $("#lozinka").val() === " ") {
@@ -319,8 +382,11 @@
                         }
                         else if (result === "Pogresna Lozinka!") {
                             $("#message").text(result);
-                        } 
+                        }
                         else if (result === "Vec ste ulogovani!") {
+                            $("#message").text(result);
+                        }
+                        else if (result === "Blokirani ste!"){
                             $("#message").text(result);
                         }
                         else {
@@ -328,6 +394,7 @@
                                 $("#uloga").append(`<option value="Vozac" id="vozac" />`);
                                 $("#dodajVozacaButton").show();
                                 $("#dodajVoznjuButton").show();
+                                $("#blokiraj").show();
                             }
                             if (result.Uloga === 2) {
                                 $("#dodajVoznjuButton").show();
@@ -338,10 +405,7 @@
                             $("#registracijaIOpis").hide();
                             $("#ulogovan").show();
                             $("#profilButton").show();
-                            /*
-                            $("#map").show();
-                            Mapa();
-                            */
+
                             sessionStorage.setItem("user", result.KorisnickoIme);
                             sessionStorage.setItem(result.KorisnickoIme, result);
                             let divheader = $("#divheader").html();
@@ -350,7 +414,8 @@
                             sessionStorage.setItem("divbody", divbody);
                         }
                     }
-                }});
+                }
+            });
         }
     });
 
@@ -369,7 +434,7 @@
             $.post("/api/Musterija/Registracija", data)
                 .done(function (data) {
                     if (data === "Korisnicko ime vec postoji") {
-                        $("#errorMessageReg").text("Korisni" + `&ccaron;` +"ko ime vec postoji");
+                        $("#errorMessageReg").text("Korisni" + `&ccaron;` + "ko ime vec postoji");
                         $("#korisnicko").css("border-color", "crimson");
                         $("#kor br").hide();
                         $("#korisnicko").focus();
@@ -388,7 +453,7 @@
     });
 
     $(document).on("click", "#prijav", function () {
-        $("#uloga option:selected").val(""); 
+        $("#uloga option:selected").val("");
         $("#email").val("");
         $("#telefon").val("");
         $("#jmbg").val("");
@@ -408,7 +473,7 @@
         if ($("#k").val() === "" || $("#k").val() === " ") {
             $("#k").css("border-color", "crimson");
             $("#k").focus();
-            $("#mess").text("Korisni"+`&ccaron;`+"ko ime mora biti popunjeno!");
+            $("#mess").text("Korisni" + `&ccaron;` + "ko ime mora biti popunjeno!");
             upis = false;
         }
         if (upis) {
@@ -458,39 +523,10 @@
     });
 
     $(document).on("click", "#odjavise", function () {
-        let dat = {
-            KorisnickoIme: sessionStorage.getItem("user")
-        };
-        $.ajax({
-            url: "api/korisnik/logout",
-            data: dat,
-            type: "DELETE",
-            success: function (result) {
-                $("#l").val("");
-                $("#k").val("");
-                $("#lozinka").val("");
-                $("#korisnickoIme").val("");
-                sessionStorage.setItem("user", "");
-                $("#login").show();
-                $("#registracijaIOpis").show();
-                $("#logout").hide();
-                $("#ulogovan").hide();
-                $("#profilButton").hide();
-                $("#registrovan").hide();
-                $("#dodajVozacaPolja").hide();
-                $("#dodajVozacaButton").hide();
-                $("#headerButtons").hide();
-                $("#dodajVoznjuButton").hide();
-                $("#dodajVoznjuPolja").hide();
-                var divheader = $("#divheader").html();
-                sessionStorage.setItem("divheader", divheader);
-                var divbody = $("#divbody").html();
-                sessionStorage.setItem("divbody", divbody);
-            }
-        });
+        OdjaviSe();
     });
-    
-    $(document).on("focusout","#dodajVozacaRegistracija #korisnicko", function () {
+
+    $(document).on("focusout", "#dodajVozacaRegistracija #korisnicko", function () {
         $("#vozackorime").val($("#dodajVozacaRegistracija #korisnicko").val());
     });
 
@@ -499,6 +535,11 @@
         $("#dodajVozacaRegistracija").html(reg);
         $("#dodajVozacaPolja").show();
         $("#dodajVozacaRegistracija #registrujse").hide();
+        $("#blok").hide();
+        $("#dodajVoznjuPolja").hide();
+        $("#ulogovan").hide();
+        $("#registrovan").hide();
+        $("#registracijaIOpis").hide();
 
         var stringMapa = "<div id=\"map\"></div>";
         $("#mapaDodajVozaca").html(stringMapa);
@@ -614,12 +655,16 @@
     });
 
     $(document).on("click", "#dodajVoznjuButton", function () {
+        BlokiraneOdjavi();
+        
         $("#registracijaIOpis").hide();
         $("#registrovan").hide();
         $("#ulogovan").hide();
         $("#dodajVozacaPolja").hide();
+        $("#blok").hide();
         $("#dodajVoznjuPolja").show();
 
+        $("#mapaDodajVozaca").html("");
         var stringMapa = "<div id=\"map\" style=\"text-align: center; justify - content: center\"></div>";
         $("#mapaDodajVoznju").html(stringMapa);
         $("#mapaDodajVoznju").show();
@@ -636,6 +681,8 @@
     });
 
     $(document).on("click", "#narucivoznju", function () {
+        BlokiraneOdjavi();
+
         let lok = {
             KorisnickoIme: $("#username").val(),
             TipAutomobila: $("#narucivoznju #tipautomobila option:selected").val(),
@@ -675,4 +722,238 @@
         }
         $("#mapaDodajVozaca").html("");
     });
+
+    $(document).on("click", "#blokiraj", function () {
+        $("#registracijaIOpis").hide();
+        $("#dodajVozacaPolja").hide();
+        $("#dodajVoznjuPolja").hide();
+        $("#registrovan").hide();
+        $("#ulogovan").hide();
+        $("#blok").show();
+
+        BlokReload();
+        UnblokReload();
+
+        var divheader = $("#divheader").html();
+        sessionStorage.setItem("divheader", divheader);
+        var divbody = $("#divbody").html();
+        sessionStorage.setItem("divbody", divbody);
+        sessionStorage.setItem("divmap", "");
+        sessionStorage.setItem("blokreload", true);
+    });
+
+    $(document).on("click", "#blokirajKorisnika", function () {
+        $("#errorOdlokiraj").html("");
+        let upis = true;
+        if ($("#korisckoImeBlokiraj").val() === "" || $("#korisckoImeBlokiraj").val() === " ") {
+            $("#korisckoImeBlokiraj").css("border-color", "crimson");
+            $("#korisnickoBlokiraj p").show();
+            $("#korisnickoBlokiraj br").hide();
+            $("#korisckoImeBlokiraj").focus();
+            upis = false;
+        }
+
+        if (upis) {
+            let blok = {
+                korisckoImeBlokiraj: $("#korisckoImeBlokiraj").val()
+            };
+
+            $.ajax({
+                url: "api/Korisnik/Blokiraj",
+                data: blok,
+                type: "GET",
+                success: function (result) {
+                    if (result === "Ne postoji korisnik sa trazenim imenom!") {
+                        $("#errorBlokiraj").html("Ne postoji korisnik sa tra&zcaron;enim imenom!");
+                    }
+                    else {
+                        $("#errorBlokiraj").html("Korisnik " + `<b>`+result+`</b>` + " uspe" + `&scaron;` + "no blokiran!");
+                        $("#korisckoImeBlokiraj").val("");
+                        BlokReload();
+                        UnblokReload();
+                        var divheader = $("#divheader").html();
+                        sessionStorage.setItem("divheader", divheader);
+                        var divbody = $("#divbody").html();
+                        sessionStorage.setItem("divbody", divbody);
+                        sessionStorage.setItem("divmap", "");
+                        sessionStorage.setItem("blokreload", true);
+                    }
+                }
+            });
+        }
+    });
+
+    $(document).on("click", "#odblokirajKorisnika", function () {
+        $("#errorBlokiraj").html("");
+        let upis = true;
+        if ($("#korisckoImeBlokirani").val() === "" || $("#korisckoImeBlokirani").val() === " ") {
+            $("#korisckoImeBlokirani").css("border-color", "crimson");
+            $("#korisnickoBlokirani p").show();
+            $("#korisnickoBlokirani br").hide();
+            $("#korisckoImeBlokirani").focus();
+            upis = false;
+        }
+
+        if (upis) {
+            let blok = {
+                korisckoImeOdblokiraj: $("#korisckoImeBlokirani").val()
+            };
+
+            $.ajax({
+                url: "api/Korisnik/Odblokiraj",
+                data: blok,
+                type: "GET",
+                success: function (result) {
+                    if (result === "Ne postoji korisnik sa trazenim imenom!") {
+                        $("#errorOdlokiraj").html("Ne postoji korisnik sa tra" + `&zcaron;` + "enim imenom!");
+                    }
+                    else {
+                        $("#errorOdlokiraj").html("Korisnik " + `<b>` + result + `</b>` + " uspe" + `&scaron;` + "no odblokiran!");
+                        $("#korisckoImeBlokirani").val("");
+                        BlokReload();
+                        UnblokReload();
+                        var divheader = $("#divheader").html();
+                        sessionStorage.setItem("divheader", divheader);
+                        var divbody = $("#divbody").html();
+                        sessionStorage.setItem("divbody", divbody);
+                        sessionStorage.setItem("divmap", "");
+                        sessionStorage.setItem("blokreload", true);
+                    }
+                }
+            });
+        }
+    });
+
+    function UnblokReload() {
+        $.ajax({
+            url: "api/Korisnik/GetBlokiraneKorisnike",
+            data: "",
+            type: "GET",
+            success: function (result) {
+                if (result === "Ne postoje blokirani korisnici!") {
+                    $.ajax({
+                        url: "api/Korisnik/GetBlokiraneVozace",
+                        data: "",
+                        type: "GET",
+                        success: function (voz) {
+                            if (voz === "Ne postoje blokirani korisnici!") {
+                                let blok = "<p>Ne postoje blokirani korisnici!</p><br/>";
+                                $("#odbloksvikorisnici").html(blok);
+                            }
+                            else {
+                                let blok = "<br/><table border=\"0\"><tr><td width=\"100px\">Korisnicko Ime</td><td width=\"100px\">Uloga</td><td width=\"100px\">Ime</td><td width=\"100px\">Prezime</td></tr>";
+                                for (var k in voz) {
+                                    blok += "<tr><td width=\"100px\">" + voz[k].KorisnickoIme + "</td>";
+                                    blok += "<td width=\"100px\">Voza" + `&ccaron;` + "</td>";
+                                    blok += "<td width=\"100px\">" + voz[k].Ime + "</td>";
+                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td></tr>";
+                                }
+                                blok += "</table><br/>";
+                                $("#odbloksvikorisnici").html(blok);
+                                sessionStorage.setItem("blokreload", true);
+                            }
+                        }
+                    });
+                }
+                else {
+                    var blok = "<br/><table border=\"0\"><tr><td width=\"100px\">Korisnicko Ime</td><td width=\"100px\">Uloga</td><td width=\"100px\">Ime</td><td width=\"100px\">Prezime</td></tr>";
+                    for (var k in result) {
+                        blok += "<tr><td>" + result[k].KorisnickoIme + "</td>";
+                        blok += "<td>Mu" + `&scaron;` + "terija</td>";
+                        blok += "<td>" + result[k].Ime + "</td>";
+                        blok += "<td>" + result[k].Prezime + "</td></tr>";
+                    }
+                    blok += "</table>";
+                    $("#odbloksvikorisnici").html(blok);
+                    $.ajax({
+                        url: "api/Korisnik/GetBlokiraneVozace",
+                        data: "",
+                        type: "GET",
+                        success: function (voz) {
+                            if (voz !== "Ne postoje blokirani korisnici!") {
+                                var blok = "<table border=\"0\">";
+                                for (var k in voz) {
+                                    blok += "<tr><td width=\"100px\">" + voz[k].KorisnickoIme + "</td>";
+                                    blok += "<td width=\"100px\">Voza" + `&ccaron;` + "</td>";
+                                    blok += "<td width=\"100px\">" + voz[k].Ime + "</td>";
+                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td></tr>";
+                                }
+                                blok += "</table><br/><br/>";
+                                $("#odbloksvikorisnici").append(blok);
+                                sessionStorage.setItem("blokreload", true);
+                            }
+                            else {
+                                $("#odbloksvikorisnici").append("<br/><br/>");
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    function BlokReload() {
+        $.ajax({
+            url: "api/Korisnik/GetAllKorisnike",
+            data: "",
+            type: "GET",
+            success: function (result) {
+                if (result === "Ne postoje blokirani korisnici!") {
+                    $.ajax({
+                        url: "api/Korisnik/GetAllVozace",
+                        data: "",
+                        type: "GET",
+                        success: function (voz) {
+                            if (voz === "Ne postoje blokirani korisnici!") {
+                                let blok = "<p>Ne postoje blokirani korisnici!</p>";
+                                $("#bloksvikorisnici").html(blok);
+                            }
+                            else {
+                                let blok = "<br/><table border=\"0\"><tr><td width=\"100px\">Korisnicko Ime</td><td width=\"100px\">Uloga</td><td width=\"100px\">Ime</td><td width=\"100px\">Prezime</td></tr>";
+                                for (var k in voz) {
+                                    blok += "<tr><td width=\"100px\">" + voz[k].KorisnickoIme + "</td>";
+                                    blok += "<td width=\"100px\">Voza" + `&ccaron;` + "</td>";
+                                    blok += "<td width=\"100px\">" + voz[k].Ime + "</td>";
+                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td></tr>";
+                                }
+                                blok += "</table><br/><br/>";
+                                $("#bloksvikorisnici").html(blok);
+                                sessionStorage.setItem("blokreload", true);
+                            }
+                        }
+                    });
+                }
+                else {
+                    var blok = "<br/><table border=\"0\"><tr><td width=\"100px\">Korisnicko Ime</td><td width=\"100px\">Uloga</td><td width=\"100px\">Ime</td><td width=\"100px\">Prezime</td></tr>";
+                    for (var k in result) {
+                        blok += "<tr><td>" + result[k].KorisnickoIme + "</td>";
+                        blok += "<td>Mu" + `&scaron;` + "terija</td>";
+                        blok += "<td>" + result[k].Ime + "</td>";
+                        blok += "<td>" + result[k].Prezime + "</td></tr>";
+                    }
+                    blok += "</table>";
+                    $("#bloksvikorisnici").html(blok);
+                    $.ajax({
+                        url: "api/Korisnik/GetAllVozace",
+                        data: "",
+                        type: "GET",
+                        success: function (voz) {
+                            if (voz !== "Ne postoje blokirani korisnici!") {
+                                var blok = "<table border=\"0\">";
+                                for (var k in voz) {
+                                    blok += "<tr><td width=\"100px\">" + voz[k].KorisnickoIme + "</td>";
+                                    blok += "<td width=\"100px\">Voza" + `&ccaron;` + "</td>";
+                                    blok += "<td width=\"100px\">" + voz[k].Ime + "</td>";
+                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td></tr>";
+                                }
+                                blok += "</table><br/><br/>";
+                                $("#bloksvikorisnici").append(blok);
+                                sessionStorage.setItem("blokreload", true);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
 });

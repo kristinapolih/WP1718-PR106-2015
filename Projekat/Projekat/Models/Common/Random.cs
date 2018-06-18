@@ -1,14 +1,16 @@
-﻿namespace Projekat.Models.Common
+﻿using System.Linq;
+
+namespace Projekat.Models.Common
 {
     public static class Random
-    {
+    { 
         static System.Random random = new System.Random();
 
-        public static char GetLetter()
+        public static string GetLetter(int length)
         {
-            int num = random.Next(0, 26); 
-            char let = (char)('A' + num);
-            return let;
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public static char GetNumber()

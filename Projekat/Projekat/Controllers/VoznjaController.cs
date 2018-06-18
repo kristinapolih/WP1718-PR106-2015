@@ -14,12 +14,15 @@ namespace Projekat.Controllers
             if (Podaci.GetKorisnike().ContainsKey(adresaILokacija.KorisnickoIme))
             {
                 v.Musterija = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme];
+                v.StatusVoznje = STATUS_VOZNJE.Kreirana;
             }
             else if(Podaci.GetDispecere().ContainsKey(adresaILokacija.KorisnickoIme))
             {
                 v.Dispecer = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme];
-                v.Vozac = Podaci.GetVozace()[(Podaci.GetSlobodneVozace()[0])];
-                Podaci.GetSlobodneVozace().Remove(v.Vozac.KorisnickoIme);
+                //ponuditi 5 najblizih
+                //v.Vozac = Podaci.GetVozace()[(Podaci.GetSlobodneVozace()[0])];
+                // Podaci.GetSlobodneVozace().Remove(v.Vozac.KorisnickoIme);
+                v.StatusVoznje = STATUS_VOZNJE.Formirana;
             }
             v.DatumIVremePorudzbine = DateTime.Now;
             v.ID = ++Podaci.cnt;
@@ -31,12 +34,12 @@ namespace Projekat.Controllers
             v.LokacijaOdredista.Adresa = new Adresa();
             v.LokacijaOdredista.Adresa.UlicaIBroj = adresaILokacija.UlicaiBroj;
             v.LokacijaOdredista.Adresa.MestoIPostanskiFah = adresaILokacija.MestoiPostanski;
-            v.LokacijaOdredista.GeoCoordinate = new System.Device.Location.GeoCoordinate();
+            v.LokacijaOdredista.GeoCoordinate = new Koordinate();
             v.LokacijaOdredista.GeoCoordinate.Longitude = adresaILokacija.xlong;
             v.LokacijaOdredista.GeoCoordinate.Latitude = adresaILokacija.ylatit;
-            v.StatusVoznje = STATUS_VOZNJE.Kreirana;
+
+            Podaci.DodajVoznje(v);
             Podaci.GetSlobodneVoznje().Add(v.ID);
-            Podaci.GetSveVoznje().Add(v.ID, v);
 
             return Ok();
         }

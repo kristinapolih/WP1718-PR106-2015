@@ -1,5 +1,4 @@
-﻿using Projekat.Models.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -16,6 +15,8 @@ namespace Projekat.Models
         private static List<int> slobodneVoznje;
         private static Dictionary<int, Voznja> sveVoznje;
         private static List<string> slobodniVozaci;
+        private static List<string> blokiraniKorisnici;
+        private static List<string> blokiraniVozaci;
 
         private static object syncLockKorisnici = new object();
         private static object syncLockAdmins = new object();
@@ -24,6 +25,8 @@ namespace Projekat.Models
         private static object syncSlobodneVoznje = new object();
         private static object syncSveVoznje = new object();
         private static object syncSlobodniVozaci = new object();
+        private static object syncBlokiraniKorisnici = new object();
+        private static object syncBlokiraniVozaci= new object();
 
         private static string path = Application.StartupPath + @"\App_Data\";
         public static int cnt;
@@ -134,6 +137,36 @@ namespace Projekat.Models
             }
             return slobodniVozaci;
         }
+
+        public static List<string> GetBlokiraneKorisnike()
+        {
+            if (blokiraniKorisnici == null)
+            {
+                lock (syncBlokiraniKorisnici)
+                {
+                    if (blokiraniKorisnici == null)
+                    {
+                        blokiraniKorisnici = new List<string>();
+                    }
+                }
+            }
+            return blokiraniKorisnici;
+        }
+
+        public static List<string> GetBlokiraneVozace()
+        {
+            if (blokiraniVozaci == null)
+            {
+                lock (syncBlokiraniVozaci)
+                {
+                    if (blokiraniVozaci == null)
+                    {
+                        blokiraniVozaci = new List<string>();
+                    }
+                }
+            }
+            return blokiraniVozaci;
+        }
         #endregion
 
         public static void IzmeniKorisnika(string username, Korisnik korisnik)
@@ -156,7 +189,7 @@ namespace Projekat.Models
                 menjamo.KorisnickoIme = korisnik.KorisnickoIme;
             if (korisnik.Lozinka != null)
                 menjamo.Lozinka = korisnik.Lozinka;
-            if (korisnik.Pol.ToString() != "")
+            if (korisnik.Pol != menjamo.Pol)
                 menjamo.Pol = korisnik.Pol;
             if (korisnik.Prezime != null)
                 menjamo.Prezime = korisnik.Prezime;
@@ -164,6 +197,8 @@ namespace Projekat.Models
                 menjamo.Telefon = korisnik.Telefon;
             if (menjamo.VoznjeIDs.Count < korisnik.VoznjeIDs.Count)
                 menjamo.VoznjeIDs = korisnik.VoznjeIDs;
+            if (korisnik.Blokiran != menjamo.Blokiran)
+                menjamo.Blokiran = korisnik.Blokiran;
 
             lock (new object())
             {
@@ -191,7 +226,7 @@ namespace Projekat.Models
                 menjamo.KorisnickoIme = vozac.KorisnickoIme;
             if (vozac.Lozinka != null)
                 menjamo.Lozinka = vozac.Lozinka;
-            if (vozac.Pol.ToString() != "")
+            if (vozac.Pol != menjamo.Pol)
                 menjamo.Pol = vozac.Pol;
             if (vozac.Prezime != null)
                 menjamo.Prezime = vozac.Prezime;
@@ -203,6 +238,8 @@ namespace Projekat.Models
                 menjamo.Lokacija = vozac.Lokacija;
             if (vozac.Automobil != null)
                 menjamo.Automobil = vozac.Automobil;
+            if (vozac.Blokiran != menjamo.Blokiran)
+                menjamo.Blokiran = vozac.Blokiran;
 
             lock (new object())
             {
@@ -282,18 +319,37 @@ namespace Projekat.Models
             }
         }
 
+        public static List<Voznja> CitajVoznje()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Voznja>));
+            lock (new object())
+            {
+                using (TextReader reader = new StreamReader(path + @"Voznje.xml"))
+                {
+                    return (List<Voznja>)(serializer.Deserialize(reader));
+                }
+            }
+        }
+
 
         public static void DodajKorisnik(Korisnik korisnik)
         {
             GetKorisnike().Add(korisnik.KorisnickoIme, korisnik);
 
-            List<Korisnik> korisnici = new List<Korisnik>();//CitajKorisnik();
-            korisnici.Add((Korisnik)korisnik);
+            List<Korisnik> korisnici = CitajKorisnik();
+            Korisnik k = korisnici.Find(f => f.KorisnickoIme == korisnik.KorisnickoIme);
+            if (k == null)
+                korisnici.Add((Korisnik)korisnik);
+            else
+            {
+                korisnici.Remove(k);
+                korisnici.Add((Korisnik)korisnik);
+            }
             
             XmlSerializer serializer = new XmlSerializer(typeof(List<Korisnik>));
             lock (new object())
             {
-                using (TextWriter writer = new StreamWriter(path + @"Musterije.xml"))
+                using (TextWriter writer = new StreamWriter(path + @"Musterije.xml", false))
                 {
                     serializer.Serialize(writer, korisnici);
                 }
@@ -310,7 +366,7 @@ namespace Projekat.Models
             XmlSerializer serializer = new XmlSerializer(typeof(List<Korisnik>));
             lock (new object())
             {
-                using (TextWriter writer = new StreamWriter(path + @"Dispeceri.xml"))
+                using (TextWriter writer = new StreamWriter(path + @"Dispeceri.xml", false))
                 {
                     serializer.Serialize(writer, dispeceri);
                 }
@@ -321,15 +377,32 @@ namespace Projekat.Models
         {
             GetVozace().Add(vozac.KorisnickoIme, vozac);
 
-            List<Vozac> vozaci = new List<Vozac>();//CitajVozac();
+            List<Vozac> vozaci = CitajVozac();
             vozaci.Add((Vozac)vozac);
             
             XmlSerializer serializer = new XmlSerializer(typeof(List<Vozac>));
             lock (new object())
             {
-                using (TextWriter writer = new StreamWriter(path + @"Vozaci.xml"))
+                using (TextWriter writer = new StreamWriter(path + @"Vozaci.xml", false))
                 {
                     serializer.Serialize(writer, vozaci);
+                }
+            }
+        }
+
+        public static void DodajVoznje(Voznja voznja)
+        {
+            GetSveVoznje().Add(voznja.ID, voznja);
+
+            List<Voznja> voznje = new List<Voznja>();//CitajVoznje();
+            voznje.Add(voznja);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Voznja>));
+            lock (new object())
+            {
+                using (TextWriter writer = new StreamWriter(path + @"Voznje.xml", false))
+                {
+                    serializer.Serialize(writer, voznje);
                 }
             }
         }
@@ -343,7 +416,10 @@ namespace Projekat.Models
                 var k = CitajKorisnik();
                 foreach(Korisnik kor in k)
                 {
-                    GetKorisnike().Add(kor.KorisnickoIme, kor);
+                    if (!kor.Blokiran)
+                        GetKorisnike().Add(kor.KorisnickoIme, kor);
+                    else
+                        GetBlokiraneKorisnike().Add(kor.KorisnickoIme);
                 }
                 
                 var d = CitajDispecer();
@@ -355,8 +431,17 @@ namespace Projekat.Models
                 var v = CitajVozac();
                 foreach (Vozac voz in v)
                 {
-                    GetVozace().Add(voz.KorisnickoIme, voz);
+                    if (!voz.Blokiran)
+                        GetVozace().Add(voz.KorisnickoIme, voz);
+                    else
+                        GetBlokiraneVozace().Add(voz.KorisnickoIme);
                 }
+                /*
+                var voznja = CitajVoznje();
+                foreach (Voznja voz in voznja)
+                {
+                    GetSveVoznje().Add(voz.ID, voz);
+                }*/
             }
         }
     }

@@ -198,14 +198,13 @@
     <Compile Include="Models\AdrILok.cs" />
     <Compile Include="Models\Automobil.cs" />
     <Compile Include="Models\Common\Enums.cs" />
-    <Compile Include="Models\Common\IAutomobil.cs" />
     <Compile Include="Models\Common\IKomentar.cs" />
     <Compile Include="Models\Common\IKorisnik.cs" />
-    <Compile Include="Models\Common\IVozac.cs" />
     <Compile Include="Models\Common\IVoznja.cs" />
     <Compile Include="Models\Common\LogIn.cs" />
     <Compile Include="Models\Common\Random.cs" />
     <Compile Include="Models\Komentar.cs" />
+    <Compile Include="Models\Koordinate.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\Lokacija.cs" />
     <Compile Include="Models\Podaci.cs" />

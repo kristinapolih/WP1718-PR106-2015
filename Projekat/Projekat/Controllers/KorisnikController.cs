@@ -1,5 +1,6 @@
 ﻿using Projekat.Models;
 using Projekat.Models.Common;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace Projekat.Controllers
@@ -25,8 +26,15 @@ namespace Projekat.Controllers
                         {
                             if (v.Lozinka == korisnik.Lozinka)
                             {
-                                Podaci.GetUlogovane().Add(v.KorisnickoIme);
-                                return Ok(v);
+                                if (v.Blokiran)
+                                {
+                                    return Ok("Blokirani ste!");
+                                }
+                                else
+                                {
+                                    Podaci.GetUlogovane().Add(v.KorisnickoIme);
+                                    return Ok(v);
+                                }
                             }
                             else
                             {
@@ -59,8 +67,15 @@ namespace Projekat.Controllers
                 {
                     if (k.Lozinka == korisnik.Lozinka)
                     {
-                        Podaci.GetUlogovane().Add(k.KorisnickoIme);
-                        return Ok(k);
+                        if (k.Blokiran)
+                        {
+                            return Ok("Blokirani ste!");
+                        }
+                        else
+                        {
+                            Podaci.GetUlogovane().Add(k.KorisnickoIme);
+                            return Ok(k);
+                        }
                     }
                     else
                     {
@@ -87,6 +102,136 @@ namespace Projekat.Controllers
                 Podaci.GetUlogovane().Remove(korisnik.KorisnickoIme);
             }
             return Ok();
+        }
+
+
+        [HttpGet, Route("api/Korisnik/GetBlokiraneKorisnike")]
+        public IHttpActionResult GetBlokiraneKorisnike()
+        {
+            if (Podaci.GetBlokiraneKorisnike().Count > 0)
+            {
+                List<Korisnik> ret = new List<Korisnik>();
+                foreach (string s in Podaci.GetBlokiraneKorisnike())
+                {
+                    ret.Add(Podaci.GetKorisnike()[s]);
+                }
+                return Ok(ret);
+            }
+            else
+            {
+                return Ok("Ne postoje blokirani korisnici!");
+            }
+        }
+
+
+        [HttpGet, Route("api/Korisnik/GetBlokiraneVozace")]
+        public IHttpActionResult GetBlokiraneVozace()
+        {
+            if (Podaci.GetBlokiraneVozace().Count > 0)
+            {
+                List<Vozac> ret = new List<Vozac>();
+                foreach (string s in Podaci.GetBlokiraneVozace())
+                {
+                    ret.Add(Podaci.GetVozace()[s]);
+                }
+                return Ok(ret);
+            }
+            else
+            {
+                return Ok("Ne postoje blokirani korisnici!");
+            }
+        }
+
+
+        [HttpGet, Route("api/Korisnik/GetAllKorisnike")]
+        public IHttpActionResult GetAllKorisnike()
+        {
+            List<Korisnik> ret = new List<Korisnik>();
+            foreach (Korisnik k in Podaci.GetKorisnike().Values)
+            {
+                if(!Podaci.GetBlokiraneKorisnike().Contains(k.KorisnickoIme))
+                    ret.Add(k);
+            }
+            return Ok(ret);
+        }
+
+
+        [HttpGet, Route("api/Korisnik/GetAllVozace")]
+        public IHttpActionResult GetAllVozace()
+        {
+            List<Vozac> ret = new List<Vozac>();
+            foreach (Vozac k in Podaci.GetVozace().Values)
+            {
+                if(!Podaci.GetBlokiraneVozace().Contains(k.KorisnickoIme))
+                    ret.Add(k);
+            }
+            return Ok(ret);
+        }
+        
+
+        [HttpGet, Route("api/Korisnik/Blokiraj")]
+        public IHttpActionResult Blokiraj([FromUri]string korisckoImeBlokiraj)
+        {
+            if (Podaci.GetVozace().ContainsKey(korisckoImeBlokiraj))
+            {
+                Vozac v = new Vozac();
+                v.KorisnickoIme = korisckoImeBlokiraj;
+                v.Blokiran = true;
+                v.Pol = Podaci.GetVozace()[korisckoImeBlokiraj].Pol;
+                Podaci.IzmeniVozaca(korisckoImeBlokiraj, v);
+                Podaci.GetBlokiraneVozace().Add(korisckoImeBlokiraj);
+                return Ok(korisckoImeBlokiraj);
+            }
+            else
+            {
+                if (Podaci.GetKorisnike().ContainsKey(korisckoImeBlokiraj))
+                {
+                    Korisnik k = new Korisnik();
+                    k.KorisnickoIme = korisckoImeBlokiraj;
+                    k.Blokiran = true;
+                    k.Pol = Podaci.GetKorisnike()[korisckoImeBlokiraj].Pol;
+                    Podaci.IzmeniKorisnika(korisckoImeBlokiraj, k);
+                    Podaci.GetBlokiraneKorisnike().Add(korisckoImeBlokiraj);
+                    return Ok(korisckoImeBlokiraj);
+                }
+                else
+                {
+                    return Ok("Ne postoji korisnik sa trazenim imenom!");
+                }
+            }
+        }
+
+
+        [HttpGet, Route("api/Korisnik/Odblokiraj")]
+        public IHttpActionResult Odblokiraj([FromUri]string korisckoImeOdblokiraj)
+        {
+            if (Podaci.GetVozace().ContainsKey(korisckoImeOdblokiraj))
+            {
+                Vozac v = new Vozac();
+                v.KorisnickoIme = korisckoImeOdblokiraj;
+                v.Blokiran = false;
+                v.Pol = Podaci.GetVozace()[korisckoImeOdblokiraj].Pol;
+                Podaci.IzmeniVozaca(korisckoImeOdblokiraj, v);
+                Podaci.GetBlokiraneVozace().Remove(korisckoImeOdblokiraj);
+                return Ok(korisckoImeOdblokiraj);
+            }
+            else
+            {
+                if (Podaci.GetKorisnike().ContainsKey(korisckoImeOdblokiraj))
+                {
+                    Korisnik k = new Korisnik();
+                    k.KorisnickoIme = korisckoImeOdblokiraj;
+                    k.Blokiran = false;
+                    k.Pol = Podaci.GetKorisnike()[korisckoImeOdblokiraj].Pol;
+                    Podaci.IzmeniKorisnika(korisckoImeOdblokiraj, k);
+                    Podaci.GetBlokiraneKorisnike().Remove(korisckoImeOdblokiraj);
+                    return Ok(korisckoImeOdblokiraj);
+                }
+                else
+                {
+                    return Ok("Ne postoji korisnik sa trazenim imenom!");
+                }
+            }
         }
     }
 }

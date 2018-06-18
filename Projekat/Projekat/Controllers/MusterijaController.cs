@@ -33,6 +33,7 @@ namespace Projekat.Controllers
             }
         }
 
+
         [HttpPost, Route("api/Musterija/RegistracijaVozaca")]
         public IHttpActionResult RegistracijaVozaca(Vozac vozac)
         {
@@ -57,6 +58,7 @@ namespace Projekat.Controllers
             }
         }
 
+
         [HttpPost, Route("api/Musterija/ail")]
         public IHttpActionResult ail(AdrILok adresaILokacija)
         {
@@ -73,7 +75,7 @@ namespace Projekat.Controllers
 
             Lokacija l = new Lokacija();
             l.Adresa = adresa;
-            l.GeoCoordinate = new System.Device.Location.GeoCoordinate();
+            l.GeoCoordinate = new Koordinate();
             l.GeoCoordinate.Longitude = adresaILokacija.xlong;
             l.GeoCoordinate.Latitude = adresaILokacija.ylatit;
 

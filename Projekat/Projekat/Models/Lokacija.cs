@@ -1,21 +1,14 @@
-﻿using Projekat.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.Device.Location;
-using System.Linq;
-using System.Web;
-
-namespace Projekat.Models
+﻿namespace Projekat.Models
 {
     public class Lokacija 
     {
         #region Fields
-        private GeoCoordinate geoCoordinate;
+        private Koordinate geoCoordinate;
         private Adresa adresa;
         #endregion
 
         #region Props
-        public GeoCoordinate GeoCoordinate
+        public Koordinate GeoCoordinate
         {
             get { return geoCoordinate; }
             set { geoCoordinate = value; }
