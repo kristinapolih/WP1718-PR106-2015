@@ -3,6 +3,7 @@ using Projekat.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Linq;
 
 namespace Projekat.Controllers
 {
@@ -194,11 +195,55 @@ namespace Projekat.Controllers
             v.Iznos = a.Cena;
             Podaci.IzmeniVoznju(a.IDVoznje, v);
 
+            if (StatusHelper.GetStatus(a.Status) == STATUS_VOZNJE.Neuspesna)
+            {
+                v.Iznos = 0;
+                v.LokacijaOdredista = null;
+            }
+
             Vozac vozac = new Vozac();
             vozac.Slobodan = true;
             Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
 
             return Ok();
+        }
+
+
+        [HttpGet, Route("api/Voznja/SortirajDatum")]
+        public IHttpActionResult SortirajDatum([FromUri]string user)
+        {
+            List<Voznja> ret = new List<Voznja>();
+            foreach (int id in Podaci.GetKorisnike()[user].VoznjeIDs)
+            {
+                ret.Add(Podaci.GetSveVoznje()[id]);
+            }
+            ret.OrderBy(x => x.DatumIVremePorudzbine);
+
+            return Ok(ret);
+        }
+        [HttpGet, Route("api/Voznja/SortirajOcena")]
+        public IHttpActionResult SortirajOcena([FromUri]string user)
+        {
+            List<Voznja> ret = new List<Voznja>();
+            foreach (int id in Podaci.GetKorisnike()[user].VoznjeIDs)
+            {
+                ret.Add(Podaci.GetSveVoznje()[id]);
+            }
+            ret.OrderBy(x => x.Komentar.Ocena);
+
+            return Ok(ret);
+        }
+        [HttpGet, Route("api/Voznja/FiltrirajStatus")]
+        public IHttpActionResult FiltrirajStatus([FromUri]string user)
+        {
+            List<Voznja> ret = new List<Voznja>();
+            foreach (int id in Podaci.GetKorisnike()[user].VoznjeIDs)
+            {
+                if()
+                ret.Add(Podaci.GetSveVoznje()[id]);
+            }
+
+            return Ok(ret);
         }
     }
 }

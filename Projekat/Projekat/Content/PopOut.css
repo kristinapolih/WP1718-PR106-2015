@@ -36,3 +36,9 @@
     cursor: pointer;
     display: inline-block;
 }
+.buttons {
+    border-color: slategray;
+    border-width: 2px;
+    background-color: lemonchiffon;
+    color: black;
+}

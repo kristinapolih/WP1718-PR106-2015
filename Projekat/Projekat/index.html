@@ -134,9 +134,76 @@
             <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
         </div>
         <div id="ulogovan" style="text-align:center; justify-content:center" hidden>
-            <br /><br /><p id="ulogovanMessage" style="color:crimson; font-size:medium"></p>
+            <br /><br />
+            <p id="ulogovanMessage" style="color:crimson; font-size:medium"></p>
             <div id="korisnikvoznja" hidden>
-
+                <table border="0">
+                    <tr>
+                        <td colspan="2">Filtriranje</td>
+                        <td colspan="2">Sortiranje</td>
+                        <td colspan="2">Pretraga po datumu</td>
+                        <td colspan="2">Pretraga po ocenama</td>
+                        <td colspan="2">Pretraga po ceni</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input list="filterstatus" placeholder="Filtriraj statuse">
+                            <datalist id="filterstatus">
+                                <option value="Kreirana" id="0" />
+                                <option value="Formirana" id="1" />
+                                <option value="Obra&dstrok;ena" id="2" />
+                                <option value="Prihva&cacute;ena" id="3" />
+                                <option value="Otkazana" id="4" />
+                                <option value="Neuspe&scaron;na" id="5" />
+                                <option value="Uspe&scaron;na" id="6" />
+                            </datalist>
+                        </td>
+                        <td>
+                            <input type="submit" id="sortirajDatum" value="Soritraj po datumu" class="buttons">
+                            <input type="submit" id="sortirajOcena" value="Soritraj po oceni" class="buttons">
+                        </td>
+                        <td>
+                            <!--Datum-->
+                        </td>
+                        <td>
+                            <input list="odocenapretraga" placeholder="Od">
+                            <datalist id="odocenapretraga">
+                                <option value="1" id="1" />
+                                <option value="2" id="2" />
+                                <option value="3" id="3" />
+                                <option value="4" id="4" />
+                                <option value="5" id="5" />
+                            </datalist>
+                            <input list="doocenapretraga" placeholder="Do">
+                            <datalist id="doocenapretraga">
+                                <option value="1" id="1" />
+                                <option value="2" id="2" />
+                                <option value="3" id="3" />
+                                <option value="4" id="4" />
+                                <option value="5" id="5" />
+                            </datalist>
+                        </td>
+                        <td>
+                            <input list="odcenapretraga" placeholder="Od">
+                            <datalist id="odocenapretraga">
+                                <option value="100" id="1" />
+                                <option value="200" id="2" />
+                                <option value="500" id="3" />
+                                <option value="1000" id="4" />
+                                <option value="2000" id="5" />
+                            </datalist>
+                            <input list="docenapretraga" placeholder="Do">
+                            <datalist id="doocenapretraga">
+                                <option value="100" id="1" />
+                                <option value="200" id="2" />
+                                <option value="500" id="3" />
+                                <option value="1000" id="4" />
+                                <option value="2000" id="5" />
+                            </datalist>
+                        </td>
+                        <td><input type="submit" id="primenikriterijum" value="Primeni kriterijume" class="buttons"></td>
+                    </tr>
+                </table>
             </div>
             <div id="vozacvoznja" hidden>
 
