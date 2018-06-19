@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Projekat.Models
 {
-    public class Korisnik : IKorisnik
+    public class Korisnik
     {
         #region Fileds
         private string korisnickoIme;

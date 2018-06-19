@@ -14,6 +14,9 @@ namespace Projekat.Models
         public double ylatit { get; set; }
         public string UlicaiBroj { get; set; }
         public string MestoiPostanski { get; set; }
+        public int IDVoznje { get; set; }
+        public double Cena { get; set; }
+        public int Status { get; set; }
 
         public AdrILok()
         {

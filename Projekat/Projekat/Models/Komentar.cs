@@ -2,13 +2,13 @@
 
 namespace Projekat.Models.Common
 {
-    public class Komentar : IKomentar
+    public class Komentar
     {
         #region Fields
         private string opis;
-        private DateTime datumObjave;
-        private IKorisnik korisnik;
-        private IVoznja voznja;
+        private string datumObjave;
+        private string korisnik;
+        private int voznja;
         private int ocena;
         #endregion
 
@@ -18,17 +18,17 @@ namespace Projekat.Models.Common
             get { return opis; }
             set { opis = value; }
         }
-        public DateTime DatumObjave
+        public string DatumObjave
         {
             get { return datumObjave; }
             set { datumObjave = value; }
         }
-        public IKorisnik Korisnik
+        public string Korisnik
         {
             get { return korisnik; }
             set { korisnik = value; }
         }
-        public IVoznja Voznja
+        public int Voznja
         {
             get { return voznja; }
             set { voznja = value; }
@@ -41,11 +41,5 @@ namespace Projekat.Models.Common
         #endregion
 
         public Komentar() { }
-
-        public Komentar (IKorisnik korisnik, IVoznja voznja)
-        {
-            this.Voznja = voznja;
-            this.Korisnik = korisnik;
-        }
     }
 }

@@ -11,6 +11,8 @@
     <Email>ella.castle@gmail.com</Email>
     <Uloga>Musterija</Uloga>
     <Blokiran>false</Blokiran>
-    <VoznjeIDs />
+    <VoznjeIDs>
+      <int>1</int>
+    </VoznjeIDs>
   </Korisnik>
 </ArrayOfKorisnik>

@@ -53,7 +53,10 @@ namespace Projekat.Controllers
             {
                 voz = new Vozac();
                 voz = vozac;
+                voz.Slobodan = true;
+                Podaci.DodajVozac(voz);
                 Podaci.GetSlobodneVozace().Add(voz.KorisnickoIme);
+
                 return Ok();
             }
         }

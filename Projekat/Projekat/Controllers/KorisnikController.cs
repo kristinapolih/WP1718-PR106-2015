@@ -177,6 +177,7 @@ namespace Projekat.Controllers
                 Vozac v = new Vozac();
                 v.KorisnickoIme = korisckoImeBlokiraj;
                 v.Blokiran = true;
+                v.Slobodan = false;
                 v.Pol = Podaci.GetVozace()[korisckoImeBlokiraj].Pol;
                 Podaci.IzmeniVozaca(korisckoImeBlokiraj, v);
                 Podaci.GetBlokiraneVozace().Add(korisckoImeBlokiraj);
@@ -210,6 +211,7 @@ namespace Projekat.Controllers
                 Vozac v = new Vozac();
                 v.KorisnickoIme = korisckoImeOdblokiraj;
                 v.Blokiran = false;
+                v.Slobodan = true;
                 v.Pol = Podaci.GetVozace()[korisckoImeOdblokiraj].Pol;
                 Podaci.IzmeniVozaca(korisckoImeOdblokiraj, v);
                 Podaci.GetBlokiraneVozace().Remove(korisckoImeOdblokiraj);

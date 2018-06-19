@@ -28,5 +28,6 @@
       <TipAutomobila>Putnicki</TipAutomobila>
     </Automobil>
     <Blokiran>false</Blokiran>
+    <Slobodan>true</Slobodan>
   </Vozac>
   </ArrayOfVozac>

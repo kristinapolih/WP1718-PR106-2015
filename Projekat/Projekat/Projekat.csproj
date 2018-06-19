@@ -198,9 +198,6 @@
     <Compile Include="Models\AdrILok.cs" />
     <Compile Include="Models\Automobil.cs" />
     <Compile Include="Models\Common\Enums.cs" />
-    <Compile Include="Models\Common\IKomentar.cs" />
-    <Compile Include="Models\Common\IKorisnik.cs" />
-    <Compile Include="Models\Common\IVoznja.cs" />
     <Compile Include="Models\Common\LogIn.cs" />
     <Compile Include="Models\Common\Random.cs" />
     <Compile Include="Models\Komentar.cs" />
@@ -221,8 +218,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Error.css" />
-    <Content Include="Content\HeaderLine.css" />
+    <Content Include="Content\PopOut.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />

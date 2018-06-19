@@ -1,0 +1,38 @@
+﻿.hover_bkgr_fricc {
+    background: transparent;
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 50%;
+    z-index: 10000;
+}
+.hover_bkgr_fricc .helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+    .hover_bkgr_fricc > div {
+        background-color: lemonchiffon;
+        box-shadow: 10px 10px 60px #555;
+        display: inline-block;
+        height: auto;
+        max-width: 50%;
+        min-height: 50%;
+        vertical-align: middle;
+        width: 50%;
+        position: relative;
+        border-radius: 5px;
+        border-color: black;
+        border-width: 2px;
+        padding: 15px 5%;
+    }
+.popupCloseButton:hover {
+    background-color: #ccc;
+}
+.trigger_popup_fricc {
+    cursor: pointer;
+    display: inline-block;
+}

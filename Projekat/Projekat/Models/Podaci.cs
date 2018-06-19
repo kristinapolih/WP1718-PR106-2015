@@ -30,6 +30,7 @@ namespace Projekat.Models
 
         private static string path = Application.StartupPath + @"\App_Data\";
         public static int cnt;
+        public static string format;
         #endregion
 
         #region Singletons
@@ -169,6 +170,7 @@ namespace Projekat.Models
         }
         #endregion
 
+
         public static void IzmeniKorisnika(string username, Korisnik korisnik)
         {
             Korisnik menjamo = new Korisnik();
@@ -240,6 +242,8 @@ namespace Projekat.Models
                 menjamo.Automobil = vozac.Automobil;
             if (vozac.Blokiran != menjamo.Blokiran)
                 menjamo.Blokiran = vozac.Blokiran;
+            if (vozac.Slobodan != menjamo.Slobodan)
+                menjamo.Slobodan = vozac.Slobodan;
 
             lock (new object())
             {
@@ -279,6 +283,33 @@ namespace Projekat.Models
             lock (new object())
             {
                 DodajDispecer(menjamo);
+            }
+        }
+
+        public static void IzmeniVoznju(int id, Voznja voznja)
+        {
+            Voznja menjamo = new Voznja();
+
+            lock (new object())
+            {
+                GetSveVoznje().TryGetValue(id, out menjamo);
+                GetSveVoznje().Remove(id);
+            }
+
+            if (voznja.Dispecer != null)
+                menjamo.Dispecer = voznja.Dispecer;
+            if (voznja.Iznos != 0)
+                menjamo.Iznos = voznja.Iznos;
+            if (voznja.Komentar != null)
+                menjamo.Komentar = voznja.Komentar;
+            if (voznja.LokacijaOdredista != null)
+                menjamo.LokacijaOdredista = voznja.LokacijaOdredista;
+            if (voznja.StatusVoznje != menjamo.StatusVoznje)
+                menjamo.StatusVoznje = voznja.StatusVoznje;
+
+            lock (new object())
+            {
+                DodajVoznje(menjamo);
             }
         }
 
@@ -411,6 +442,7 @@ namespace Projekat.Models
         public static void CitajSve()
         {
             cnt = 0;
+            format = "HH:mm dd/MM/yyyy";
             lock (new object())
             {
                 var k = CitajKorisnik();
@@ -432,16 +464,24 @@ namespace Projekat.Models
                 foreach (Vozac voz in v)
                 {
                     if (!voz.Blokiran)
+                    {
                         GetVozace().Add(voz.KorisnickoIme, voz);
+                        if (voz.Slobodan)
+                            GetSlobodneVozace().Add(voz.KorisnickoIme);
+                    }
                     else
                         GetBlokiraneVozace().Add(voz.KorisnickoIme);
                 }
-                /*
+                
                 var voznja = CitajVoznje();
                 foreach (Voznja voz in voznja)
                 {
+                    if(voz.StatusVoznje == Common.STATUS_VOZNJE.Kreirana)
+                    {
+                        GetSlobodneVoznje().Add(voz.ID);
+                    }
                     GetSveVoznje().Add(voz.ID, voz);
-                }*/
+                }
             }
         }
     }

@@ -3,11 +3,11 @@ using System;
 
 namespace Projekat.Models
 {
-    public class Voznja : IVoznja
+    public class Voznja
     {
         #region Fields
         private int iD;
-        private DateTime datumIVremePorudzbine;
+        private string datumIVremePorudzbine;
         private Lokacija lokacijaPolazista;
         private TIP_AUTOMOBILA tipAutomobila;
         private Korisnik musterija;
@@ -25,7 +25,7 @@ namespace Projekat.Models
             get { return iD; }
             set { iD = value; }
         }
-        public DateTime DatumIVremePorudzbine
+        public string DatumIVremePorudzbine
         {
             get { return datumIVremePorudzbine; }
             set { datumIVremePorudzbine = value; }

@@ -6,9 +6,10 @@
     <title>Home Page</title>
     <link href="/Content/bootstrap.css" rel="stylesheet">
     <link href="/Content/site.css" rel="stylesheet">
+    <link href="/Content/PopOut.css" rel="stylesheet">
     <script src="Scripts/jquery-3.3.1.js"></script>
     <script src="/Scripts/jquery-1.10.2.js"></script>
-    <script src="/Scripts/bootstrap.js"></script>
+    <!--<script src="/Scripts/bootstrap.js"></script>-->
     <script src="/Scripts/respond.js"></script>
     <script src="/Scripts/modernizr-2.8.3.js"></script>
     <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
@@ -28,12 +29,12 @@
     <div class="navbar navbar-inverse navbar-fixed-top" id="divheader">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <input type="submit" class="navbar-brand" value="Taksi slu&zcaron;ba" style="background-color:transparent; border-color:transparent; color:yellow; padding-right:15px; padding-left:15px"/>
+                </button>-->
+                <input id="pocetna" type="submit" class="navbar-brand" value="Taksi slu&zcaron;ba" style="background-color:transparent; border-color:transparent; color:yellow; padding-right:15px; padding-left:15px" />
             </div>
             <div class="navbar-collapse collapse">
                 &nbsp;&nbsp;
@@ -132,9 +133,8 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
         </div>
-        <div id="ulogovan" hidden>
-            <!--Prikaz na pocetnoj-->
-            <br />
+        <div id="ulogovan" style="text-align:center; justify-content:center" hidden>
+            <br /><br /><p id="ulogovanMessage" style="color:crimson; font-size:medium"></p>
             <div id="korisnikvoznja" hidden>
 
             </div>
@@ -216,6 +216,41 @@
                     <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
                 </div>
                 <input type="submit" value="Odblokiraj" id="odblokirajKorisnika">
+            </div>
+        </div>
+        <div id="korisnikkomentar" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
+            <span class="helper"></span>
+            <div id="komentar" style="text-align:center; justify-content:center">
+                <h1>Komentari&scaron;i vo&zcaron;nju</h1>
+                <input type="text" style="width:500px; height:300px" placeholder="Opis" id="opiskomentar"><br /><br />
+                <input list="ocenakomentar" name="ocenakomentar" placeholder="Ocena"><br /><br />
+                <datalist id="ocenakomentar">
+                    <option value="1" id="1" />
+                    <option value="2" id="2" />
+                    <option value="3" id="3" />
+                    <option value="4" id="4" />
+                    <option selected value="5" id="5" />
+                </datalist><br />
+                <input type="submit" value="Dodaj komentar" id="dodajKoment">
+            </div>
+        </div>
+        <div id="vozacOdrediste" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
+            <span class="helper"></span>
+            <div id="odrediste" style="text-align:center; justify-content:center">
+                <h1>"Dodaj odredi&scaron;te</h1>
+                <div id="mapaodrediste"></div>
+                <input type="submit" value="Dodaj lokaciju" id="dodajlokaciju">
+            </div>
+        </div>
+        <div id="pogledajkomentar" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
+            <span class="helper"></span>
+            <div id="pkomentar" style="text-align:center; justify-content:center">
+                <p id="komopis">Opis: </p><br />
+                <p id="komdatum">Datum objave: </p><br />
+                <p id="komocena">Ocena: </p><br />
+                <p id="komkorisnik">Korisnik: </p><br />
+                <p id="komvozac"></p><br />
+                <input type="submit" value="Napusti" id="napusti">
             </div>
         </div>
     </div>
