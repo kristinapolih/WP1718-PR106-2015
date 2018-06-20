@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Projekat.Models.Common
+namespace Projekat.Models
 {
     public class Komentar
     {

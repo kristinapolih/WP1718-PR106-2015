@@ -3,7 +3,7 @@
   <Voznja>
     <ID>1</ID>
     <DatumIVremePorudzbine>11:50 19/06/2018</DatumIVremePorudzbine>
-<LokacijaPolazista>
+    <LokacijaPolazista>
       <GeoCoordinate>
         <Longitude>19.848727583885193</Longitude>
         <Latitude>45.244406664572551</Latitude>
@@ -29,7 +29,286 @@
         <int>1</int>
       </VoznjeIDs>
     </Musterija>
+    <LokacijaOdredista>
+      <GeoCoordinate>
+        <Longitude>19.845674559473991</Longitude>
+        <Latitude>45.248953991978027</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Sutjeska 3</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaOdredista>
+    <Iznos>540</Iznos>
+    <Komentar>
+      <Opis>Awsome</Opis>
+      <DatumObjave>12:30 20-06-2018</DatumObjave>
+      <Korisnik>ella</Korisnik>
+      <Voznja>1</Voznja>
+      <Ocena>4</Ocena>
+    </Komentar>
+    <StatusVoznje>Uspesna</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>2</ID>
+    <DatumIVremePorudzbine>13:32 20-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.840487837791443</Longitude>
+        <Latitude>45.24813066566557</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Максима Горког 2ц</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Musterija>
+      <KorisnickoIme>ella</KorisnickoIme>
+      <Lozinka>ella</Lozinka>
+      <Ime>Ella</Ime>
+      <Prezime>Castle</Prezime>
+      <Pol>Z</Pol>
+      <JMBG>1605988806040</JMBG>
+      <Telefon>0656203703</Telefon>
+      <Email>ella.castle@gmail.com</Email>
+      <Uloga>Musterija</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>2</int>
+      </VoznjeIDs>
+    </Musterija>
     <Iznos>0</Iznos>
-    <StatusVoznje>Kreirana</StatusVoznje>
+    <Komentar>
+      <Voznja>0</Voznja>
+      <Ocena>0</Ocena>
+    </Komentar>
+    <StatusVoznje>Otkazana</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>3</ID>
+    <DatumIVremePorudzbine>13:40 20-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.839023351669308</Longitude>
+        <Latitude>45.236927710001112</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Bulevar Despota Stefana undefined</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Musterija>
+      <KorisnickoIme>ella</KorisnickoIme>
+      <Lozinka>ella</Lozinka>
+      <Ime>Ella</Ime>
+      <Prezime>Castle</Prezime>
+      <Pol>Z</Pol>
+      <JMBG>1605988806040</JMBG>
+      <Telefon>0656203703</Telefon>
+      <Email>ella.castle@gmail.com</Email>
+      <Uloga>Musterija</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>2</int>
+        <int>3</int>
+      </VoznjeIDs>
+    </Musterija>
+    <Iznos>0</Iznos>
+    <Komentar>
+      <Opis>nisam videla vozilo</Opis>
+      <DatumObjave>14:08 20-06-2018</DatumObjave>
+      <Korisnik>ella</Korisnik>
+      <Voznja>3</Voznja>
+      <Ocena>1</Ocena>
+    </Komentar>
+    <StatusVoznje>Neuspesna</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>4</ID>
+    <DatumIVremePorudzbine>14:18 20-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.843508005142212</Longitude>
+        <Latitude>45.240010065083311</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Bulevar oslobodjenja 147</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Musterija>
+      <KorisnickoIme>ella</KorisnickoIme>
+      <Lozinka>ella</Lozinka>
+      <Ime>Ella</Ime>
+      <Prezime>Castle</Prezime>
+      <Pol>Z</Pol>
+      <JMBG>1605988806040</JMBG>
+      <Telefon>0656203703</Telefon>
+      <Email>ella.castle@gmail.com</Email>
+      <Uloga>Musterija</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>2</int>
+        <int>3</int>
+        <int>4</int>
+      </VoznjeIDs>
+    </Musterija>
+    <LokacijaOdredista>
+      <GeoCoordinate>
+        <Longitude>19.848164990544319</Longitude>
+        <Latitude>45.249082399593192</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Radnicka 14</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaOdredista>
+    <Iznos>380</Iznos>
+    <Komentar>
+      <Opis>Super voznja i vozac</Opis>
+      <DatumObjave>14:19 20-06-2018</DatumObjave>
+      <Korisnik>ella</Korisnik>
+      <Voznja>4</Voznja>
+      <Ocena>5</Ocena>
+    </Komentar>
+    <StatusVoznje>Uspesna</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>5</ID>
+    <DatumIVremePorudzbine>14:23 20-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.841126203536984</Longitude>
+        <Latitude>45.244965657996545</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Bulevar oslobodjenja 100</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Musterija>
+      <KorisnickoIme>ella</KorisnickoIme>
+      <Lozinka>ella</Lozinka>
+      <Ime>Ella</Ime>
+      <Prezime>Castle</Prezime>
+      <Pol>Z</Pol>
+      <JMBG>1605988806040</JMBG>
+      <Telefon>0656203703</Telefon>
+      <Email>ella.castle@gmail.com</Email>
+      <Uloga>Musterija</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>2</int>
+        <int>3</int>
+        <int>4</int>
+        <int>5</int>
+      </VoznjeIDs>
+    </Musterija>
+    <LokacijaOdredista>
+      <GeoCoordinate>
+        <Longitude>19.849098399281498</Longitude>
+        <Latitude>45.246914537995877</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Dr Sime Milosevica undefined</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaOdredista>
+    <Vozac>
+      <KorisnickoIme>vozac</KorisnickoIme>
+      <Lozinka>vozac</Lozinka>
+      <Ime>Michael</Ime>
+      <Prezime>Voughn</Prezime>
+      <Pol>M</Pol>
+      <JMBG>0309987456236</JMBG>
+      <Telefon>0631239875</Telefon>
+      <Email>michael.voughn2gmail.com</Email>
+      <Uloga>Vozac</Uloga>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>3</int>
+        <int>4</int>
+        <int>5</int>
+      </VoznjeIDs>
+      <Lokacija>
+        <GeoCoordinate>
+          <Longitude>19.849098399281498</Longitude>
+          <Latitude>45.246914537995877</Latitude>
+        </GeoCoordinate>
+        <Adresa>
+          <UlicaIBroj>Dr Sime Milosevica undefined</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+        </Adresa>
+      </Lokacija>
+      <Automobil>
+        <GodisteAutomobila>2010</GodisteAutomobila>
+        <BrojRegistarskeOznake>NS174LJ</BrojRegistarskeOznake>
+        <BrojTaksiVozila>GL175</BrojTaksiVozila>
+        <TipAutomobila>Putnicki</TipAutomobila>
+      </Automobil>
+      <Blokiran>false</Blokiran>
+      <Slobodan>true</Slobodan>
+    </Vozac>
+    <Iznos>800</Iznos>
+    <Komentar>
+      <Opis>voznja je bila super</Opis>
+      <DatumObjave>14:30 20-06-2018</DatumObjave>
+      <Korisnik>ella</Korisnik>
+      <Voznja>5</Voznja>
+      <Ocena>4</Ocena>
+    </Komentar>
+    <StatusVoznje>Uspesna</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>6</ID>
+    <DatumIVremePorudzbine>14:30 20-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.834259748458862</Longitude>
+        <Latitude>45.239360366890537</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Narodnog fronta 56</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Musterija>
+      <KorisnickoIme>ella</KorisnickoIme>
+      <Lozinka>ella</Lozinka>
+      <Ime>Ella</Ime>
+      <Prezime>Castle</Prezime>
+      <Pol>Z</Pol>
+      <JMBG>1605988806040</JMBG>
+      <Telefon>0656203703</Telefon>
+      <Email>ella.castle@gmail.com</Email>
+      <Uloga>Musterija</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>2</int>
+        <int>3</int>
+        <int>4</int>
+        <int>5</int>
+        <int>6</int>
+      </VoznjeIDs>
+    </Musterija>
+    <Iznos>0</Iznos>
+    <Komentar>
+      <Opis>ne mogu da stignem</Opis>
+      <DatumObjave>14:39 20-06-2018</DatumObjave>
+      <Korisnik>ella</Korisnik>
+      <Voznja>6</Voznja>
+      <Ocena>0</Ocena>
+    </Komentar>
+    <StatusVoznje>Otkazana</StatusVoznje>
   </Voznja>
 </ArrayOfVoznja>

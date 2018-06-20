@@ -16,7 +16,7 @@ namespace Projekat.Models
         public string MestoiPostanski { get; set; }
         public int IDVoznje { get; set; }
         public double Cena { get; set; }
-        public int Status { get; set; }
+        public string Status { get; set; }
 
         public AdrILok()
         {

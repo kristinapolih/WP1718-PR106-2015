@@ -296,14 +296,48 @@ namespace Projekat.Models
                 GetSveVoznje().Remove(id);
             }
 
+            if (voznja.TipAutomobila == Common.TIP_AUTOMOBILA.Kombi)
+                menjamo.TipAutomobila = Common.TIP_AUTOMOBILA.Kombi;
+            else
+                menjamo.TipAutomobila = Common.TIP_AUTOMOBILA.Putnicki;
             if (voznja.Dispecer != null)
                 menjamo.Dispecer = voznja.Dispecer;
+            if (voznja.Vozac != null)
+                menjamo.Vozac = voznja.Vozac;
             if (voznja.Iznos != 0)
                 menjamo.Iznos = voznja.Iznos;
             if (voznja.Komentar != null)
+            {
+                menjamo.Komentar = new Komentar();
+                menjamo.Komentar.DatumObjave = voznja.Komentar.DatumObjave;
                 menjamo.Komentar = voznja.Komentar;
+            }
             if (voznja.LokacijaOdredista != null)
-                menjamo.LokacijaOdredista = voznja.LokacijaOdredista;
+            {
+                menjamo.LokacijaOdredista = new Lokacija();
+                if (voznja.LokacijaOdredista.Adresa != null && voznja.LokacijaOdredista.GeoCoordinate != null)
+                {
+                    menjamo.LokacijaOdredista.Adresa = new Adresa();
+                    menjamo.LokacijaOdredista.Adresa.MestoIPostanskiFah = voznja.LokacijaOdredista.Adresa.MestoIPostanskiFah;
+                    menjamo.LokacijaOdredista.Adresa.UlicaIBroj = voznja.LokacijaOdredista.Adresa.UlicaIBroj;
+                    menjamo.LokacijaOdredista.GeoCoordinate = new Koordinate();
+                    menjamo.LokacijaOdredista.GeoCoordinate.Latitude = voznja.LokacijaOdredista.GeoCoordinate.Latitude;
+                    menjamo.LokacijaOdredista.GeoCoordinate.Longitude = voznja.LokacijaOdredista.GeoCoordinate.Longitude;
+                }
+            }
+            if (voznja.LokacijaPolazista != null)
+            {
+                menjamo.LokacijaPolazista = new Lokacija();
+                if (voznja.LokacijaPolazista.Adresa != null && voznja.LokacijaPolazista.GeoCoordinate != null)
+                {
+                    menjamo.LokacijaPolazista.Adresa = new Adresa();
+                    menjamo.LokacijaPolazista.Adresa.MestoIPostanskiFah = voznja.LokacijaPolazista.Adresa.MestoIPostanskiFah;
+                    menjamo.LokacijaPolazista.Adresa.UlicaIBroj = voznja.LokacijaPolazista.Adresa.UlicaIBroj;
+                    menjamo.LokacijaPolazista.GeoCoordinate = new Koordinate();
+                    menjamo.LokacijaPolazista.GeoCoordinate.Latitude = voznja.LokacijaPolazista.GeoCoordinate.Latitude;
+                    menjamo.LokacijaPolazista.GeoCoordinate.Longitude = voznja.LokacijaPolazista.GeoCoordinate.Longitude;
+                }
+            }
             if (voznja.StatusVoznje != menjamo.StatusVoznje)
                 menjamo.StatusVoznje = voznja.StatusVoznje;
 
@@ -370,11 +404,11 @@ namespace Projekat.Models
             List<Korisnik> korisnici = CitajKorisnik();
             Korisnik k = korisnici.Find(f => f.KorisnickoIme == korisnik.KorisnickoIme);
             if (k == null)
-                korisnici.Add((Korisnik)korisnik);
+                korisnici.Add(korisnik);
             else
             {
                 korisnici.Remove(k);
-                korisnici.Add((Korisnik)korisnik);
+                korisnici.Add(korisnik);
             }
             
             XmlSerializer serializer = new XmlSerializer(typeof(List<Korisnik>));
@@ -392,8 +426,16 @@ namespace Projekat.Models
             GetDispecere().Add(dispecer.KorisnickoIme, dispecer);
 
             List<Korisnik> dispeceri = CitajDispecer();
-            dispeceri.Add((Korisnik)dispecer);
-            
+
+            Korisnik k = dispeceri.Find(f => f.KorisnickoIme == dispecer.KorisnickoIme);
+            if (k == null)
+                dispeceri.Add(dispecer);
+            else
+            {
+                dispeceri.Remove(k);
+                dispeceri.Add(dispecer);
+            }
+
             XmlSerializer serializer = new XmlSerializer(typeof(List<Korisnik>));
             lock (new object())
             {
@@ -409,8 +451,16 @@ namespace Projekat.Models
             GetVozace().Add(vozac.KorisnickoIme, vozac);
 
             List<Vozac> vozaci = CitajVozac();
-            vozaci.Add((Vozac)vozac);
-            
+
+            Vozac k = vozaci.Find(f => f.KorisnickoIme == vozac.KorisnickoIme);
+            if (k == null)
+                vozaci.Add(vozac);
+            else
+            {
+                vozaci.Remove(k);
+                vozaci.Add(vozac);
+            }
+
             XmlSerializer serializer = new XmlSerializer(typeof(List<Vozac>));
             lock (new object())
             {
@@ -425,8 +475,16 @@ namespace Projekat.Models
         {
             GetSveVoznje().Add(voznja.ID, voznja);
 
-            List<Voznja> voznje = new List<Voznja>();//CitajVoznje();
-            voznje.Add(voznja);
+            List<Voznja> voznje = CitajVoznje();
+
+            Voznja k = voznje.Find(f => f.ID == voznja.ID);
+            if (k == null)
+                voznje.Add(voznja);
+            else
+            {
+                voznje.Remove(k);
+                voznje.Add(voznja);
+            }
 
             XmlSerializer serializer = new XmlSerializer(typeof(List<Voznja>));
             lock (new object())
@@ -481,6 +539,12 @@ namespace Projekat.Models
                         GetSlobodneVoznje().Add(voz.ID);
                     }
                     GetSveVoznje().Add(voz.ID, voz);
+                }
+
+                foreach (Voznja voz in voznja)
+                {
+                    if (voz.ID > cnt)
+                        cnt = voz.ID;
                 }
             }
         }

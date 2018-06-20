@@ -27,18 +27,18 @@
         Prihvacena,
         Otkazana,
         Neuspesna,
-        Uspesna,
-        U_toku
+        Uspesna
     }
 
-    public enum OCENA
+    public enum PRETRAGA
     {
-        Nula,
-        Jedan,
-        Dva,
-        Tri,
-        Cetiri,
-        Pet
+        Status,
+        OdDatum,
+        DoDatum,
+        OdOcena,
+        DoOcena,
+        OdCena,
+        DoCena
     }
 
     public static class StatusHelper
@@ -60,7 +60,7 @@
             else if (s == 6)
                 return STATUS_VOZNJE.Uspesna;
             else
-                return STATUS_VOZNJE.U_toku;
+                return STATUS_VOZNJE.Kreirana;
         }
     }
 }

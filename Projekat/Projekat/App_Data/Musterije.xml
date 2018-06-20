@@ -13,6 +13,24 @@
     <Blokiran>false</Blokiran>
     <VoznjeIDs>
       <int>1</int>
+      <int>2</int>
+      <int>3</int>
+      <int>4</int>
+      <int>5</int>
+      <int>6</int>
     </VoznjeIDs>
+  </Korisnik>
+  <Korisnik>
+    <KorisnickoIme>patrik</KorisnickoIme>
+    <Lozinka>patrik</Lozinka>
+    <Ime>Patrik</Ime>
+    <Prezime>Polih</Prezime>
+    <Pol>M</Pol>
+    <JMBG>0309993232628</JMBG>
+    <Telefon>0617894563</Telefon>
+    <Email>patrik.polih@gmail.com</Email>
+    <Uloga>Musterija</Uloga>
+    <Blokiran>false</Blokiran>
+    <VoznjeIDs />
   </Korisnik>
 </ArrayOfKorisnik>

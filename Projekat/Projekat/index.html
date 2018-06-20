@@ -9,7 +9,6 @@
     <link href="/Content/PopOut.css" rel="stylesheet">
     <script src="Scripts/jquery-3.3.1.js"></script>
     <script src="/Scripts/jquery-1.10.2.js"></script>
-    <!--<script src="/Scripts/bootstrap.js"></script>-->
     <script src="/Scripts/respond.js"></script>
     <script src="/Scripts/modernizr-2.8.3.js"></script>
     <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
@@ -64,262 +63,325 @@
             </div>
         </div>
     </div>
-    <div class="container body-content" id="divbody">
-        <div id="registracijaIOpis" class="row">
-            <div id="opis" class="col-md-4 col-md-push-0.5">
-                <br /><br /><h1>Taksi sluzba</h1>
-                <p>
-                    Ovo je taksi slu&zcaron;ba koja omogucava da lako i brzo poru&ccaron;ite taksi vozilo
-                    na Va&scaron;u adresu. Dovoljno je samo da se prijavite na na&scaron; sajt i da unesete
-                    adresu na koju dolazi na&scaron;e vozilo po Vas.
-                </p><br /><br />
-                <img src="Content/TAXI.jpg" height="400" width="600" />
+    <div class="body-content" id="divbody">
+        <div class="container">
+            <div id="registracijaIOpis" class="row">
+                <div id="opis" class="col-md-4 col-md-push-0.5">
+                    <br /><br /><h1>Taksi sluzba</h1>
+                    <p>
+                        Ovo je taksi slu&zcaron;ba koja omogucava da lako i brzo poru&ccaron;ite taksi vozilo
+                        na Va&scaron;u adresu. Dovoljno je samo da se prijavite na na&scaron; sajt i da unesete
+                        adresu na koju dolazi na&scaron;e vozilo po Vas.
+                    </p><br /><br />
+                    <img src="Content/TAXI.jpg" height="400" width="600" />
+                </div>
+                <div id="registracija" class="col-md-5" style="float:right">
+                    <br /><br /><h1 id="naslovreg">Registracija</h1><br />
+                    <p style="color:crimson" id="errorMessageReg"></p>
+                    <div id="kor">
+                        <input type="text" name="korisnickoIme" id="korisnicko" placeholder="Korisni&ccaron;ko ime"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="loz">
+                        <input type="password" name="lozinka" id="lozin" placeholder="Lozinka"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="ploz">
+                        <input type="password" name="ponovljenaLozinka" id="ponovljenaLozinka" placeholder="Ponovi lozinku"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="im">
+                        <input type="text" name="ime" id="ime" placeholder="Ime"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="prez">
+                        <input type="text" name="prezime" id="prezime" placeholder="Prezime"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div>
+                        <input type="radio" name="pol" value="M" checked>Mu&scaron;ki
+                        <input type="radio" name="pol" value="Z">&Zcaron;enski<br />
+                    </div><br />
+                    <div id="jm">
+                        <input type="text" name="jmbg" id="jmbg" placeholder="JMBG"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="tel">
+                        <input type="tel" name="telefon" id="telefon" placeholder="Kontakt telefon"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="em">
+                        <input type="email" name="email" id="email" placeholder="Email"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="ul">
+                        <input list="uloga" name="uloga" placeholder="Uloga">
+                        <datalist id="uloga">
+                            <option selected value="Mu&scaron;terija" id="musterija" />
+                        </datalist><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="Registruj se" id="registrujse">
+                </div>
             </div>
-            <div id="registracija" class="col-md-5" style="float:right">
-                <br /><br /><h1 id="naslovreg">Registracija</h1><br />
-                <p style="color:crimson" id="errorMessageReg"></p>
-                <div id="kor">
-                    <input type="text" name="korisnickoIme" id="korisnicko" placeholder="Korisni&ccaron;ko ime"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div>
-                <div id="loz">
-                    <input type="password" name="lozinka" id="lozin" placeholder="Lozinka"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div>
-                <div id="ploz">
-                    <input type="password" name="ponovljenaLozinka" id="ponovljenaLozinka" placeholder="Ponovi lozinku"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div>
-                <div id="im">
-                    <input type="text" name="ime" id="ime" placeholder="Ime"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div>
-                <div id="prez">
-                    <input type="text" name="prezime" id="prezime" placeholder="Prezime"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div>
-                <div>
-                    <input type="radio" name="pol" value="M" checked>Mu&scaron;ki
-                    <input type="radio" name="pol" value="Z">&Zcaron;enski<br />
-                </div><br />
-                <div id="jm">
-                    <input type="text" name="jmbg" id="jmbg" placeholder="JMBG"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div>
-                <div id="tel">
-                    <input type="tel" name="telefon" id="telefon" placeholder="Kontakt telefon"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div>
-                <div id="em">
-                    <input type="email" name="email" id="email" placeholder="Email"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div>
-                <div id="ul">
-                    <input list="uloga" name="uloga" placeholder="Uloga">
-                    <datalist id="uloga">
-                        <option selected value="Mu&scaron;terija" id="musterija" />
-                    </datalist><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                </div><br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Registruj se" id="registrujse">
+            <div align="center" id="registrovan" class="col-md-8" style="vertical-align:central; align-items:center; align-self:center" hidden>
+                <br /><br /><br /><br /><br /><br /><br />
+                <p id="mess" style="color:crimson; font-size:medium">Uspe&scaron;no ste se registrovali!</p><br />
+                <input type="text" name="korisnickoIme" placeholder="Korisni&ccaron;ko ime" id="k" /><br /><br />
+                <input type="password" name="lozinka" placeholder="Lozinka" id="l" /><br /><br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
             </div>
-        </div>
-        <div align="center" id="registrovan" class="col-md-8" style="vertical-align:central; align-items:center; align-self:center" hidden>
-            <br /><br /><br /><br /><br /><br /><br />
-            <p id="mess" style="color:crimson; font-size:medium">Uspe&scaron;no ste se registrovali!</p><br />
-            <input type="text" name="korisnickoIme" placeholder="Korisni&ccaron;ko ime" id="k" /><br /><br />
-            <input type="password" name="lozinka" placeholder="Lozinka" id="l" /><br /><br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
-        </div>
-        <div id="ulogovan" style="text-align:center; justify-content:center" hidden>
-            <br /><br />
-            <p id="ulogovanMessage" style="color:crimson; font-size:medium"></p>
-            <div id="korisnikvoznja" hidden>
-                <table border="0">
-                    <tr>
-                        <td colspan="2">Filtriranje</td>
-                        <td colspan="2">Sortiranje</td>
-                        <td colspan="2">Pretraga po datumu</td>
-                        <td colspan="2">Pretraga po ocenama</td>
-                        <td colspan="2">Pretraga po ceni</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input list="filterstatus" placeholder="Filtriraj statuse">
-                            <datalist id="filterstatus">
-                                <option value="Kreirana" id="0" />
-                                <option value="Formirana" id="1" />
-                                <option value="Obra&dstrok;ena" id="2" />
-                                <option value="Prihva&cacute;ena" id="3" />
-                                <option value="Otkazana" id="4" />
-                                <option value="Neuspe&scaron;na" id="5" />
-                                <option value="Uspe&scaron;na" id="6" />
-                            </datalist>
-                        </td>
-                        <td>
-                            <input type="submit" id="sortirajDatum" value="Soritraj po datumu" class="buttons">
-                            <input type="submit" id="sortirajOcena" value="Soritraj po oceni" class="buttons">
-                        </td>
-                        <td>
-                            <!--Datum-->
-                        </td>
-                        <td>
-                            <input list="odocenapretraga" placeholder="Od">
-                            <datalist id="odocenapretraga">
-                                <option value="1" id="1" />
-                                <option value="2" id="2" />
-                                <option value="3" id="3" />
-                                <option value="4" id="4" />
-                                <option value="5" id="5" />
-                            </datalist>
-                            <input list="doocenapretraga" placeholder="Do">
-                            <datalist id="doocenapretraga">
-                                <option value="1" id="1" />
-                                <option value="2" id="2" />
-                                <option value="3" id="3" />
-                                <option value="4" id="4" />
-                                <option value="5" id="5" />
-                            </datalist>
-                        </td>
-                        <td>
-                            <input list="odcenapretraga" placeholder="Od">
-                            <datalist id="odocenapretraga">
-                                <option value="100" id="1" />
-                                <option value="200" id="2" />
-                                <option value="500" id="3" />
-                                <option value="1000" id="4" />
-                                <option value="2000" id="5" />
-                            </datalist>
-                            <input list="docenapretraga" placeholder="Do">
-                            <datalist id="doocenapretraga">
-                                <option value="100" id="1" />
-                                <option value="200" id="2" />
-                                <option value="500" id="3" />
-                                <option value="1000" id="4" />
-                                <option value="2000" id="5" />
-                            </datalist>
-                        </td>
-                        <td><input type="submit" id="primenikriterijum" value="Primeni kriterijume" class="buttons"></td>
-                    </tr>
-                </table>
-            </div>
-            <div id="vozacvoznja" hidden>
 
-            </div>
-            <div id="adminvoznja" hidden>
-
-            </div>
-        </div>
-        <div id="dodajVozacaPolja" hidden>
-            <div id="dodajVozacaRegistracija" class="col-md-5">
-            </div>
-            <div id="dodajVozacaLokacijaAutomobil" class="col-md-5" style="text-align:center; justify-content:center">
-                <br /><p style="font-size:medium"><b>Automobil</b></p>
-                <div id="voz">
-                    <input type="text" id="vozackorime" placeholder="Korisni&ccaron;ko ime voza&ccaron;a"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+            <div id="dodajVozacaPolja" hidden>
+                <div id="dodajVozacaRegistracija" class="col-md-5">
                 </div>
-                <div id="god">
-                    <input type="text" id="godiste" placeholder="Godiste"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                <div id="dodajVozacaLokacijaAutomobil" class="col-md-5" style="text-align:center; justify-content:center">
+                    <br /><p style="font-size:medium"><b>Automobil</b></p>
+                    <div id="voz">
+                        <input type="text" id="vozackorime" placeholder="Korisni&ccaron;ko ime voza&ccaron;a"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="god">
+                        <input type="text" id="godiste" placeholder="Godiste"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <div id="tipauta">
+                        <input list="tipautomobila" name="tipautomobila" placeholder="Tip automobila">
+                        <datalist id="tipautomobila">
+                            <option value="Putni&ccaron;ki" id="putnicki" />
+                            <option value="Kombi" id="kombi" />
+                        </datalist><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div><br />
+                    <p style="font-size:medium"><b>Lokacija</b></p>
+                    <p style="font-size:medium">(odaberite trenutnu lokaciju voza&ccaron;a)</p>
+                    <div id="mapaDodajVozaca" hidden>
+                        <p style="color:crimson" hidden>Morate izabrati lokaciju!</p><br />
+                    </div><br /><br /><br />
+                    <input type="submit" value="Registruj voza&ccaron;a" id="registrujvozaca">
                 </div>
-                <div id="tipauta">
-                    <input list="tipautomobila" name="tipautomobila" placeholder="Tip automobila">
-                    <datalist id="tipautomobila">
+            </div>
+            <div id="dodajVoznjuPolja" style="text-align:center; justify-content:center" class="col-md-7" hidden>
+                <br /><br /><br /><br /><br />
+                <div id="tipautaa">
+                    <input list="tipautomobilaa" name="tipautomobilaa" placeholder="Tip automobila">
+                    <datalist id="tipautomobilaa">
                         <option value="Putni&ccaron;ki" id="putnicki" />
                         <option value="Kombi" id="kombi" />
                     </datalist><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
                 </div><br />
                 <p style="font-size:medium"><b>Lokacija</b></p>
-                <p style="font-size:medium">(odaberite trenutnu lokaciju voza&ccaron;a)</p>
-                <div id="mapaDodajVozaca" hidden>
-                    <p style="color:crimson" hidden>Morate izabrati lokaciju!</p><br />
+                <p style="font-size:medium">(odaberite lokaciju na koju ce taksi vozilo do&cacute;i po Vas)</p>
+                <p style="color:crimson" id="errormapadodajvoznju" hidden>Morate izabrati lokaciju!</p><br />
+                <div id="mapaDodajVoznju" style="text-align:center; justify-content:center" hidden>
+
                 </div><br /><br /><br />
-                <input type="submit" value="Registruj voza&ccaron;a" id="registrujvozaca">
+                <input type="submit" value="Naru&ccaron;i vo&zcaron;nju" id="narucivoznju">
             </div>
-        </div>
-        <div id="dodajVoznjuPolja" style="text-align:center; justify-content:center" class="col-md-7" hidden>
-            <br /><br /><br /><br /><br />
-            <div id="tipautaa">
-                <input list="tipautomobilaa" name="tipautomobilaa" placeholder="Tip automobila">
-                <datalist id="tipautomobilaa">
-                    <option value="Putni&ccaron;ki" id="putnicki" />
-                    <option value="Kombi" id="kombi" />
-                </datalist><br />
-            </div><br />
-            <p style="font-size:medium"><b>Lokacija</b></p>
-            <p style="font-size:medium">(odaberite lokaciju na koju ce taksi vozilo do&cacute;i po Vas)</p>
-            <div id="mapaDodajVoznju" style="text-align:center; justify-content:center" hidden>
-                <p style="color:crimson" hidden>Morate izabrati lokaciju!</p><br />
-            </div><br /><br /><br />
-            <input type="submit" value="Naru&ccaron;i vo&zcaron;nju" id="narucivoznju">
-        </div>
-        <div id="blok" class="row" hidden>
-            <div id="bloksvi" class="col-md-5" style="text-align:center; justify-content:center">
-                <br /><br /><br />
-                <p style="font-size:medium"><b>Svi korisnici</b></p>
-                <div id="bloksvikorisnici"></div>
-                <p style="font-size:medium"><b>Blokiranje korisnika</b></p>
-                <p>(Unesite korisni&ccaron;ko ime koga zelite da blokirate)</p>
-                <p id="errorBlokiraj" style="color:crimson"></p>
-                <div id="korisnickoBlokiraj">
-                    <input type="text" name="korisnickoIme" id="korisckoImeBlokiraj" placeholder="Korisni&ccaron;ko ime"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+            <div id="blok" class="row" hidden>
+                <div id="bloksvi" class="col-md-5" style="text-align:center; justify-content:center">
+                    <br /><br /><br />
+                    <p style="font-size:medium"><b>Svi korisnici</b></p>
+                    <div id="bloksvikorisnici"></div>
+                    <p style="font-size:medium"><b>Blokiranje korisnika</b></p>
+                    <p>(Unesite korisni&ccaron;ko ime koga zelite da blokirate)</p>
+                    <p id="errorBlokiraj" style="color:crimson"></p>
+                    <div id="korisnickoBlokiraj">
+                        <input type="text" name="korisnickoIme" id="korisckoImeBlokiraj" placeholder="Korisni&ccaron;ko ime"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <input type="submit" value="Blokiraj" id="blokirajKorisnika">
                 </div>
-                <input type="submit" value="Blokiraj" id="blokirajKorisnika">
-            </div>
-            <div id="blokblokirani" class="col-md-5">
-                <br /><br /><br />
-                <p style="font-size:medium"><b>Svi blokirani korisnici</b></p>
-                <div id="odbloksvikorisnici"></div>
-                <p style="font-size:medium"><b>Odblokirajte korisnika</b></p>
-                <p>(Unesite korisni&ccaron;ko ime koga zelite da odblokirate)</p>
-                <p id="errorOdlokiraj" style="color:crimson"></p>
-                <div id="korisnickoBlokirani">
-                    <input type="text" name="korisnickoIme" id="korisckoImeBlokirani" placeholder="Korisni&ccaron;ko ime"><br />
-                    <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                <div id="blokblokirani" class="col-md-5">
+                    <br /><br /><br />
+                    <p style="font-size:medium"><b>Svi blokirani korisnici</b></p>
+                    <div id="odbloksvikorisnici"></div>
+                    <p style="font-size:medium"><b>Odblokirajte korisnika</b></p>
+                    <p>(Unesite korisni&ccaron;ko ime koga zelite da odblokirate)</p>
+                    <p id="errorOdlokiraj" style="color:crimson"></p>
+                    <div id="korisnickoBlokirani">
+                        <input type="text" name="korisnickoIme" id="korisckoImeBlokirani" placeholder="Korisni&ccaron;ko ime"><br />
+                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
+                    </div>
+                    <input type="submit" value="Odblokiraj" id="odblokirajKorisnika">
                 </div>
-                <input type="submit" value="Odblokiraj" id="odblokirajKorisnika">
+            </div>
+            <div id="korisnikkomentar" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
+                <span class="helper"></span>
+                <div id="komentar" style="text-align:center; justify-content:center">
+                    <h1>Komentari&scaron;i vo&zcaron;nju</h1>
+                    <input type="text" style="width:500px; height:300px; text-wrap:normal; overflow-wrap:normal" placeholder="Opis" id="opiskomentar"><br /><br />
+                    <input list="ocenakomentar" name="ocenakomentar" placeholder="Ocena"><br /><br />
+                    <datalist id="ocenakomentar">
+                        <option value="1" id="1" />
+                        <option value="2" id="2" />
+                        <option value="3" id="3" />
+                        <option value="4" id="4" />
+                        <option selected value="5" id="5" />
+                    </datalist><br />
+                    <input type="submit" value="Dodaj komentar" id="dodajKoment">
+                </div>
+            </div>
+            <div id="vozacOdrediste" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
+                <span class="helper"></span>
+                <div id="odrediste" style="text-align:center; justify-content:center">
+                    <h1>Dodaj odredi&scaron;te</h1>
+                    <div id="mapaodrediste"></div>
+                    <input type="submit" value="Dodaj lokaciju" id="dodajlokaciju">
+                </div>
+            </div>
+
+            <div id="promenipolazistekorisnik" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
+                <span class="helper"></span>
+                <div id="polazistepromeni" style="text-align:center; justify-content:center">
+                    <h1>Promeni polazi&scaron;te</h1>
+                    <div id="mapapolaziste"></div>
+                    <input type="submit" value="Dodaj lokaciju" id="dodajlokacijupolazista">
+                </div>
+            </div>
+            <div id="pogledajkoment" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
+                <span class="helper"></span>
+                <div id="pkomentar" style="text-align:center; justify-content:center">
+                    <h1>Komentar vo&zcaron;nje</h1><br /><br /><br />
+                    <p id="komopis">Opis: </p><br />
+                    <p id="komdatum">Datum objave: </p><br />
+                    <p id="komocena">Ocena: </p><br />
+                    <p id="komkorisnik">Korisnik: </p><br />
+                    <input type="submit" value="Napusti" id="napusti">
+                </div>
+            </div>
+            <div id="dodelivoznjuvozacu" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
+                <span class="helper"></span>
+                <div id="dvoznju" style="text-align:center; justify-content:center">
+                    <h1>Dodeli vo&zcaron;nju</h1><br /><br /><br />
+                    <input type="submit" value="Napusti" id="napusti">
+                </div>
             </div>
         </div>
-        <div id="korisnikkomentar" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
-            <span class="helper"></span>
-            <div id="komentar" style="text-align:center; justify-content:center">
-                <h1>Komentari&scaron;i vo&zcaron;nju</h1>
-                <input type="text" style="width:500px; height:300px" placeholder="Opis" id="opiskomentar"><br /><br />
-                <input list="ocenakomentar" name="ocenakomentar" placeholder="Ocena"><br /><br />
-                <datalist id="ocenakomentar">
-                    <option value="1" id="1" />
-                    <option value="2" id="2" />
-                    <option value="3" id="3" />
-                    <option value="4" id="4" />
-                    <option selected value="5" id="5" />
-                </datalist><br />
-                <input type="submit" value="Dodaj komentar" id="dodajKoment">
-            </div>
+        <div id="divtabelapretrage" class="col-lg-2" style="text-align:left; justify-content:initial" hidden>
+            <br/><br />
+            <table border="0" id="tabelaPretrage">
+                <tr>
+                    <td colspan="2"><b>Sortiranje</b></td>
+                </tr>
+                <tr>
+                    <td>
+                        <br/><input type="submit" id="sortirajDatum" value="Soritraj po datumu" class="buttons">
+                    </td>
+                    <td>
+                        <br /><input type="submit" id="sortirajOcena" value="Soritraj po oceni" class="buttons">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br /><b>Filtriranje</b></td>
+                </tr>
+                <tr>
+                    <td>
+                        <br /><input list="filterstatus" placeholder="Filtriraj statuse" style="width:130px">
+                        <datalist id="filterstatus">
+                            <option value="Kreirana" id="0" />
+                            <option value="Formirana" id="1" />
+                            <option value="Obra&dstrok;ena" id="2" />
+                            <option value="Prihva&cacute;ena" id="3" />
+                            <option value="Otkazana" id="4" />
+                            <option value="Neuspe&scaron;na" id="5" />
+                            <option value="Uspe&scaron;na" id="6" />
+                        </datalist>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br /><b>Pretraga po datumu</b></td>
+                </tr>
+                <tr>
+                    <td>
+                        <br /><input list="oddatumpretraga" placeholder="Od" style="width:130px">
+                        <datalist id="oddatumpretraga"></datalist>
+                    </td>
+                    <td>
+                        <br /><input list="dodatumpretraga" placeholder="Do" style="width:130px">
+                        <datalist id="dodatumpretraga"></datalist>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br /><p><b>Pretraga po ocenama</b></p></td>
+                </tr>
+                <tr>
+                    <td>
+                        <br /><input list="odocenapretraga" placeholder="Od" style="width:130px">
+                        <datalist id="odocenapretraga">
+                            <option value="1" id="1" />
+                            <option value="2" id="2" />
+                            <option value="3" id="3" />
+                            <option value="4" id="4" />
+                            <option value="5" id="5" />
+                        </datalist>
+                    </td>
+                    <td>
+                        <br /><input list="doocenapretraga" placeholder="Do" style="width:130px">
+                        <datalist id="doocenapretraga">
+                            <option value="1" id="1" />
+                            <option value="2" id="2" />
+                            <option value="3" id="3" />
+                            <option value="4" id="4" />
+                            <option value="5" id="5" />
+                        </datalist>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br /><b>Pretraga po ceni</b></td>
+                </tr>
+                <tr>
+                    <td>
+                        <br /><input list="odcenapretraga" placeholder="Od" style="width:130px">
+                        <datalist id="odcenapretraga">
+                            <option value=100 id="1" />
+                            <option value=200 id="2" />
+                            <option value=500 id="3" />
+                            <option value=1000 id="4" />
+                            <option value=2000 id="5" />
+                        </datalist>
+                    </td>
+                    <td>
+                        <br /><input list="docenapretraga" placeholder="Do" style="width:130px">
+                        <datalist id="docenapretraga">
+                            <option value="100" id="1" />
+                            <option value="200" id="2" />
+                            <option value="500" id="3" />
+                            <option value="1000" id="4" />
+                            <option value="2000" id="5" />
+                        </datalist>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br /><input type="submit" id="primenikriterijum" value="Primeni kriterijume" class="buttons"></td>
+                </tr>
+            </table>
         </div>
-        <div id="vozacOdrediste" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
-            <span class="helper"></span>
-            <div id="odrediste" style="text-align:center; justify-content:center">
-                <h1>"Dodaj odredi&scaron;te</h1>
-                <div id="mapaodrediste"></div>
-                <input type="submit" value="Dodaj lokaciju" id="dodajlokaciju">
+        <div id="ulogovan" style="text-align:center; justify-content:center" hidden>
+            <br />
+            <p id="ulogovanMessage" style="color:crimson; font-size:medium"></p>
+            <br />
+            <div id="korisnikvoznja" hidden>
+
+                <div id="tableklijent">
+
+                </div>
             </div>
-        </div>
-        <div id="pogledajkomentar" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
-            <span class="helper"></span>
-            <div id="pkomentar" style="text-align:center; justify-content:center">
-                <p id="komopis">Opis: </p><br />
-                <p id="komdatum">Datum objave: </p><br />
-                <p id="komocena">Ocena: </p><br />
-                <p id="komkorisnik">Korisnik: </p><br />
-                <p id="komvozac"></p><br />
-                <input type="submit" value="Napusti" id="napusti">
+            <div id="vozacvoznja" hidden>
+                <div id="tablevozac">
+
+                </div>
+            </div>
+            <div id="adminvoznja" hidden>
+                <div id="tableadmin">
+
+                </div>
             </div>
         </div>
     </div>
+
+    
 </body>
 </html>

@@ -12,14 +12,20 @@ namespace Projekat.Controllers
         [HttpPost, Route("api/Voznja/poruciVoznju")]
         public IHttpActionResult poruciVoznju(AdrILok adresaILokacija)
         {
-            var intid = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].VoznjeIDs[(Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].VoznjeIDs.Count)];
-            if (Podaci.GetSveVoznje()[intid].StatusVoznje != STATUS_VOZNJE.Neuspesna || Podaci.GetSveVoznje()[intid].StatusVoznje != STATUS_VOZNJE.Otkazana || Podaci.GetSveVoznje()[intid].StatusVoznje != STATUS_VOZNJE.Uspesna)
+            if (CheckDrives(adresaILokacija.KorisnickoIme))
             {
                 return Ok("Ne mozete da narucite sledecu voznju!");
             }
             else
             {
                 Voznja v = new Voznja();
+                v.ID = ++Podaci.cnt;
+                Korisnik k = new Korisnik();
+                k.KorisnickoIme = adresaILokacija.KorisnickoIme;
+                k.Pol = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].Pol;
+                k.VoznjeIDs = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].VoznjeIDs;
+                k.VoznjeIDs.Add(v.ID);
+                Podaci.IzmeniKorisnika(adresaILokacija.KorisnickoIme, k);
                 if (Podaci.GetKorisnike().ContainsKey(adresaILokacija.KorisnickoIme))
                 {
                     v.Musterija = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme];
@@ -35,7 +41,6 @@ namespace Projekat.Controllers
                 }
                 var date = DateTime.Now;
                 v.DatumIVremePorudzbine = (date.ToString(Podaci.format));
-                v.ID = ++Podaci.cnt;
                 if (adresaILokacija.TipAutomobila == TIP_AUTOMOBILA.Kombi.ToString())
                     v.TipAutomobila = TIP_AUTOMOBILA.Kombi;
                 else
@@ -47,16 +52,34 @@ namespace Projekat.Controllers
                 v.LokacijaPolazista.GeoCoordinate = new Koordinate();
                 v.LokacijaPolazista.GeoCoordinate.Longitude = adresaILokacija.xlong;
                 v.LokacijaPolazista.GeoCoordinate.Latitude = adresaILokacija.ylatit;
-
-                Korisnik k = new Korisnik();
-                k.KorisnickoIme = adresaILokacija.KorisnickoIme;
-                k.Pol = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].Pol;
-                k.VoznjeIDs.Add(v.ID);
-                Podaci.IzmeniKorisnika(adresaILokacija.KorisnickoIme, k);
+                
                 Podaci.DodajVoznje(v);
                 Podaci.GetSlobodneVoznje().Add(v.ID);
             }
             return Ok();
+        }
+
+        public bool CheckDrives(string k)
+        {
+            bool ret = false;
+            List<int> ids = new List<int>();
+            ids = Podaci.GetKorisnike()[k].VoznjeIDs;
+
+            foreach(Voznja v in Podaci.GetSveVoznje().Values)
+            {
+                foreach (int id in ids)
+                {
+                    if (v.ID == id)
+                    {
+                        if (v.StatusVoznje != STATUS_VOZNJE.Neuspesna && v.StatusVoznje != STATUS_VOZNJE.Otkazana && v.StatusVoznje != STATUS_VOZNJE.Uspesna)
+                        {
+                            ret = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            return ret;
         }
 
 
@@ -112,7 +135,10 @@ namespace Projekat.Controllers
             kom.DatumObjave = (date.ToString(Podaci.format));
 
             Voznja v = new Voznja();
+            v.StatusVoznje = Podaci.GetSveVoznje()[kom.Voznja].StatusVoznje;
             v.Komentar = kom;
+            if (kom.Ocena == 0 || kom.Ocena.CompareTo(null) == 0)
+                kom.Ocena = 0;
             Podaci.IzmeniVoznju(kom.Voznja, v);
 
             return Ok();
@@ -120,21 +146,21 @@ namespace Projekat.Controllers
 
 
         [HttpGet, Route("api/Voznja/OtkaziVoznju")]
-        public IHttpActionResult OtkaziVoznju([FromUri]int id)
+        public IHttpActionResult OtkaziVoznju([FromUri]int user)
         {
-            Voznja v = Podaci.GetSveVoznje()[id];
+            Voznja v = Podaci.GetSveVoznje()[user];
             v.StatusVoznje = STATUS_VOZNJE.Otkazana;
-            
-            Podaci.IzmeniVoznju(id, v);
+
+            Podaci.IzmeniVoznju(user, v);
 
             return Ok();
         }
 
 
         [HttpGet, Route("api/Voznja/GetKomentar")]
-        public IHttpActionResult GetKomentar([FromUri]int id)
+        public IHttpActionResult GetKomentar([FromUri]int voznja)
         {
-            Komentar k = Podaci.GetSveVoznje()[id].Komentar;
+            Komentar k = Podaci.GetSveVoznje()[voznja].Komentar;
 
             return Ok(k);
         }
@@ -143,21 +169,26 @@ namespace Projekat.Controllers
         [HttpGet, Route("api/Voznja/UnesiOdrediste")]
         public IHttpActionResult UnesiOdrediste([FromUri]AdrILok a)
         {
-            Lokacija l = new Lokacija();
-            l.Adresa = new Adresa();
-            l.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
-            l.Adresa.UlicaIBroj = a.UlicaiBroj;
-            l.GeoCoordinate = new Koordinate();
-            l.GeoCoordinate.Latitude = a.ylatit;
-            l.GeoCoordinate.Longitude = a.xlong;
-
             Voznja v = new Voznja();
-            v.LokacijaOdredista = l;
+            v.LokacijaOdredista = new Lokacija();
+            v.LokacijaOdredista.Adresa = new Adresa();
+            v.LokacijaOdredista.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
+            v.LokacijaOdredista.Adresa.UlicaIBroj = a.UlicaiBroj;
+            v.LokacijaOdredista.GeoCoordinate = new Koordinate();
+            v.LokacijaOdredista.GeoCoordinate.Latitude = a.ylatit;
+            v.LokacijaOdredista.GeoCoordinate.Longitude = a.xlong;
+            v.StatusVoznje = STATUS_VOZNJE.Prihvacena;
             Podaci.IzmeniVoznju(a.IDVoznje, v);
 
             Vozac vozac = new Vozac();
             vozac.KorisnickoIme = a.KorisnickoIme;
-            vozac.Lokacija = l;
+            vozac.Lokacija = new Lokacija ();
+            vozac.Lokacija.Adresa = new Adresa();
+            vozac.Lokacija.GeoCoordinate = new Koordinate();
+            vozac.Lokacija.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
+            vozac.Lokacija.Adresa.UlicaIBroj = a.UlicaiBroj;
+            vozac.Lokacija.GeoCoordinate.Latitude = a.ylatit;
+            vozac.Lokacija.GeoCoordinate.Longitude = a.xlong;
             vozac.Slobodan = false;
             Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
 
@@ -169,16 +200,19 @@ namespace Projekat.Controllers
         public IHttpActionResult PrihvatiVoznju([FromUri]AdrILok a)
         {
             Podaci.GetSlobodneVozace().Remove(a.KorisnickoIme);
-
-            Voznja v = new Voznja();
-            v.Vozac = Podaci.GetVozace()[a.KorisnickoIme];
-            v.StatusVoznje = STATUS_VOZNJE.Prihvacena;
-            Podaci.IzmeniVoznju(a.IDVoznje, v);
+            Podaci.GetSlobodneVoznje().Remove(a.IDVoznje);
 
             Vozac vozac = new Vozac();
             vozac.Slobodan = false;
+            vozac.VoznjeIDs = Podaci.GetVozace()[a.KorisnickoIme].VoznjeIDs;
             vozac.VoznjeIDs.Add(a.IDVoznje);
             Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
+
+            Voznja v = new Voznja();
+            v.Vozac = new Vozac();
+            v.Vozac = Podaci.GetVozace()[a.KorisnickoIme];
+            v.StatusVoznje = STATUS_VOZNJE.Prihvacena;
+            Podaci.IzmeniVoznju(a.IDVoznje, v);
 
             return Ok();
         }
@@ -191,15 +225,17 @@ namespace Projekat.Controllers
 
             Voznja v = new Voznja();
             v.Vozac = Podaci.GetVozace()[a.KorisnickoIme];
-            v.StatusVoznje = StatusHelper.GetStatus(a.Status);
+            if (a.Status.Contains("Neus"))
+                v.StatusVoznje = STATUS_VOZNJE.Neuspesna;
+            else
+                v.StatusVoznje = STATUS_VOZNJE.Uspesna;
             v.Iznos = a.Cena;
-            Podaci.IzmeniVoznju(a.IDVoznje, v);
-
-            if (StatusHelper.GetStatus(a.Status) == STATUS_VOZNJE.Neuspesna)
+            if (v.StatusVoznje == STATUS_VOZNJE.Neuspesna)
             {
                 v.Iznos = 0;
                 v.LokacijaOdredista = null;
             }
+            Podaci.IzmeniVoznju(a.IDVoznje, v);
 
             Vozac vozac = new Vozac();
             vozac.Slobodan = true;
@@ -217,9 +253,9 @@ namespace Projekat.Controllers
             {
                 ret.Add(Podaci.GetSveVoznje()[id]);
             }
-            ret.OrderBy(x => x.DatumIVremePorudzbine);
+            List<Voznja> sort = ret.OrderByDescending(x => x.DatumIVremePorudzbine).ToList();
 
-            return Ok(ret);
+            return Ok(sort);
         }
         [HttpGet, Route("api/Voznja/SortirajOcena")]
         public IHttpActionResult SortirajOcena([FromUri]string user)
@@ -229,21 +265,143 @@ namespace Projekat.Controllers
             {
                 ret.Add(Podaci.GetSveVoznje()[id]);
             }
-            ret.OrderBy(x => x.Komentar.Ocena);
+            List<Voznja> sort = ret.OrderByDescending(x => x.Komentar.Ocena).ToList();
 
-            return Ok(ret);
+            return Ok(sort);
         }
-        [HttpGet, Route("api/Voznja/FiltrirajStatus")]
-        public IHttpActionResult FiltrirajStatus([FromUri]string user)
+
+        [HttpPost, Route("api/Voznja/IzvrsiPretragu")]
+        public IHttpActionResult IzvrsiPretragu(Pretraga p)
         {
-            List<Voznja> ret = new List<Voznja>();
-            foreach (int id in Podaci.GetKorisnike()[user].VoznjeIDs)
+            List<Voznja> result = Podaci.GetSveVoznje().Values.ToList();
+            List<int> ids = new List<int>();
+            ids = Podaci.GetKorisnike()[p.KIme].VoznjeIDs;
+            if (p.FilterStatus != null)
             {
-                if()
-                ret.Add(Podaci.GetSveVoznje()[id]);
+                result = PretragaString(ids, PRETRAGA.Status, p.FilterStatus.Substring(0, 3), result);
+            }
+            if(p.OdDatum != null)
+            {
+                result = PretragaString(ids, PRETRAGA.OdDatum, p.OdDatum, result);
+            }
+            if (p.DoDatum != null)
+            {
+                result = PretragaString(ids, PRETRAGA.DoDatum, p.DoDatum, result);
+            }
+            if (p.OdCena != 0)
+            {
+                result = PretragaInt(ids, PRETRAGA.OdCena, p.OdCena, result);
+            }
+            if (p.DoCena != 0)
+            {
+                result = PretragaInt(ids, PRETRAGA.DoCena, p.DoCena, result);
+            }
+            if (p.OdOcena != 0)
+            {
+                result = PretragaInt(ids, PRETRAGA.OdOcena, p.OdOcena, result);
+            }
+            if (p.DoOcena != 0)
+            {
+                result = PretragaInt(ids, PRETRAGA.DoOcena, p.DoOcena, result);
             }
 
-            return Ok(ret);
+            if (result.Count > 0)
+                return Ok(result);
+            else
+                return Ok("Ne postoje voznje za trazene kriterujeme!");
+        }
+
+        public List<Voznja> PretragaString(List<int> ids, PRETRAGA p, string s, List<Voznja> r)
+        {
+            List<Voznja> result = new List<Voznja>();
+            foreach (Voznja v in r)
+            {
+                foreach (int id in ids)
+                {
+                    if (v.ID == id)
+                    {
+                        if(p == PRETRAGA.Status && v.StatusVoznje.ToString().Substring(0, 3) == s)
+                        {
+                            result.Add(v);
+                        }
+                        else if (p == PRETRAGA.OdDatum && DateTime.Compare(DateTime.Parse(v.DatumIVremePorudzbine), DateTime.Parse(s)) >= 0 )
+                        {
+                            result.Add(v);
+                        }
+                        else if (p == PRETRAGA.DoDatum && DateTime.Compare(DateTime.Parse(v.DatumIVremePorudzbine), DateTime.Parse(s)) <= 0)
+                        {
+                            result.Add(v);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<Voznja> PretragaInt(List<int> ids, PRETRAGA p, int i, List<Voznja> r)
+        {
+            List<Voznja> result = new List<Voznja>();
+            foreach (Voznja v in r)
+            {
+                foreach (int id in ids)
+                {
+                    if (v.ID == id)
+                    {
+                        if (p == PRETRAGA.OdCena && v.Iznos >= i)
+                        {
+                            result.Add(v);
+                        }
+                        else if (p == PRETRAGA.DoCena && v.Iznos <= i)
+                        {
+                            result.Add(v);
+                        }
+                        else if (p == PRETRAGA.OdOcena && v.Komentar.Ocena >= i)
+                        {
+                            result.Add(v);
+                        }
+                        else if (p == PRETRAGA.DoOcena && v.Komentar.Ocena <= i)
+                        {
+                            result.Add(v);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        [HttpPost, Route("api/Voznja/PromeniLokaciju")]
+        public IHttpActionResult PromeniLokaciju(AdrILok a)
+        {
+            Voznja v = new Voznja();
+            Lokacija l = new Lokacija();
+            l.Adresa = new Adresa();
+            l.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
+            l.Adresa.UlicaIBroj = a.UlicaiBroj;
+            l.GeoCoordinate = new Koordinate();
+            l.GeoCoordinate.Latitude = a.ylatit;
+            l.GeoCoordinate.Longitude = a.xlong;
+            v.LokacijaPolazista = l;
+            v.ID = a.IDVoznje;
+            v.TipAutomobila = Podaci.GetSveVoznje()[a.IDVoznje].TipAutomobila;
+
+            Podaci.IzmeniVoznju(a.IDVoznje,v );
+
+            return Ok();
+        }
+
+        [HttpGet, Route("api/Voznja/PromeniVozilo")]
+        public IHttpActionResult PromeniVozilo([FromUri]string a, [FromUri]int id)
+        {
+            Voznja v = new Voznja();
+            v.ID = id;
+            if (a == "Kombi")
+                v.TipAutomobila = TIP_AUTOMOBILA.Kombi;
+            else
+                v.TipAutomobila = TIP_AUTOMOBILA.Putnicki;
+
+            Podaci.IzmeniVoznju(id, v);
+
+            return Ok();
         }
     }
 }

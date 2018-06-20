@@ -28,7 +28,9 @@ namespace Projekat.Controllers
             }
             else
             {
+                korisnik.Uloga = ULOGA.Musterija;
                 Podaci.DodajKorisnik(korisnik);
+
                 return Ok();
             }
         }
