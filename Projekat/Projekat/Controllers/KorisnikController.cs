@@ -92,8 +92,7 @@ namespace Projekat.Controllers
                 return Ok("Vec ste ulogovani!");
             }
         }
-
-
+        
         [HttpDelete, Route("api/Korisnik/LogOut")]
         public IHttpActionResult LogOut(LogIn korisnik)
         {
@@ -103,6 +102,7 @@ namespace Projekat.Controllers
             }
             return Ok();
         }
+
 
 
         [HttpGet, Route("api/Korisnik/GetBlokiraneKorisnike")]
@@ -122,8 +122,7 @@ namespace Projekat.Controllers
                 return Ok("Ne postoje blokirani korisnici!");
             }
         }
-
-
+        
         [HttpGet, Route("api/Korisnik/GetBlokiraneVozace")]
         public IHttpActionResult GetBlokiraneVozace()
         {
@@ -143,6 +142,7 @@ namespace Projekat.Controllers
         }
 
 
+
         [HttpGet, Route("api/Korisnik/GetAllKorisnike")]
         public IHttpActionResult GetAllKorisnike()
         {
@@ -152,10 +152,12 @@ namespace Projekat.Controllers
                 if(!Podaci.GetBlokiraneKorisnike().Contains(k.KorisnickoIme))
                     ret.Add(k);
             }
-            return Ok(ret);
+            if (ret.Count > 0)
+                return Ok(ret);
+            else
+                return Ok("");
         }
-
-
+        
         [HttpGet, Route("api/Korisnik/GetAllVozace")]
         public IHttpActionResult GetAllVozace()
         {
@@ -165,9 +167,13 @@ namespace Projekat.Controllers
                 if(!Podaci.GetBlokiraneVozace().Contains(k.KorisnickoIme))
                     ret.Add(k);
             }
-            return Ok(ret);
+            if (ret.Count > 0)
+                return Ok(ret);
+            else
+                return Ok("");
         }
         
+
 
         [HttpGet, Route("api/Korisnik/Blokiraj")]
         public IHttpActionResult Blokiraj([FromUri]string korisckoImeBlokiraj)
@@ -201,8 +207,7 @@ namespace Projekat.Controllers
                 }
             }
         }
-
-
+        
         [HttpGet, Route("api/Korisnik/Odblokiraj")]
         public IHttpActionResult Odblokiraj([FromUri]string korisckoImeOdblokiraj)
         {
@@ -234,6 +239,60 @@ namespace Projekat.Controllers
                     return Ok("Ne postoji korisnik sa trazenim imenom!");
                 }
             }
+        }
+
+
+
+        [HttpGet, Route("api/Korisnik/GetImenaKorisnika")]
+        public IHttpActionResult GetImenaKorisnika()
+        {
+            List<string> result = new List<string>();
+
+            foreach(Korisnik k in Podaci.GetKorisnike().Values)
+            {
+                result.Add(k.Ime);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet, Route("api/Korisnik/GetPrezimenaKorisnika")]
+        public IHttpActionResult GetPrezimenaKorisnika()
+        {
+            List<string> result = new List<string>();
+
+            foreach (Korisnik k in Podaci.GetKorisnike().Values)
+            {
+                result.Add(k.Prezime);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet, Route("api/Korisnik/GetImenaVozaca")]
+        public IHttpActionResult GetImenaVozaca()
+        {
+            List<string> result = new List<string>();
+
+            foreach (Vozac v in Podaci.GetVozace().Values)
+            {
+                result.Add(v.Ime);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet, Route("api/Korisnik/GetPrezimenaVozaca")]
+        public IHttpActionResult GetPrezimenaVozaca()
+        {
+            List<string> result = new List<string>();
+
+            foreach (Vozac v in Podaci.GetVozace().Values)
+            {
+                result.Add(v.Prezime);
+            }
+
+            return Ok(result);
         }
     }
 }

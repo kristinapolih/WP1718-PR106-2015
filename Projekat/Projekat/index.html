@@ -181,31 +181,17 @@
                 <input type="submit" value="Naru&ccaron;i vo&zcaron;nju" id="narucivoznju">
             </div>
             <div id="blok" class="row" hidden>
-                <div id="bloksvi" class="col-md-5" style="text-align:center; justify-content:center">
+                <div id="bloksvi" class="col-md-6" style="text-align:center; justify-content:center">
                     <br /><br /><br />
-                    <p style="font-size:medium"><b>Svi korisnici</b></p>
-                    <div id="bloksvikorisnici"></div>
-                    <p style="font-size:medium"><b>Blokiranje korisnika</b></p>
-                    <p>(Unesite korisni&ccaron;ko ime koga zelite da blokirate)</p>
+                    <p style="font-size:medium"><b>Svi korisnici</b></p><br />
                     <p id="errorBlokiraj" style="color:crimson"></p>
-                    <div id="korisnickoBlokiraj">
-                        <input type="text" name="korisnickoIme" id="korisckoImeBlokiraj" placeholder="Korisni&ccaron;ko ime"><br />
-                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                    </div>
-                    <input type="submit" value="Blokiraj" id="blokirajKorisnika">
+                    <div id="bloksvikorisnici"></div>
                 </div>
-                <div id="blokblokirani" class="col-md-5">
+                <div id="blokblokirani" class="col-md-5" style="text-align:center; justify-content:center">
                     <br /><br /><br />
-                    <p style="font-size:medium"><b>Svi blokirani korisnici</b></p>
-                    <div id="odbloksvikorisnici"></div>
-                    <p style="font-size:medium"><b>Odblokirajte korisnika</b></p>
-                    <p>(Unesite korisni&ccaron;ko ime koga zelite da odblokirate)</p>
+                    <p style="font-size:medium"><b>Svi blokirani korisnici</b></p><br/>
                     <p id="errorOdlokiraj" style="color:crimson"></p>
-                    <div id="korisnickoBlokirani">
-                        <input type="text" name="korisnickoIme" id="korisckoImeBlokirani" placeholder="Korisni&ccaron;ko ime"><br />
-                        <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
-                    </div>
-                    <input type="submit" value="Odblokiraj" id="odblokirajKorisnika">
+                    <div id="odbloksvikorisnici"></div>
                 </div>
             </div>
             <div id="korisnikkomentar" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
@@ -232,7 +218,6 @@
                     <input type="submit" value="Dodaj lokaciju" id="dodajlokaciju">
                 </div>
             </div>
-
             <div id="promenipolazistekorisnik" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
                 <span class="helper"></span>
                 <div id="polazistepromeni" style="text-align:center; justify-content:center">
@@ -255,20 +240,29 @@
             <div id="dodelivoznjuvozacu" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
                 <span class="helper"></span>
                 <div id="dvoznju" style="text-align:center; justify-content:center">
-                    <h1>Dodeli vo&zcaron;nju</h1><br /><br /><br />
-                    <input type="submit" value="Napusti" id="napusti">
+                    <h1>Dodeli vo&zcaron;nju</h1><br />
+                    <div id="voznjevozacima"></div>
                 </div>
             </div>
         </div>
         <div id="divtabelapretrage" class="col-lg-2" style="text-align:left; justify-content:initial" hidden>
-            <br/><br />
+            <br /><br />
+            <div id="vozacslobodne" hidden>
+                <input type="submit" id="vslobodne" value="Vidi slobodne vo&zcaron;nje" style="font-size:larger; font-weight:700" class="buttons">
+            </div><br />
+            <div id="vozacsortira" hidden>
+                <input type="submit" id="vsortira" value="Sortiraj slobodne vo&zcaron;nje" style="font-size:medium; font-weight:700" class="buttons">
+            </div>
+            <div id="adminvidisve" hidden>
+                <input type="submit" id="vidisvevoznje" value="Vidi sve vo&zcaron;nje" style="font-size:larger; font-weight:700" class="buttons">
+            </div><br />
             <table border="0" id="tabelaPretrage">
                 <tr>
                     <td colspan="2"><b>Sortiranje</b></td>
                 </tr>
                 <tr>
                     <td>
-                        <br/><input type="submit" id="sortirajDatum" value="Soritraj po datumu" class="buttons">
+                        <br /><input type="submit" id="sortirajDatum" value="Soritraj po datumu" class="buttons">
                     </td>
                     <td>
                         <br /><input type="submit" id="sortirajOcena" value="Soritraj po oceni" class="buttons">
@@ -279,8 +273,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <br /><input list="filterstatus" placeholder="Filtriraj statuse" style="width:130px">
+                        <br /><input list="filterstatus" id="fs" placeholder="Filtriraj statuse" style="width:130px">
                         <datalist id="filterstatus">
+                            <option value=" " id="-1" />
                             <option value="Kreirana" id="0" />
                             <option value="Formirana" id="1" />
                             <option value="Obra&dstrok;ena" id="2" />
@@ -296,11 +291,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <br /><input list="oddatumpretraga" placeholder="Od" style="width:130px">
+                        <br /><input list="oddatumpretraga" id="ood" placeholder="Od" style="width:130px">
                         <datalist id="oddatumpretraga"></datalist>
                     </td>
                     <td>
-                        <br /><input list="dodatumpretraga" placeholder="Do" style="width:130px">
+                        <br /><input list="dodatumpretraga" id="dod" placeholder="Do" style="width:130px">
                         <datalist id="dodatumpretraga"></datalist>
                     </td>
                 </tr>
@@ -309,7 +304,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <br /><input list="odocenapretraga" placeholder="Od" style="width:130px">
+                        <br /><input list="odocenapretraga" id="odo" placeholder="Od" style="width:130px">
                         <datalist id="odocenapretraga">
                             <option value="1" id="1" />
                             <option value="2" id="2" />
@@ -319,7 +314,7 @@
                         </datalist>
                     </td>
                     <td>
-                        <br /><input list="doocenapretraga" placeholder="Do" style="width:130px">
+                        <br /><input list="doocenapretraga" id="doo" placeholder="Do" style="width:130px">
                         <datalist id="doocenapretraga">
                             <option value="1" id="1" />
                             <option value="2" id="2" />
@@ -334,7 +329,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <br /><input list="odcenapretraga" placeholder="Od" style="width:130px">
+                        <br /><input list="odcenapretraga" id="odc" placeholder="Od" style="width:130px">
                         <datalist id="odcenapretraga">
                             <option value=100 id="1" />
                             <option value=200 id="2" />
@@ -344,7 +339,7 @@
                         </datalist>
                     </td>
                     <td>
-                        <br /><input list="docenapretraga" placeholder="Do" style="width:130px">
+                        <br /><input list="docenapretraga" id="doc" placeholder="Do" style="width:130px">
                         <datalist id="docenapretraga">
                             <option value="100" id="1" />
                             <option value="200" id="2" />
@@ -355,9 +350,23 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><br /><input type="submit" id="primenikriterijum" value="Primeni kriterijume" class="buttons"></td>
+                    <td><br /><input type="submit" id="primenikriterijum" value="Primeni kriterijume" class="buttons"></td>
+                    
                 </tr>
             </table>
+            <div id="admintraziimeprezime" hidden>
+                <br /><b>Trazi po imenu i/ili prezimenu</b><br /><br />
+                <input list="admintraziimek" id="atik" placeholder="Ime korisnika" style="width:130px">
+                <datalist id="admintraziimek"></datalist>
+                <input list="admintraziprezimek" id="atpk" placeholder="Prezime korisnika" style="width:130px">
+                <datalist id="admintraziprezimek"></datalist><br /><br />
+                <input list="admintraziimev" id="ativ" placeholder="Ime voza&ccaron;a" style="width:130px">
+                <datalist id="admintraziimev"></datalist>
+                <input list="admintraziprezimev" id="atpv" placeholder="Prezime voza&ccaron;a" style="width:130px">
+                <datalist id="admintraziprezimev"></datalist><br /><br />
+                <input type="submit" id="admintraziip" value="Trazi" class="buttons">
+                <input type="reset" id="onemogucikriterujume" value="Onemogu&cacute;i kriterijume" class="buttons">
+            </div>
         </div>
         <div id="ulogovan" style="text-align:center; justify-content:center" hidden>
             <br />

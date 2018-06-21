@@ -12,7 +12,7 @@ namespace Projekat.Controllers
         [HttpPost, Route("api/Voznja/poruciVoznju")]
         public IHttpActionResult poruciVoznju(AdrILok adresaILokacija)
         {
-            if (CheckDrives(adresaILokacija.KorisnickoIme))
+            if (Podaci.GetKorisnike().ContainsKey(adresaILokacija.KorisnickoIme) && CheckDrives(adresaILokacija.KorisnickoIme))
             {
                 return Ok("Ne mozete da narucite sledecu voznju!");
             }
@@ -21,22 +21,26 @@ namespace Projekat.Controllers
                 Voznja v = new Voznja();
                 v.ID = ++Podaci.cnt;
                 Korisnik k = new Korisnik();
-                k.KorisnickoIme = adresaILokacija.KorisnickoIme;
-                k.Pol = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].Pol;
-                k.VoznjeIDs = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].VoznjeIDs;
-                k.VoznjeIDs.Add(v.ID);
-                Podaci.IzmeniKorisnika(adresaILokacija.KorisnickoIme, k);
+                
                 if (Podaci.GetKorisnike().ContainsKey(adresaILokacija.KorisnickoIme))
                 {
+                    k.KorisnickoIme = adresaILokacija.KorisnickoIme;
+                    k.Pol = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].Pol;
+                    k.VoznjeIDs = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].VoznjeIDs;
+                    k.VoznjeIDs.Add(v.ID);
+                    Podaci.IzmeniKorisnika(adresaILokacija.KorisnickoIme, k);
+
                     v.Musterija = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme];
                     v.StatusVoznje = STATUS_VOZNJE.Kreirana;
                 }
                 else if (Podaci.GetDispecere().ContainsKey(adresaILokacija.KorisnickoIme))
                 {
                     v.Dispecer = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme];
-                    //ponuditi 5 najblizih
-                    //v.Vozac = Podaci.GetVozace()[(Podaci.GetSlobodneVozace()[0])];
-                    // Podaci.GetSlobodneVozace().Remove(v.Vozac.KorisnickoIme);
+                    k.KorisnickoIme = adresaILokacija.KorisnickoIme;
+                    k.Pol = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme].Pol;
+                    k.VoznjeIDs = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme].VoznjeIDs;
+                    k.VoznjeIDs.Add(v.ID);
+                    Podaci.IzmeniDispecera(adresaILokacija.KorisnickoIme, k);
                     v.StatusVoznje = STATUS_VOZNJE.Formirana;
                 }
                 var date = DateTime.Now;
@@ -102,20 +106,12 @@ namespace Projekat.Controllers
                 {
                     ret.Add(Podaci.GetSveVoznje()[id]);
                 }
-                foreach (int id in Podaci.GetSlobodneVoznje())
-                {
-                    ret.Add(Podaci.GetSveVoznje()[id]);
-                }
                 return Ok(ret);
             }
             else if (korisnik.Uloga == ULOGA.Admin)
             {
                 List<Voznja> ret = new List<Voznja>();
                 foreach (int id in Podaci.GetDispecere()[korisnik.KorisnickoIme].VoznjeIDs)
-                {
-                    ret.Add(Podaci.GetSveVoznje()[id]);
-                }
-                foreach (int id in Podaci.GetSlobodneVoznje())
                 {
                     ret.Add(Podaci.GetSveVoznje()[id]);
                 }
@@ -246,24 +242,113 @@ namespace Projekat.Controllers
 
 
         [HttpGet, Route("api/Voznja/SortirajDatum")]
-        public IHttpActionResult SortirajDatum([FromUri]string user)
+        public IHttpActionResult SortirajDatum([FromUri]string user, [FromUri]string uloga, [FromUri]string a)
         {
             List<Voznja> ret = new List<Voznja>();
-            foreach (int id in Podaci.GetKorisnike()[user].VoznjeIDs)
+            if (uloga.StartsWith("2"))
             {
-                ret.Add(Podaci.GetSveVoznje()[id]);
+                foreach (int id in Podaci.GetKorisnike()[user].VoznjeIDs)
+                {
+                    ret.Add(Podaci.GetSveVoznje()[id]);
+                }
             }
-            List<Voznja> sort = ret.OrderByDescending(x => x.DatumIVremePorudzbine).ToList();
+            else if(uloga.StartsWith("1"))
+            {
+                if (a == "true")
+                {
+                    foreach (int id in Podaci.GetSlobodneVoznje())
+                    {
+                        ret.Add(Podaci.GetSveVoznje()[id]);
+                    }
+                }
+                else
+                {
+                    foreach (int id in Podaci.GetVozace()[user].VoznjeIDs)
+                    {
+                        ret.Add(Podaci.GetSveVoznje()[id]);
+                    }
+                }
+            }
+            else if(uloga.StartsWith("0"))
+            {
+                if (a == "true")
+                {
+                    foreach (Voznja v in Podaci.GetSveVoznje().Values)
+                    {
+                        ret.Add(v);
+                    }
+                }
+                else
+                {
+                    foreach (int id in Podaci.GetDispecere()[user].VoznjeIDs)
+                    {
+                        ret.Add(Podaci.GetSveVoznje()[id]);
+                    }
+                }
+            }
+            List<Voznja> sort = ret.OrderByDescending(x => DateTime.Parse(x.DatumIVremePorudzbine)).ToList();
 
             return Ok(sort);
         }
         [HttpGet, Route("api/Voznja/SortirajOcena")]
-        public IHttpActionResult SortirajOcena([FromUri]string user)
+        public IHttpActionResult SortirajOcena([FromUri]string user, [FromUri]string uloga, [FromUri]string a)
         {
             List<Voznja> ret = new List<Voznja>();
-            foreach (int id in Podaci.GetKorisnike()[user].VoznjeIDs)
+            if (uloga.StartsWith("2"))
             {
-                ret.Add(Podaci.GetSveVoznje()[id]);
+                foreach (int id in Podaci.GetKorisnike()[user].VoznjeIDs)
+                {
+                    if (Podaci.GetSveVoznje()[id].Komentar != null)
+                    {
+                        ret.Add(Podaci.GetSveVoznje()[id]);
+                    }
+                }
+            }
+            else if (uloga.StartsWith("1"))
+            {
+                if (a == "true")
+                {
+                    foreach (int id in Podaci.GetSlobodneVoznje())
+                    {
+                        if (Podaci.GetSveVoznje()[id].Komentar != null)
+                        {
+                            ret.Add(Podaci.GetSveVoznje()[id]);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (int id in Podaci.GetVozace()[user].VoznjeIDs)
+                    {
+                        if (Podaci.GetSveVoznje()[id].Komentar != null)
+                        {
+                            ret.Add(Podaci.GetSveVoznje()[id]);
+                        }
+                    }
+                }
+            }
+            else if (uloga.StartsWith("0"))
+            {
+                if (a == "true")
+                {
+                    foreach (Voznja v in Podaci.GetSveVoznje().Values)
+                    {
+                        if (v.Komentar != null)
+                        {
+                            ret.Add(v);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (int id in Podaci.GetDispecere()[user].VoznjeIDs)
+                    {
+                        if (Podaci.GetSveVoznje()[id].Komentar != null)
+                        {
+                            ret.Add(Podaci.GetSveVoznje()[id]);
+                        }
+                    }
+                }
             }
             List<Voznja> sort = ret.OrderByDescending(x => x.Komentar.Ocena).ToList();
 
@@ -275,7 +360,43 @@ namespace Projekat.Controllers
         {
             List<Voznja> result = Podaci.GetSveVoznje().Values.ToList();
             List<int> ids = new List<int>();
-            ids = Podaci.GetKorisnike()[p.KIme].VoznjeIDs;
+            if (p.Uloga.StartsWith("2"))
+            {
+                ids = Podaci.GetKorisnike()[p.KIme].VoznjeIDs;
+            }
+            else if (p.Uloga.StartsWith("1"))
+            {
+                if (p.a == "true")
+                {
+                    foreach (int id in Podaci.GetSlobodneVoznje())
+                    {
+                        ids.Add(id);
+                    }
+                }
+                else
+                {
+                    ids = Podaci.GetVozace()[p.KIme].VoznjeIDs;
+                }
+            }
+            else if (p.Uloga.StartsWith("0"))
+            {
+                if (p.a == "true")
+                {
+                    foreach (int id in Podaci.GetSveVoznje().Keys)
+                    {
+                        ids.Add(id);
+                    }
+                }
+                else
+                {
+                    ids = Podaci.GetDispecere()[p.KIme].VoznjeIDs;
+                    foreach (int id in Podaci.GetSlobodneVoznje())
+                    {
+                        ids.Add(id);
+                    }
+                }
+            }
+
             if (p.FilterStatus != null)
             {
                 result = PretragaString(ids, PRETRAGA.Status, p.FilterStatus.Substring(0, 3), result);
@@ -347,19 +468,19 @@ namespace Projekat.Controllers
                 {
                     if (v.ID == id)
                     {
-                        if (p == PRETRAGA.OdCena && v.Iznos >= i)
+                        if (p == PRETRAGA.OdCena && v.Iznos >= i && v.Iznos != 0)
                         {
                             result.Add(v);
                         }
-                        else if (p == PRETRAGA.DoCena && v.Iznos <= i)
+                        else if (p == PRETRAGA.DoCena && v.Iznos <= i && v.Iznos != 0)
                         {
                             result.Add(v);
                         }
-                        else if (p == PRETRAGA.OdOcena && v.Komentar.Ocena >= i)
+                        else if (p == PRETRAGA.OdOcena && v.Komentar != null && v.Komentar.Ocena >= i)
                         {
                             result.Add(v);
                         }
-                        else if (p == PRETRAGA.DoOcena && v.Komentar.Ocena <= i)
+                        else if (p == PRETRAGA.DoOcena && v.Komentar != null && v.Komentar.Ocena <= i)
                         {
                             result.Add(v);
                         }
@@ -402,6 +523,182 @@ namespace Projekat.Controllers
             Podaci.IzmeniVoznju(id, v);
 
             return Ok();
+        }
+
+        [HttpGet, Route("api/Voznja/NadjiNajblize")]
+        public IHttpActionResult NadjiNajblize([FromUri]int i)
+        {
+            Dictionary<double, Vozac> rastojanje = new Dictionary<double, Vozac>();
+            double d, x, y;
+            foreach (Vozac v in Podaci.GetVozace().Values)
+            {
+                foreach (string kime in Podaci.GetSlobodneVozace())
+                {
+                    if(v.KorisnickoIme == kime)
+                    {
+                        x = Math.Abs((Podaci.GetSveVoznje()[i].LokacijaPolazista.GeoCoordinate.Longitude) - (v.Lokacija.GeoCoordinate.Longitude));
+                        y = Math.Abs((Podaci.GetSveVoznje()[i].LokacijaPolazista.GeoCoordinate.Latitude) - (v.Lokacija.GeoCoordinate.Latitude));
+                        d = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+                        rastojanje.Add(d, v);
+                    }
+                }
+            }
+
+            var r = rastojanje.OrderBy(w => w.Key).ToDictionary(k => k.Key, v => v.Value);
+
+            List<Vozac> result = new List<Vozac>();
+            for(int j = 0; j < r.Count; j++)
+            {
+                if (j == 5)
+                    break;
+                result.Add(r.ElementAt(j).Value);
+            }
+            if (result.Count > 0)
+                return Ok(result);
+            else
+                return Ok("Nema slobodnih vozaca!");
+        }
+
+        [HttpGet, Route("api/Voznja/dodelivoznju")]
+        public IHttpActionResult dodelivoznju([FromUri]int id, [FromUri]string user)
+        {
+            Voznja voznja = new Voznja();
+            voznja.TipAutomobila = Podaci.GetSveVoznje()[id].TipAutomobila;
+            voznja.StatusVoznje = STATUS_VOZNJE.Obradjena;
+            voznja.Vozac = Podaci.GetVozace()[user];
+            Podaci.IzmeniVoznju(id, voznja);
+
+            Vozac v = new Vozac();
+            v.Slobodan = false;
+            v.Pol = Podaci.GetVozace()[user].Pol;
+            v.VoznjeIDs = Podaci.GetVozace()[user].VoznjeIDs;
+            v.VoznjeIDs.Add(id);
+            Podaci.IzmeniVozaca(user, v);
+
+            Podaci.GetSlobodneVoznje().Remove(id);
+            Podaci.GetSlobodneVozace().Remove(user);
+
+            return Ok();
+        }
+
+        [HttpGet, Route("api/Voznja/GetSveVoznje")]
+        public IHttpActionResult GetSveVoznje()
+        {
+            List<Voznja> result = new List<Voznja>();
+            foreach (Voznja v in Podaci.GetSveVoznje().Values)
+            {
+                result.Add(v);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet, Route("api/Voznja/GetSlobodneV")]
+        public IHttpActionResult GetSlobodneV()
+        {
+            List<Voznja> result = new List<Voznja>();
+            foreach (int id in Podaci.GetSlobodneVoznje())
+            {
+                result.Add(Podaci.GetSveVoznje()[id]);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet, Route("api/Voznja/VozacSortira")]
+        public IHttpActionResult VozacSortira([FromUri]string user)
+        {
+            Dictionary<double, Voznja> ret = new Dictionary<double, Voznja>();
+            double d, x, y;
+            foreach (Voznja v in Podaci.GetSveVoznje().Values)
+            {
+                foreach (int id in Podaci.GetSlobodneVoznje())
+                {
+                    if (v.ID == id)
+                    {
+                        x = Math.Abs((Podaci.GetVozace()[user].Lokacija.GeoCoordinate.Longitude) - (v.LokacijaPolazista.GeoCoordinate.Longitude));
+                        y = Math.Abs((Podaci.GetVozace()[user].Lokacija.GeoCoordinate.Latitude) - (v.LokacijaPolazista.GeoCoordinate.Latitude));
+                        d = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+                        ret.Add(d, v);
+                    }
+                }
+            }
+
+            var r = ret.OrderBy(w => w.Key).ToDictionary(k => k.Key, v => v.Value);
+            List<Voznja> sort = new List<Voznja>();
+            foreach (Voznja v in r.Values)
+            {
+                sort.Add(v);
+            }
+            
+            return Ok(sort);
+        }
+
+        [HttpPost, Route("api/Voznja/adminptretrazuje")]
+        public IHttpActionResult adminptretrazuje(Pretraga p)
+        {
+            List<Voznja> result = new List<Voznja>();
+            List<int> ids = new List<int>();
+            if (p.KIme != null)
+            {
+                foreach(Korisnik k in Podaci.GetKorisnike().Values)
+                {
+                    if(k.Ime.ToLower() == p.KIme.ToLower())
+                    {
+                        foreach(int id in k.VoznjeIDs)
+                        {
+                            ids.Add(id);
+                        }
+                    }
+                }
+            }
+            else if (p.KPrezime != null)
+            {
+                foreach (Korisnik k in Podaci.GetKorisnike().Values)
+                {
+                    if (k.Prezime.ToLower() == p.KPrezime.ToLower())
+                    {
+                        foreach (int id in k.VoznjeIDs)
+                        {
+                            ids.Add(id);
+                        }
+                    }
+                }
+            }
+            else if (p.VIme != null)
+            {
+                foreach (Vozac k in Podaci.GetVozace().Values)
+                {
+                    if (k.Ime.ToLower() == p.VIme.ToLower())
+                    {
+                        foreach (int id in k.VoznjeIDs)
+                        {
+                            ids.Add(id);
+                        }
+                    }
+                }
+            }
+            else if (p.VPrezime != null)
+            {
+                foreach (Vozac k in Podaci.GetVozace().Values)
+                {
+                    if (k.Prezime.ToLower() == p.VPrezime.ToLower())
+                    {
+                        foreach (int id in k.VoznjeIDs)
+                        {
+                            ids.Add(id);
+                        }
+                    }
+                }
+            }
+
+            foreach(int id in ids)
+            {
+                result.Add(Podaci.GetSveVoznje()[id]);
+            }
+
+            if (result.Count > 0)
+                return Ok(result);
+            else
+                return Ok("Nema rezultata!");
         }
     }
 }

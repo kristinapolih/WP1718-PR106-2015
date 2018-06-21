@@ -764,6 +764,7 @@
         $("#ulogovan").hide();
         $("#blok").show();
         $("#divtabelapretrage").hide();
+        $("#errorBlokiraj").html("");
 
         BlokReload();
         UnblokReload();
@@ -775,21 +776,12 @@
         sessionStorage.setItem("divmap", false);
         sessionStorage.setItem("blokreload", true);
     });
-
-    $(document).on("click", "#blokirajKorisnika", function () {
+    
+    $(document).on("click", "#blokirajkime", function () {
         $("#errorOdlokiraj").html("");
-        let upis = true;
-        if ($("#korisckoImeBlokiraj").val() === "" || $("#korisckoImeBlokiraj").val() === " ") {
-            $("#korisckoImeBlokiraj").css("border-color", "crimson");
-            $("#korisnickoBlokiraj p").show();
-            $("#korisnickoBlokiraj br").hide();
-            $("#korisckoImeBlokiraj").focus();
-            upis = false;
-        }
-
-        if (upis) {
+        let k = $(this).attr("name");
             let blok = {
-                korisckoImeBlokiraj: $("#korisckoImeBlokiraj").val()
+                korisckoImeBlokiraj: k
             };
 
             $.ajax({
@@ -814,23 +806,14 @@
                     }
                 }
             });
-        }
+        
     });
 
-    $(document).on("click", "#odblokirajKorisnika", function () {
+    $(document).on("click", "#odblokirajkime", function () {
         $("#errorBlokiraj").html("");
-        let upis = true;
-        if ($("#korisckoImeBlokirani").val() === "" || $("#korisckoImeBlokirani").val() === " ") {
-            $("#korisckoImeBlokirani").css("border-color", "crimson");
-            $("#korisnickoBlokirani p").show();
-            $("#korisnickoBlokirani br").hide();
-            $("#korisckoImeBlokirani").focus();
-            upis = false;
-        }
-
-        if (upis) {
+        let k = $(this).attr("name");
             let blok = {
-                korisckoImeOdblokiraj: $("#korisckoImeBlokirani").val()
+                korisckoImeOdblokiraj: k
             };
 
             $.ajax({
@@ -855,7 +838,6 @@
                     }
                 }
             });
-        }
     });
 
     function UnblokReload() {
@@ -875,12 +857,13 @@
                                 $("#odbloksvikorisnici").html(blok);
                             }
                             else {
-                                let blok = "<br/><table border=\"0\"><tr><td width=\"100px\">Korisnicko Ime</td><td width=\"100px\">Uloga</td><td width=\"100px\">Ime</td><td width=\"100px\">Prezime</td></tr>";
+                                var blok = "<br/><table border=\"1\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr><td width=\"130px\"><b>Korisnicko Ime</b></td><td width=\"100px\"><b>Uloga</b></td><td width=\"100px\"><b>Ime</b></td><td width=\"100px\"><b>Prezime</b></td><td width=\"100px\">&nbsp;</td></tr>";
                                 for (var k in voz) {
-                                    blok += "<tr><td width=\"100px\">" + voz[k].KorisnickoIme + "</td>";
-                                    blok += "<td width=\"100px\">Voza" + `&ccaron;` + "</td>";
-                                    blok += "<td width=\"100px\">" + voz[k].Ime + "</td>";
-                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td></tr>";
+                                    blok += "<tr><td>" + voz[k].KorisnickoIme + "</td>";
+                                    blok += "<td>Voza" + `&ccaron;` + "</td>";
+                                    blok += "<td>" + voz[k].Ime + "</td>";
+                                    blok += "<td>" + voz[k].Prezime + "</td>";
+                                    blok += "<td><input id=\"odblokirajkime\" name=\"" + voz[k].KorisnickoIme + "\" type=\"submit\" value=\"Odblokiraj\" class=\"buttons\"/></tr>";
                                 }
                                 blok += "</table><br/>";
                                 $("#odbloksvikorisnici").html(blok);
@@ -890,12 +873,13 @@
                     });
                 }
                 else {
-                    var blok = "<br/><table border=\"0\"><tr><td width=\"100px\">Korisnicko Ime</td><td width=\"100px\">Uloga</td><td width=\"100px\">Ime</td><td width=\"100px\">Prezime</td></tr>";
-                    for (var k in result) {
+                    var blok = "<br/><table border=\"1\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr><td width=\"130px\"><b>Korisnicko Ime</b></td><td width=\"100px\"><b>Uloga</b></td><td width=\"100px\"><b>Ime</b></td><td width=\"100px\"><b>Prezime</b></td><td width=\"100px\">&nbsp;</td></tr>";
+                                for (var k in result) {
                         blok += "<tr><td>" + result[k].KorisnickoIme + "</td>";
                         blok += "<td>Mu" + `&scaron;` + "terija</td>";
                         blok += "<td>" + result[k].Ime + "</td>";
-                        blok += "<td>" + result[k].Prezime + "</td></tr>";
+                        blok += "<td>" + result[k].Prezime + "</td>";
+                        blok += "<td><input id=\"odblokirajkime\" name=\"" + result[k].KorisnickoIme + "\" type=\"submit\" value=\"Odblokiraj\" class=\"buttons\"/></tr>";
                     }
                     blok += "</table>";
                     $("#odbloksvikorisnici").html(blok);
@@ -905,19 +889,17 @@
                         type: "GET",
                         success: function (voz) {
                             if (voz !== "Ne postoje blokirani korisnici!") {
-                                var blok = "<table border=\"0\">";
+                                var blok = "<table border=\"1\" style=\"border-color:slategray; background-color:lemonchiffon\">";
                                 for (var k in voz) {
-                                    blok += "<tr><td width=\"100px\">" + voz[k].KorisnickoIme + "</td>";
+                                    blok += "<tr><td width=\"130px\">" + voz[k].KorisnickoIme + "</td>";
                                     blok += "<td width=\"100px\">Voza" + `&ccaron;` + "</td>";
                                     blok += "<td width=\"100px\">" + voz[k].Ime + "</td>";
-                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td></tr>";
+                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td>";
+                                    blok += "<td width=\"100px\"><input id=\"odblokirajkime\" name=\"" + voz[k].KorisnickoIme + "\" type=\"submit\" value=\"Odblokiraj\" class=\"buttons\"/></tr>";
                                 }
                                 blok += "</table><br/><br/>";
                                 $("#odbloksvikorisnici").append(blok);
                                 sessionStorage.setItem("blokreload", true);
-                            }
-                            else {
-                                $("#odbloksvikorisnici").append("<br/><br/>");
                             }
                         }
                     });
@@ -938,17 +920,18 @@
                         data: "",
                         type: "GET",
                         success: function (voz) {
-                            if (voz === "Ne postoje blokirani korisnici!") {
-                                let blok = "<p>Ne postoje blokirani korisnici!</p>";
+                            if (voz === "") {
+                                let blok = "<p>Ne postoje korisnici koji nisu blokirani!</p>";
                                 $("#bloksvikorisnici").html(blok);
                             }
                             else {
-                                let blok = "<br/><table border=\"0\"><tr><td width=\"100px\">Korisnicko Ime</td><td width=\"100px\">Uloga</td><td width=\"100px\">Ime</td><td width=\"100px\">Prezime</td></tr>";
+                                var blok = "<br/><table border=\"1\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr><td width=\"130px\"><b>Korisnicko Ime</b></td><td width=\"100px\"><b>Uloga</b></td><td width=\"100px\"><b>Ime</b></td><td width=\"100px\"><b>Prezime</b></td><td width=\"100px\">&nbsp;</td></tr>";
                                 for (var k in voz) {
-                                    blok += "<tr><td width=\"100px\">" + voz[k].KorisnickoIme + "</td>";
-                                    blok += "<td width=\"100px\">Voza" + `&ccaron;` + "</td>";
-                                    blok += "<td width=\"100px\">" + voz[k].Ime + "</td>";
-                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td></tr>";
+                                    blok += "<tr><td>" + voz[k].KorisnickoIme + "</td>";
+                                    blok += "<td>Voza" + `&ccaron;` + "</td>";
+                                    blok += "<td>" + voz[k].Ime + "</td>";
+                                    blok += "<td>" + voz[k].Prezime + "</td>";
+                                    blok += "<td><input id=\"blokirajkime\" name=\"" + voz[k].KorisnickoIme + "\" type=\"submit\" value=\"Blokiraj\" class=\"buttons\"/></tr>";
                                 }
                                 blok += "</table><br/><br/>";
                                 $("#bloksvikorisnici").html(blok);
@@ -958,12 +941,13 @@
                     });
                 }
                 else {
-                    var blok = "<br/><table border=\"0\"><tr><td width=\"100px\">Korisnicko Ime</td><td width=\"100px\">Uloga</td><td width=\"100px\">Ime</td><td width=\"100px\">Prezime</td></tr>";
+                    var blok = "<br/><table border=\"1\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr><td width=\"130px\"><b>Korisnicko Ime</b></td><td width=\"100px\"><b>Uloga</b></td><td width=\"100px\"><b>Ime</b></td><td width=\"100px\"><b>Prezime</b></td><td width=\"100px\">&nbsp;</td></tr>";
                     for (var k in result) {
                         blok += "<tr><td>" + result[k].KorisnickoIme + "</td>";
                         blok += "<td>Mu" + `&scaron;` + "terija</td>";
                         blok += "<td>" + result[k].Ime + "</td>";
-                        blok += "<td>" + result[k].Prezime + "</td></tr>";
+                        blok += "<td>" + result[k].Prezime + "</td>";
+                                    blok += "<td><input id=\"blokirajkime\" name=\"" + result[k].KorisnickoIme + "\" type=\"submit\" value=\"Blokiraj\" class=\"buttons\"/></tr>";
                     }
                     blok += "</table>";
                     $("#bloksvikorisnici").html(blok);
@@ -972,13 +956,14 @@
                         data: "",
                         type: "GET",
                         success: function (voz) {
-                            if (voz !== "Ne postoje blokirani korisnici!") {
-                                var blok = "<table border=\"0\">";
+                            if (voz !== "") {
+                                var blok = "<table border=\"1\" style=\"border-color:slategray; background-color:lemonchiffon\">";
                                 for (var k in voz) {
-                                    blok += "<tr><td width=\"100px\">" + voz[k].KorisnickoIme + "</td>";
+                                    blok += "<tr><td width=\"130px\">" + voz[k].KorisnickoIme + "</td>";
                                     blok += "<td width=\"100px\">Voza" + `&ccaron;` + "</td>";
                                     blok += "<td width=\"100px\">" + voz[k].Ime + "</td>";
-                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td></tr>";
+                                    blok += "<td width=\"100px\">" + voz[k].Prezime + "</td>";
+                                    blok += "<td width=\"100px\"><input id=\"blokirajkime\" name=\"" + voz[k].KorisnickoIme + "\" type=\"submit\" value=\"Blokiraj\" class=\"buttons\"/></tr>";
                                 }
                                 blok += "</table><br/><br/>";
                                 $("#bloksvikorisnici").append(blok);
@@ -1013,6 +998,7 @@
 
     $(document).on("click", "#pocetna", function () {
         $("#ulogovanMessage").html("");
+        sessionStorage.setItem("adminvidisve", "false");
         PocetnaStrana();
     });
 
@@ -1049,7 +1035,9 @@
                     DodajDatum(result);
                     if (sessionStorage.getItem("sortirajDatum") === "true") {
                         let b = {
-                            user: sessionStorage.getItem("user")
+                            user: sessionStorage.getItem("user"),
+                            uloga: sessionStorage.getItem(sessionStorage.getItem("user")),
+                            a: sessionStorage.getItem("adminvidisve")
                         }
                         sessionStorage.setItem("sortirajDatum", false);
                         sessionStorage.setItem("sortirajOcena", false);
@@ -1059,18 +1047,24 @@
                                 $("#ulogovanMessage").show();
                                 if (ul === "2") {
                                     TabelaKlijent(r);
+                                    DodajDatum(r);
                                 }
                                 else if (ul === "1") {
                                     TabelaVozac(r);
+                                    DodajDatum(r);
                                 }
                                 else if (ul === "0") {
                                     TabelaAdmin(r);
+                                    DodajDatum(r);
+                                    DodajImenaPrezimena();
                                 }
                             });
                     }
                     else if (sessionStorage.getItem("sortirajOcena") === "true") {
                         let b = {
-                            user: sessionStorage.getItem("user")
+                            user: sessionStorage.getItem("user"),
+                            uloga: sessionStorage.getItem(sessionStorage.getItem("user")),
+                            a: sessionStorage.getItem("adminvidisve")
                         }
                         sessionStorage.setItem("sortirajDatum", false);
                         sessionStorage.setItem("sortirajOcena", false);
@@ -1080,24 +1074,32 @@
                                 $("#ulogovanMessage").show();
                                 if (ul === "2") {
                                     TabelaKlijent(r);
+                                    DodajDatum(r);
                                 }
                                 else if (ul === "1") {
                                     TabelaVozac(r);
+                                    DodajDatum(r);
                                 }
                                 else if (ul === "0") {
                                     TabelaAdmin(r);
+                                    DodajDatum(r);
+                                    DodajImenaPrezimena();
                                 }
                             });
                     }
                     else {
                         if (ul === "2") {
                             TabelaKlijent(result);
+                            DodajDatum(result);
                         }
                         else if (ul === "1") {
                             TabelaVozac(result);
+                            DodajDatum(result);
                         }
                         else if (ul === "0") {
-                            TabelaAdmin(r);
+                            TabelaAdmin(result);
+                            DodajDatum(result);
+                            DodajImenaPrezimena();
                         }
                     }
 
@@ -1115,9 +1117,15 @@
     }
 
     function TabelaKlijent(result) {
+        $("#adminvidisve").hide();
+        $("#adminvoznja").hide();
+        $("#vozacvoznja").hide();
+        $("#vozacslobodne").hide();
+        $("#vozacsortira").hide();
+        $("#admintraziimeprezime").hide();
         $("#tableklijent").html("");
         var t = "";
-        t += "<table border=\"3\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr  style=\"background-color:yellow\"><td width=\"80px\"><b>Vreme i datum</b></td><td width=\"120px\"><b>Polazi" + `&scaron;` + "te</b></td><td width=\"120px\"><b>Odredi" + `&scaron;` + "te</b></td><td width=\"50px\"><b>Tip vozila</b></td><td width=\"80px\"><b>Status vo" + `&zcaron;` + "nje</b></td><td width=\"50px\"><b>Cena</b></td><td width=\"80px\">&nbsp;</td></tr>";
+        t += "<table border=\"3\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr  style=\"background-color:yellow\"><td width=\"100px\"><b>Vreme i datum</b></td><td width=\"150px\"><b>Polazi" + `&scaron;` + "te</b></td><td width=\"150px\"><b>Odredi" + `&scaron;` + "te</b></td><td width=\"80px\"><b>Tip vozila</b></td><td width=\"100px\"><b>Status vo" + `&zcaron;` + "nje</b></td><td width=\"80px\"><b>Cena</b></td><td width=\"150px\">&nbsp;</td></tr>";
         for (var i in result) {
             t += "<tr><td>" + result[i].DatumIVremePorudzbine + "</td>";
             if (result[i].StatusVoznje === 0) {
@@ -1176,9 +1184,15 @@
     }
 
     function TabelaAdmin(result) {
+        $("#korisnikvoznja").hide();
+        $("#vozacvoznja").hide();
+        $("#adminvidisve").show();
+        $("#vozacslobodne").hide();
+        $("#vozacsortira").hide();
+        $("#admintraziimeprezime").show();
         $("#tableadmin").html("");
         var t = "";
-        t += "<table border=\"3\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr style=\"background-color:yellow\"><td width=\"80px\"><b>Vreme i datum</b></td><td width=\"120px\"><b>Polazi" + `&scaron;` + "te</b></td><td width=\"120px\"><b>Odredi" + `&scaron;` + "te</b></td><td width=\"50px\"><b>Tip vozila</b></td><td width=\"80px\"><b>Status vo" + `&zcaron;` + "nje</b></td><td width=\"50px\"><b>Cena</b></td><td width=\"80px\">&nbsp;</td><td width=\"80px\"><b>Korisnik</b></td><td width=\"80px\"><b>Voza" + `&ccaron;` + "</b></td><td width=\"80px\">&nbsp;</td></tr>";
+        t += "<table border=\"3\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr style=\"background-color:yellow\"><td width=\"100px\"><b>Vreme i datum</b></td><td width=\"150px\"><b>Polazi" + `&scaron;` + "te</b></td><td width=\"150px\"><b>Odredi" + `&scaron;` + "te</b></td><td width=\"80px\"><b>Tip vozila</b></td><td width=\"100px\"><b>Status vo" + `&zcaron;` + "nje</b></td><td width=\"80px\"><b>Cena</b></td><td width=\"80px\"><b>Korisnik</b></td><td width=\"80px\"><b>Voza" + `&ccaron;` + "</b></td><td width=\"150px\">&nbsp;</td></tr>";
         for (var i in result) {
             t += "<tr><td>" + result[i].DatumIVremePorudzbine + "</td>";
             t += "<td>" + result[i].LokacijaPolazista.Adresa.UlicaIBroj + "&nbsp;" + result[i].LokacijaPolazista.Adresa.MestoIPostanskiFah + "</td>";
@@ -1194,22 +1208,15 @@
             else {
                 t += "<td>Kombi</td>";
             }
-            if (result[i].StatusVoznje === 1 || result[i].StatusVoznje === 0) {
-                t += "<td><input list=\"statusv\" name=\"statusv\" placeholder=\"Status\"><datalist id=\"statusv\">";
-                t += "<option value=\"Obra" + `&dstrok;` + "ena\" id=\"5\"><option value=\"Uspe" + `&scaron;` + "na\" id=\"6\">";
-                t += "</datalist></td>";
-            }
-            else {
-                t += Statusi(result[i].StatusVoznje)
-            }
+                t +=  Statusi(result[i].StatusVoznje);
             if (result[i].Iznos !== 0) {
                 t += "<td>" + result[i].Iznos + "</td>";
             }
             else {
                 t += "<td>" + `&nbsp;` + "</td>";
             }
-            if (result[i].Korisnik !== null) {
-                t += "<td>" + result[i].Korisnik.KorisnickoIme + "</td>";
+            if (result[i].Musterija !== null) {
+                t += "<td>" + result[i].Musterija.KorisnickoIme + "</td>";
             }
             else {
                 t += "<td>" + `&nbsp;` + "</td>";
@@ -1221,17 +1228,16 @@
                 t += "<td>" + `&nbsp;` + "</td>";
             }
             t += "<td>";
-            if (result[i].Komentar !== null) {
-                t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" class=\"trigger_popup_fricc\" value=\"Pogledaj komentar\" id=\"pogledajkomentar\">";
-            }
-            else {
-                t += "" + `&nbsp;`;
-            }
             if (result[i].StatusVoznje === 0 || result[i].StatusVoznje === 1) {
                 t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" class=\"trigger_popup_fricc\" value=\"Dodeli vo" + `&zcaron;` + "nju\" id=\"dodelivoznju\">";
             }
             else {
-                t += "" + `&nbsp;`;
+                if (result[i].Komentar !== null) {
+                    t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" class=\"trigger_popup_fricc\" value=\"Pogledaj komentar\" id=\"pogledajkomentar\">";
+                }
+                else {
+                    t += "" + `&nbsp;`;
+                }
             }
             t += "</td>";
         }
@@ -1241,9 +1247,15 @@
     }
 
     function TabelaVozac(result) {
+        $("#korisnikvoznja").hide();
+        $("#adminvoznja").hide();
+        $("#adminvidisve").hide();
+        $("#vozacslobodne").show();
+        $("#vozacsortira").show();
+        $("#admintraziimeprezime").hide();
         var t = "";
         $("#tablevozac").html("");
-        t += "<table border=\"3\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr  style=\"background-color:yellow\"><td width=\"80px\"><b>Vreme i datum</b></td><td width=\"120px\"><b>Polazi" + `&scaron;` + "te</b></td><td width=\"120px\"><b>Odredi" + `&scaron;` + "te</b></td><td width=\"50px\"><b>Tip vozila</b></td><td width=\"80px\"><b>Status vo" + `&zcaron;` + "nje</b></td><td width=\"50px\"><b>Cena</b></td><td width=\"80px\">&nbsp;</td></tr>";
+        t += "<table border=\"3\" style=\"border-color:slategray; background-color:lemonchiffon\"><tr  style=\"background-color:yellow\"><td width=\"100px\"><b>Vreme i datum</b></td><td width=\"150px\"><b>Polazi" + `&scaron;` + "te</b></td><td width=\"150px\"><b>Odredi" + `&scaron;` + "te</b></td><td width=\"80px\"><b>Tip vozila</b></td><td width=\"150px\"><b>Status vo" + `&zcaron;` + "nje</b></td><td width=\"80px\"><b>Cena</b></td><td width=\"150px\">&nbsp;</td></tr>";
         for (var i in result) {
             t += "<tr><td>" + result[i].DatumIVremePorudzbine + "</td>";
             t += "<td>" + result[i].LokacijaPolazista.Adresa.UlicaIBroj + "&nbsp;" + result[i].LokacijaPolazista.Adresa.MestoIPostanskiFah + "</td>";
@@ -1251,7 +1263,7 @@
                 t += "<td>" + result[i].LokacijaOdredista.Adresa.UlicaIBroj + "&nbsp;" + result[i].LokacijaOdredista.Adresa.MestoIPostanskiFah + "</td>";
             }
             else {
-                if (result[i].StatusVoznje === 0 || result[i].StatusVoznje === 5) {
+                if (result[i].StatusVoznje === 0 || result[i].StatusVoznje === 5 || result[i].StatusVoznje === 1 || result[i].StatusVoznje === 4) {
                     t += "<td>" + `&nbsp;` + "</td>";
                 }
                 else {
@@ -1265,7 +1277,7 @@
             else {
                 t += "<td>Kombi</td>";
             }
-            if (result[i].StatusVoznje === 1 || result[i].StatusVoznje === 2 || result[i].StatusVoznje === 3) {
+            if (result[i].StatusVoznje === 2 || result[i].StatusVoznje === 3) {
                 t += "<td><input list=\"statusv\" name=\"statusv\" placeholder=\"Status\"><datalist id=\"statusv\">";
                 t += "<option value=\"Neuspe" + `&scaron;` + "na\" id=\"5\"><option value=\"Uspe" + `&scaron;` + "na\" id=\"6\">";
                 t += "</datalist></td>";
@@ -1277,7 +1289,7 @@
                 t += "<td>" + result[i].Iznos + " din</td>";
             }
             else {
-                if (result[i].StatusVoznje === 0 || result[i].StatusVoznje === 5) {
+                if (result[i].StatusVoznje === 0 || result[i].StatusVoznje === 5 || result[i].StatusVoznje === 1) {
                     t += "<td>" + `&nbsp;` + "</td>";
                 }
                 else {
@@ -1286,23 +1298,27 @@
                 }
             }
             t += "<td>";
-            if (result[i].Komentar !== null) {
-                t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" class=\"trigger_popup_fricc\" value=\"Pogledaj komentar\" id=\"pogledajkomentar\">";
-            }
-            else {
-                t += "" + `&nbsp;`;
-            }
-            if (result[i].StatusVoznje === 0) {
+            if (result[i].StatusVoznje === 0 || result[i].StatusVoznje === 1) {
                 t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" value=\"Prihvati vo" + `&zcaron;` + "nju\" id=\"prihvativoznju\">";
             }
-            else if (result[i].StatusVoznje === 6) {
-                t += "" + `&nbsp;`;
+            else if (result[i].StatusVoznje === 5 && result[i].Komentar === null) {
+                var id = result[i].ID;
+                sessionStorage.setItem("id", id);
+                DodajKomentar();
             }
-            else if (result[i].StatusVoznje === 5) {
-                t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" class=\"trigger_popup_fricc\" value=\"Dodaj komentar\" id=\"dodajkomentar\">";
+            else if (result[i].StatusVoznje === 2 || result[i].StatusVoznje === 3) {
+                t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" value=\"Dodaj Izmene\" id=\"dodajizmene\">";
+            }
+            else if (result[i].StatusVoznje === 6 || result[i].StatusVoznje === 5 || result[i].StatusVoznje === 4) {
+                if (result[i].Komentar !== null) {
+                    t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" class=\"trigger_popup_fricc\" value=\"Pogledaj komentar\" id=\"pogledajkomentar\">";
+                }
+                else {
+                    t += "" + `&nbsp;`;
+                }
             }
             else {
-                t += "<input type=\"submit\" name=\"" + `${result[i].ID}` + "\" value=\"Dodaj Izmene\" id=\"dodajizmene\">";
+                t += "" + `&nbsp;`;
             }
             t += "</td>";
         }
@@ -1336,12 +1352,46 @@
     }
 
     function DodajDatum(result) {
+        $("#oddatumpretraga").html("");
+        $("#dodatumpretraga").html("");
         for (var i in result) {
             $("#oddatumpretraga").append(`<option value="${result[i].DatumIVremePorudzbine}" id="${i}" />`);
         }
         for (var i in result) {
             $("#dodatumpretraga").append(`<option value="${result[i].DatumIVremePorudzbine}" id="${i}" />`);
         }
+    }
+
+    function DodajImenaPrezimena() {
+        $("#admintraziimek").html("");
+        $("#admintraziprezimek").html("");
+        $("#admintraziimev").html("");
+        $("#admintraziprezimev").html("");
+
+        $.get("/api/Korisnik/GetImenaKorisnika", "")
+            .done(function (result) {
+                for (var i in result) {
+                    $("#admintraziimek").append(`<option value="${result[i]}" id="${i}" />`);
+                }
+            });
+        $.get("/api/Korisnik/GetPrezimenaKorisnika", "")
+            .done(function (result) {
+                for (var i in result) {
+                    $("#admintraziprezimek").append(`<option value="${result[i]}" id="${i}" />`);
+                }
+            });
+        $.get("/api/Korisnik/GetImenaVozaca", "")
+            .done(function (result) {
+                for (var i in result) {
+                    $("#admintraziimev").append(`<option value="${result[i]}" id="${i}" />`);
+                }
+            });
+        $.get("/api/Korisnik/GetPrezimenaVozaca", "")
+            .done(function (result) {
+                for (var i in result) {
+                    $("#admintraziprezimev").append(`<option value="${result[i]}" id="${i}" />`);
+                }
+            });
     }
 
     $(document).on("click", "#otkazivoznju", function () {
@@ -1462,7 +1512,7 @@
             });
     });
 
-    $(document).on("click", "#dodajizmene", function () {//
+    $(document).on("click", "#dodajizmene", function () {
         $("#ulogovanMessage").html("");
         $("#ulogovanMessage").hide();
         let id = $(this).attr("name");
@@ -1500,6 +1550,7 @@
         $("#vozacOdrediste").hide();
         $("#pogledajkoment").hide();
         $("#korisnikkomentar").hide();
+        $("#dodelivoznjuvozacu").hide();
     });
 
     function DodajKomentar() {
@@ -1605,12 +1656,48 @@
         sessionStorage.setItem("docenapretraga", $(this).val());
     });
 
+    $(document).on("focusin", "input[list=filterstatus]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=oddatumpretraga]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=dodatumpretraga]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=odocenapretraga]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=doocenapretraga]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=odcenapretraga]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=docenapretraga]", function () {
+        $(this).val("");
+    });
+
+    $(document).on("focusin", "input[list=admintraziimek]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=admintraziprezimek]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=admintraziimev]", function () {
+        $(this).val("");
+    });
+    $(document).on("focusin", "input[list=admintraziprezimev]", function () {
+        $(this).val("");
+    });
+
     $(document).on("click", "#primenikriterijum", function () {
         $("#ulogovanMessage").html("");
-        $("#ulogovan").hide();
+        $("#ulogovanMessage").hide();
         var user = sessionStorage.getItem("user");
         var ul = sessionStorage.getItem(user);
         var data = {
+            Uloga: sessionStorage.getItem(user),
             KIme: user,
             FilterStatus: sessionStorage.getItem("filterstatus"),
             OdDatum: sessionStorage.getItem("oddatumpretraga"),
@@ -1618,21 +1705,40 @@
             OdOcena: sessionStorage.getItem("odocenapretraga"),
             DoOcena: sessionStorage.getItem("doocenapretraga"),
             OdCena: sessionStorage.getItem("odcenapretraga"),
-            DoCena: sessionStorage.getItem("docenapretraga")
+            DoCena: sessionStorage.getItem("docenapretraga"),
+            a: sessionStorage.getItem("adminvidisve")
         }
         $.post("/api/Voznja/IzvrsiPretragu", data)
             .done(function (result) {
                 if (result === "Ne postoje voznje za trazene kriterujeme!") {
                     $("#ulogovanMessage").html("Ne postoje vo" + `&zcaron;` + "nje za tra" + `&zcaron;` + "ene kriterijume!");
                     $("#ulogovanMessage").show();
-                    $("#ulogovan").hide();
+                    if (ul === "2") {
+                        $("#korisnikvoznja").hide();
+                    }
+                    else if (ul === "1") {
+                        $("#vozacvoznja").hide();
+                    }
+                    else if (ul === "0") {
+                        $("#adminvoznja").hide();
+                    }
                 }
                 else {
                     if (ul === "2") {
+                        $("#korisnikvoznja").show();
+                        $("#ulogovan").show();
                         TabelaKlijent(result);
                     }
                     else if (ul === "1") {
+                        $("#vozacvoznja").show();
+                        $("#ulogovan").show();
                         TabelaVozac(result);
+                    }
+                    else if (ul === "0") {
+                        $("#adminvoznja").show();
+                        $("#ulogovan").show();
+                        $("#admintraziimeprezime").show();
+                        TabelaAdmin(result);
                     }
                 }
             });
@@ -1641,18 +1747,211 @@
     $(document).on("click", "#dodelivoznju", function () {
         $("#ulogovanMessage").html("");
         $("#ulogovanMessage").hide();
+        $("#vozacOdrediste").hide();
+        $("#pogledajkomentar").hide();
+        $("#korisnikkomentar").hide();
+        $("#promenipolazistekorisnik").hide();
+        $("#dodelivoznjuvozacu").show();
+
         var id = $(this).attr("name");
-
-        let data = {
-            KorisnickoIme: sessionStorage.getItem("user"),
-            IDVoznje: id
+        sessionStorage.setItem("id", id);
+        var idd = {
+            i: id
         }
-
-        $.get("/api/Voznja/PrihvatiVoznju", data)
+        $.get("/api/Voznja/NadjiNajblize", idd)
             .done(function (result) {
-                $("#ulogovanMessage").html("Vo" + `&zcaron;` + "nja uspe" + `&scaron;` + "no prihva" + `&cacute;` + "ena!");
+                if (result === "Nema slobodnih vozaca!") {
+                    let p = "<p style=\"color: crimson; font - size: medium\">Nema slobodnih voza" + `&ccaron;` + "a!</p></br><input type=\"submit\" value=\"Napusti\" id=\"napusti\">";
+                    $("#voznjevozacima").html(p);
+                    $("#voznjevozacima").show();
+                }
+                else {
+                    let t = "<table border=\"0\"><tr><td width=\"30%\"><b>Korisni" + `&ccaron;` + "ko ime</b></td><td width=\"40%\"><b>Trenutna lokacija<b></td><td width=\"30%\">&nbsp;</td></tr>"
+                    for (var i in result) {
+                        t += "<tr><td>" + result[i].KorisnickoIme + "</td>";
+                        t += "<td>" + result[i].Lokacija.Adresa.UlicaIBroj + result[i].Lokacija.Adresa.MestoIPostanskiFah + "</td>";
+                        t += "<td><input type=\"submit\" name=\"" + `${result[i].KorisnickoIme}` + "\" value=\"Dodeli\" id=\"dodeli\"></td>";
+                    }
+                    t += "</tr></table></br></br><input type=\"submit\" value=\"Napusti\" id=\"napusti\">";
+                    $("#voznjevozacima").html(t);
+                    $("#dodelivoznjuvozacu").show();
+                }
+            });
+    });
+
+    $(document).on("click", "#dodeli", function () {
+        let user = $(this).attr("name");
+        $("#ulogovanMessage").html("");
+        $("#ulogovanMessage").hide();
+        $("#vozacOdrediste").hide();
+        $("#pogledajkomentar").hide();
+        $("#korisnikkomentar").hide();
+        $("#promenipolazistekorisnik").hide();
+        $("#dodelivoznjuvozacu").hide();
+
+        var idvuser = {
+            id: sessionStorage.getItem("id"),
+            user: user
+        }
+        $.get("/api/Voznja/dodelivoznju", idvuser)
+            .done(function (result) {
+                $("#ulogovanMessage").html("Vo" + `&zcaron;` + "nja uspe" + `&scaron;` + "no dodeljena!");
                 $("#ulogovanMessage").show();
                 PocetnaStrana();
+            });
+    });
+
+
+    $(document).on("click", "#vidisvevoznje", function () {
+        $("#ulogovanMessage").html("");
+        $("#ulogovanMessage").hide();
+        $("#mapaodrediste").html("");
+        $("#mapaodrediste").hide();
+        $("#divtabelapretrage").show();
+        $("#registracijaIOpis").hide();
+        $("#registrovan").hide();
+        $("#ulogovan").show();
+        $("#tabelaPretrage").show();
+        $("#dodajVozacaPolja").hide();
+        $("#blok").hide();
+        $("#dodajVoznjuPolja").hide();
+
+        $.get("/api/Voznja/GetSveVoznje", "")
+            .done(function (result) {
+                TabelaAdmin(result);
+                DodajDatum(result);
+                DodajImenaPrezimena();
+
+                sessionStorage.setItem("adminvidisve", true);
+                sessionStorage.setItem("sortirajDatum", false);
+                sessionStorage.setItem("sortirajOcena", false);
+                sessionStorage.setItem("pocetna", true);
+                var divheader = $("#divheader").html();
+                sessionStorage.setItem("divheader", divheader);
+                var divbody = $("#divbody").html();
+                sessionStorage.setItem("divbody", divbody);
+                sessionStorage.setItem("divmap", "");
+            });
+    });
+
+    $(document).on("click", "#vslobodne", function () {
+        $("#ulogovanMessage").html("");
+        $("#ulogovanMessage").hide();
+        $("#mapaodrediste").html("");
+        $("#mapaodrediste").hide();
+        $("#divtabelapretrage").show();
+        $("#registracijaIOpis").hide();
+        $("#registrovan").hide();
+        $("#ulogovan").show();
+        $("#tabelaPretrage").show();
+        $("#dodajVozacaPolja").hide();
+        $("#blok").hide();
+        $("#dodajVoznjuPolja").hide();
+
+        $.get("/api/Voznja/GetSlobodneV", "")
+            .done(function (result) {
+                TabelaVozac(result);
+                DodajDatum(result);
+
+                sessionStorage.setItem("adminvidisve", true);
+                sessionStorage.setItem("sortirajDatum", false);
+                sessionStorage.setItem("sortirajOcena", false);
+                sessionStorage.setItem("pocetna", true);
+                var divheader = $("#divheader").html();
+                sessionStorage.setItem("divheader", divheader);
+                var divbody = $("#divbody").html();
+                sessionStorage.setItem("divbody", divbody);
+                sessionStorage.setItem("divmap", "");
+            });
+    });
+    
+    $(document).on("click", "#onemogucikriterujume", function () {
+        Onemoguci();
+        PocetnaStrana();
+    });
+
+    function Onemoguci() {
+        $("#ulogovanMessage").html("");
+        $("#ulogovanMessage").hide();
+        sessionStorage.setItem("filterstatus", "");
+        sessionStorage.setItem("oddatumpretraga", "");
+        sessionStorage.setItem("dodatumpretraga", "");
+        sessionStorage.setItem("odocenapretraga", "");
+        sessionStorage.setItem("doocenapretraga", "");
+        sessionStorage.setItem("odcenapretraga", "");
+        sessionStorage.setItem("docenapretraga", "");
+        $("#fs").val("");
+        $("#ood").val("");
+        $("#dod").val("");
+        $("#odo").val("");
+        $("#doo").val("");
+        $("#odc").val("");
+        $("#doc").val("");
+        $("#atik").val("");
+        $("#atpk").val("");
+        $("#ativ").val("");
+        $("#atpv").val("");
+    };
+
+    $(document).on("click", "#vsortira", function () {
+        $("#ulogovanMessage").html("");
+        $("#ulogovanMessage").hide();
+
+        var u = {
+            user: sessionStorage.getItem("user")
+        }
+
+        $.get("/api/Voznja/VozacSortira", u)
+            .done(function (result) {
+                TabelaVozac(result);
+                DodajDatum(result);
+
+                sessionStorage.setItem("adminvidisve", false);
+                sessionStorage.setItem("sortirajDatum", false);
+                sessionStorage.setItem("sortirajOcena", false);
+                sessionStorage.setItem("pocetna", true);
+                var divheader = $("#divheader").html();
+                sessionStorage.setItem("divheader", divheader);
+                var divbody = $("#divbody").html();
+                sessionStorage.setItem("divbody", divbody);
+                sessionStorage.setItem("divmap", "");
+            });
+    });
+
+    $(document).on("click", "#admintraziip", function () {
+        $("#ulogovanMessage").html("");
+        $("#ulogovanMessage").hide();
+
+        var pretraga = {
+            KIme: $("#atik").val(),
+            KPrezime: $("#atpk").val(),
+            VIme: $("#ativ").val(),
+            VPrezime: $("#atpv").val()
+        };
+
+        $.post("/api/Voznja/adminptretrazuje", pretraga)
+            .done(function (result) {
+                if (result === "Nema rezultata!") {
+                    $("#ulogovanMessage").html("Ne postoje vo" + `&zcaron;` + "nje za tra" + `&zcaron;` + "en pretragu!");
+                    $("#ulogovanMessage").show();
+                        $("#adminvoznja").hide();
+                }
+                else {
+                    $("#adminvoznja").show();
+                    $("#ulogovan").show();
+                    $("#admintraziimeprezime").show();
+                    TabelaAdmin(result);
+                }
+
+                sessionStorage.setItem("adminvidisve", false);
+                sessionStorage.setItem("sortirajDatum", false);
+                sessionStorage.setItem("sortirajOcena", false);
+                sessionStorage.setItem("pocetna", true);
+                var divheader = $("#divheader").html();
+                sessionStorage.setItem("divheader", divheader);
+                var divbody = $("#divbody").html();
+                sessionStorage.setItem("divbody", divbody);
+                sessionStorage.setItem("divmap", "");
             });
     });
 });
