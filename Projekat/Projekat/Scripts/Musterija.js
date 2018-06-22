@@ -327,6 +327,7 @@
                 $("#blok").hide();
                 $("#divtabelapretrage").hide();
                 $("#vozac").html("");
+                $("#profil").hide();
                 var divheader = $("#divheader").html();
                 sessionStorage.setItem("divheader", divheader);
                 var divbody = $("#divbody").html();
@@ -986,14 +987,24 @@
         $("#blok").hide();
         $("#dodajVoznjuPolja").hide();
         $("#divtabelapretrage").hide();
+        $("#ulogovan").hide();
+        $("#profil").show();
+
+        let user = sessionStorage.getItem("user");
+        let uloga = sessionStorage.getItem(user);
+        if (uloga === "2") {
+
+        }
+        else if (uloga == "1") {
+            $("#profilvozac").show();
+        }
 
         var divheader = $("#divheader").html();
         sessionStorage.setItem("divheader", divheader);
         var divbody = $("#divbody").html();
         sessionStorage.setItem("divbody", divbody);
         sessionStorage.setItem("divmap", false);
-
-        PocetnaStrana();
+        
     }); //nije uradjeno
 
     $(document).on("click", "#pocetna", function () {
