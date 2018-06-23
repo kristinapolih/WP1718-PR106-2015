@@ -90,7 +90,7 @@ namespace Projekat.Controllers
         [HttpGet, Route("api/Voznja/GetVoznje")]
         public IHttpActionResult GetVoznje([FromUri]Korisnik korisnik)
         {
-            if (korisnik.Uloga == ULOGA.Musterija)
+            if (korisnik.Uloga.ToString().StartsWith("M"))
             {
                 List<Voznja> ret = new List<Voznja>();
                 foreach (int id in Podaci.GetKorisnike()[korisnik.KorisnickoIme].VoznjeIDs)
@@ -99,7 +99,7 @@ namespace Projekat.Controllers
                 }
                 return Ok(ret);
             }
-            else if (korisnik.Uloga == ULOGA.Vozac)
+            else if (korisnik.Uloga.ToString().StartsWith("V"))
             {
                 List<Voznja> ret = new List<Voznja>();
                 foreach (int id in Podaci.GetVozace()[korisnik.KorisnickoIme].VoznjeIDs)
@@ -108,7 +108,7 @@ namespace Projekat.Controllers
                 }
                 return Ok(ret);
             }
-            else if (korisnik.Uloga == ULOGA.Admin)
+            else if (korisnik.Uloga.ToString().StartsWith("A"))
             {
                 List<Voznja> ret = new List<Voznja>();
                 foreach (int id in Podaci.GetDispecere()[korisnik.KorisnickoIme].VoznjeIDs)
@@ -699,6 +699,61 @@ namespace Projekat.Controllers
                 return Ok(result);
             else
                 return Ok("Nema rezultata!");
+        }
+
+        [HttpGet, Route("api/Voznja/GetCurrentLocation")]
+        public IHttpActionResult GetCurrentLocation([FromUri] int id)
+        {
+            string result = "";
+            Voznja v = Podaci.GetSveVoznje()[id];
+
+            if(v.LokacijaPolazista != null)
+            {
+                result = v.LokacijaPolazista.Adresa.UlicaIBroj + " " + v.LokacijaPolazista.Adresa.MestoIPostanskiFah;
+                return Ok(result);
+            }
+            else
+            {
+                return Ok("");
+            }
+        }
+
+        [HttpGet, Route("api/Voznja/GetCurrentLocationVozac")]
+        public IHttpActionResult GetCurrentLocationVozac([FromUri]string user, [FromUri]string uloga)
+        {
+            string result = "";
+            Vozac v = Podaci.GetVozace()[user];
+
+            if (v.Lokacija != null)
+            {
+                result = v.Lokacija.Adresa.UlicaIBroj + " " + v.Lokacija.Adresa.MestoIPostanskiFah;
+                return Ok(result);
+            }
+            else
+            {
+                return Ok("");
+            }
+        }
+
+        [HttpGet, Route("api/Voznja/VozacMenjaLokaciju")]
+        public IHttpActionResult VozacMenjaLokaciju([FromUri]AdrILok a)
+        {
+            Vozac v = new Vozac();
+            v.KorisnickoIme = a.KorisnickoIme;
+            v.Pol = Podaci.GetVozace()[a.KorisnickoIme].Pol;
+            v.Slobodan = Podaci.GetVozace()[a.KorisnickoIme].Slobodan;
+            v.Blokiran = false;
+            Lokacija l = new Lokacija();
+            l.Adresa = new Adresa();
+            l.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
+            l.Adresa.UlicaIBroj = a.UlicaiBroj;
+            l.GeoCoordinate = new Koordinate();
+            l.GeoCoordinate.Latitude = a.ylatit;
+            l.GeoCoordinate.Longitude = a.xlong;
+            v.Lokacija = l;
+
+            Podaci.IzmeniVozaca(a.KorisnickoIme, v);
+            return Ok();
         }
     }
 }

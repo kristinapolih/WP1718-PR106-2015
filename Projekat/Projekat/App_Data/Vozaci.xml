@@ -8,22 +8,26 @@
     <Pol>M</Pol>
     <JMBG>0309987456236</JMBG>
     <Telefon>0631239875</Telefon>
-    <Email>michael.voughn2gmail.com</Email>
+    <Email>michael.voughn@gmail.com</Email>
     <Uloga>Vozac</Uloga>
     <VoznjeIDs>
       <int>1</int>
       <int>3</int>
       <int>4</int>
       <int>5</int>
+      <int>7</int>
+      <int>8</int>
+      <int>9</int>
+      <int>10</int>
     </VoznjeIDs>
     <Lokacija>
       <GeoCoordinate>
-        <Longitude>19.849098399281498</Longitude>
-        <Latitude>45.246914537995877</Latitude>
+        <Longitude>19.812716245651242</Longitude>
+        <Latitude>45.243318877819178</Latitude>
       </GeoCoordinate>
       <Adresa>
-        <UlicaIBroj>Dr Sime Milosevica undefined</UlicaIBroj>
-        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+        <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
       </Adresa>
     </Lokacija>
     <Automobil>

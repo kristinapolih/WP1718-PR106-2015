@@ -294,5 +294,144 @@ namespace Projekat.Controllers
 
             return Ok(result);
         }
+
+
+
+        [HttpGet, Route("api/Korisnik/GetKorisnika")]
+        public IHttpActionResult GetKorisnika([FromUri]string user, [FromUri]string uloga)
+        {
+            Korisnik result = null;
+            Vozac r = null;
+            if(uloga == "2")
+            {
+                result = Podaci.GetKorisnike()[user];
+            }
+            else if (uloga == "1")
+            {
+                r = Podaci.GetVozace()[user];
+            }
+            else if (uloga == "0")
+            {
+                result = Podaci.GetDispecere()[user];
+            }
+
+            if (result == null)
+                return Ok(r);
+            else
+                return Ok(result);
+        }
+
+        [HttpPost, Route("api/Korisnik/IzmeniKorisnika")]
+        public IHttpActionResult IzmeniKorisnika(IzmenaKorisnik izmena)
+        {
+            Vozac v = new Vozac();
+            Korisnik k = new Korisnik();
+            if (izmena.KorisnickoIme != izmena.StaroKorisnickoIme)
+            {
+                if (izmena.Uloga == ULOGA.Vozac && !Podaci.GetVozace().ContainsKey(izmena.KorisnickoIme))
+                {
+                    v.Blokiran = false;
+                    v.Email = izmena.Email;
+                    v.Ime = izmena.Ime;
+                    v.JMBG = izmena.JMBG;
+                    v.KorisnickoIme = izmena.KorisnickoIme;
+                    v.Lozinka = izmena.Lozinka;
+                    v.Pol = izmena.Pol;
+                    v.Prezime = izmena.Prezime;
+                    v.Telefon = izmena.Telefon;
+                    v.Slobodan = Podaci.GetVozace()[izmena.StaroKorisnickoIme].Slobodan;
+                    v.Uloga = ULOGA.Vozac;
+                    v.VoznjeIDs = Podaci.GetVozace()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                    Podaci.IzmeniVozaca(izmena.StaroKorisnickoIme, v);
+                }
+                else if (izmena.Uloga == ULOGA.Admin && !Podaci.GetDispecere().ContainsKey(izmena.KorisnickoIme))
+                {
+                    k.Email = izmena.Email;
+                    k.Ime = izmena.Ime;
+                    k.JMBG = izmena.JMBG;
+                    k.KorisnickoIme = izmena.KorisnickoIme;
+                    k.Lozinka = izmena.Lozinka;
+                    k.Pol = izmena.Pol;
+                    k.Prezime = izmena.Prezime;
+                    k.Telefon = izmena.Telefon;
+                    k.Uloga = ULOGA.Admin;
+                    k.VoznjeIDs = Podaci.GetDispecere()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                    Podaci.IzmeniDispecera(izmena.StaroKorisnickoIme, k);
+                }
+                else if (izmena.Uloga == ULOGA.Musterija && !Podaci.GetKorisnike().ContainsKey(izmena.KorisnickoIme))
+                {
+                    k.Email = izmena.Email;
+                    k.Ime = izmena.Ime;
+                    k.JMBG = izmena.JMBG;
+                    k.KorisnickoIme = izmena.KorisnickoIme;
+                    k.Lozinka = izmena.Lozinka;
+                    k.Pol = izmena.Pol;
+                    k.Prezime = izmena.Prezime;
+                    k.Telefon = izmena.Telefon;
+                    k.Uloga = ULOGA.Musterija;
+                    k.VoznjeIDs = Podaci.GetKorisnike()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                    Podaci.IzmeniKorisnika(izmena.StaroKorisnickoIme, k);
+                }
+                else
+                    return Ok("Korisnicko ime vec postoji!");
+
+            }
+            else
+            {
+                if (izmena.Uloga == ULOGA.Vozac)
+                {
+                    v.Blokiran = false;
+                    v.Email = izmena.Email;
+                    v.Ime = izmena.Ime;
+                    v.JMBG = izmena.JMBG;
+                    v.KorisnickoIme = izmena.KorisnickoIme;
+                    v.Lozinka = izmena.Lozinka;
+                    v.Pol = izmena.Pol;
+                    v.Prezime = izmena.Prezime;
+                    v.Telefon = izmena.Telefon;
+                    v.Slobodan = Podaci.GetVozace()[izmena.StaroKorisnickoIme].Slobodan;
+                    v.Uloga = ULOGA.Vozac;
+                    v.VoznjeIDs = Podaci.GetVozace()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                    Podaci.IzmeniVozaca(izmena.StaroKorisnickoIme, v);
+                }
+                else if (izmena.Uloga == ULOGA.Admin)
+                {
+                    k.Email = izmena.Email;
+                    k.Ime = izmena.Ime;
+                    k.JMBG = izmena.JMBG;
+                    k.KorisnickoIme = izmena.KorisnickoIme;
+                    k.Lozinka = izmena.Lozinka;
+                    k.Pol = izmena.Pol;
+                    k.Prezime = izmena.Prezime;
+                    k.Telefon = izmena.Telefon;
+                    k.Uloga = ULOGA.Admin;
+                    k.VoznjeIDs = Podaci.GetDispecere()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                    Podaci.IzmeniDispecera(izmena.StaroKorisnickoIme, k);
+                }
+                else if (izmena.Uloga == ULOGA.Musterija)
+                {
+                    k.Email = izmena.Email;
+                    k.Ime = izmena.Ime;
+                    k.JMBG = izmena.JMBG;
+                    k.KorisnickoIme = izmena.KorisnickoIme;
+                    k.Lozinka = izmena.Lozinka;
+                    k.Pol = izmena.Pol;
+                    k.Prezime = izmena.Prezime;
+                    k.Telefon = izmena.Telefon;
+                    k.Uloga = ULOGA.Musterija;
+                    k.VoznjeIDs = Podaci.GetKorisnike()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                    Podaci.IzmeniKorisnika(izmena.StaroKorisnickoIme, k);
+                }
+            }
+            return Ok();
+        }
+
+        [HttpGet, Route("api/Korisnik/GetAutomobil")]
+        public IHttpActionResult GetAutomobil([FromUri]string user, [FromUri]string uloga)
+        {
+            Automobil a = null;
+            a = Podaci.GetVozace()[user].Automobil;
+            return Ok(a);
+        }
     }
 }

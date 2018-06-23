@@ -198,6 +198,7 @@
     <Compile Include="Models\AdrILok.cs" />
     <Compile Include="Models\Automobil.cs" />
     <Compile Include="Models\Common\Enums.cs" />
+    <Compile Include="Models\Common\IzmenaKorisnik.cs" />
     <Compile Include="Models\Common\LogIn.cs" />
     <Compile Include="Models\Common\Pretraga.cs" />
     <Compile Include="Models\Common\Random.cs" />

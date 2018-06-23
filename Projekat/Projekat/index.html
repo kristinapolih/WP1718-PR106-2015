@@ -28,11 +28,6 @@
     <div class="navbar navbar-inverse navbar-fixed-top" id="divheader">
         <div class="container">
             <div class="navbar-header">
-                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>-->
                 <input id="pocetna" type="submit" class="navbar-brand" value="Taksi slu&zcaron;ba" style="background-color:transparent; border-color:transparent; color:yellow; padding-right:15px; padding-left:15px" />
             </div>
             <div class="navbar-collapse collapse">
@@ -163,7 +158,7 @@
                     <input type="submit" value="Registruj voza&ccaron;a" id="registrujvozaca">
                 </div>
             </div>
-            <div id="dodajVoznjuPolja" style="text-align:center; justify-content:center" class="col-md-7" hidden>
+            <div id="dodajVoznjuPolja" style="text-align:center; justify-content:center" class="col-md-7 col-md-offset-3" hidden>
                 <br /><br /><br /><br /><br />
                 <div id="tipautaa">
                     <input list="tipautomobilaa" name="tipautomobilaa" placeholder="Tip automobila">
@@ -221,9 +216,11 @@
             <div id="promenipolazistekorisnik" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
                 <span class="helper"></span>
                 <div id="polazistepromeni" style="text-align:center; justify-content:center">
-                    <h1>Promeni polazi&scaron;te</h1>
+                    <h1>Promeni polazi&scaron;te</h1><br />
+                    <p id="trnutnopolaziste">Trenutna lokacija: </p><br />
                     <div id="mapapolaziste"></div>
                     <input type="submit" value="Dodaj lokaciju" id="dodajlokacijupolazista">
+                    <input type="submit" value="Napusti" id="napusti">
                 </div>
             </div>
             <div id="pogledajkoment" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
@@ -242,96 +239,110 @@
                 <div id="dvoznju" style="text-align:center; justify-content:center">
                     <h1>Dodeli vo&zcaron;nju</h1><br />
                     <div id="voznjevozacima"></div>
+                    <input type="submit" value="Napusti" id="napusti">
                 </div>
             </div>
             <div id="profil" class="row" hidden>
                 <div id="profilvozac" hidden>
-                    <div id="pv" class="col-md-4">
-                        <h1>Osnovne informacije</h1>
-                        <table>
-                            <tr>
-                                <td>
-                                    <p>Korisni&ccaron;ko ime</p>
-                                </td>
-                                <td>
-                                    <input id="izmenakimev" type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Lozinka</p>
-                                </td>
-                                <td>
-                                    <input id="izmenalozv" type="password" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Pnovi novu lozinku</p>
-                                </td>
-                                <td>
-                                    <input id="izmenaplozv" type="password" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Ime</p>
-                                </td>
-                                <td>
-                                    <input id="izmenaimev" type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Prezime</p>
-                                </td>
-                                <td>
-                                    <input id="izmenaprezimev" type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Pol</p>
-                                </td>
-                                <td>
-                                    <input type="radio" name="pol" value="M">Mu&scaron;ki
-                                    <input type="radio" name="pol" value="Z">&Zcaron;enski
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>JMBG</p>
-                                </td>
-                                <td>
-                                    <input id="izmenajmbgv" type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Telefon</p>
-                                </td>
-                                <td>
-                                    <input id="izmenatelefonv" type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Email</p>
-                                </td>
-                                <td>
-                                    <input id="izmenakemailv" type="text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" align="center">
-                                    <input id="izmenavozacaprofil" type="submit" value="Izmeni"/>
-                                </td>
-                            </tr>
-                        </table>
+                    <div id="pv" class="col-md-4"></div>
+                    <div id="lv" class="col-md-6 col-md-offset-1" style="text-align:center; justify-content:center">
+                        <div id="autom">
+                            <h1>Automobil</h1><br />
+                            <p id="godauta"></p>
+                            <p id="brregozn"></p>
+                            <p id="brtakvoz"></p>
+                            <p id="tipautam">Tip automobila: </p>
+                        </div><br /><br />
+                        <h1>Lokacija</h1><br />
+                        <p id="vozacmessagelok" style="color:crimson; font-size:medium"></p>
+                        <p id="vozactrenlokizmena"></p>
+                        <div id="profilvozacmapa"></div><br/>
+                        <input type="submit" value="Promeni lokaciju" id="vozacmenjalokaciju">
                     </div>
-                    <div id="lv">
-
-                    </div>
+                </div>
+                <div id="profiliosninf" style="text-align:center; justify-content:center" class="col-md-4 col-md-offset-3" hidden>
+                    <br /><h1>Osnovne informacije</h1><br /><br />
+                    <p id="izmenaerrormessage" style="color:crimson; font-size:medium"></p>
+                    <table>
+                        <tr>
+                            <td>
+                                <p>Korisni&ccaron;ko ime</p>
+                            </td>
+                            <td>
+                                <input id="izmenakimev" type="text" /><br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Lozinka</p>
+                            </td>
+                            <td>
+                                <input id="izmenalozv" type="password" /><br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Ponovi novu lozinku&nbsp;</p>
+                            </td>
+                            <td>
+                                <input id="izmenaplozv" type="password" /><br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Ime</p>
+                            </td>
+                            <td>
+                                <input id="izmenaimev" type="text" /><br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Prezime</p>
+                            </td>
+                            <td>
+                                <input id="izmenaprezimev" type="text" /><br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Pol</p>
+                            </td>
+                            <td>
+                                <input id="polm" type="radio" name="polizmena" value="M">Mu&scaron;ki
+                                <input id="polz" type="radio" name="polizmena" value="Z">&Zcaron;enski<br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>JMBG</p>
+                            </td>
+                            <td>
+                                <input id="izmenajmbgv" type="text" /><br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Telefon</p>
+                            </td>
+                            <td>
+                                <input id="izmenatelefonv" type="text" /><br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Email</p>
+                            </td>
+                            <td>
+                                <input id="izmenakemailv" type="text" /><br /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <input id="izmenaprofil" type="submit" value="Izmeni profil" />
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -441,7 +452,7 @@
                 </tr>
                 <tr>
                     <td><br /><input type="submit" id="primenikriterijum" value="Primeni kriterijume" class="buttons"></td>
-                    
+
                 </tr>
             </table>
             <div id="admintraziimeprezime" hidden>
@@ -455,8 +466,8 @@
                 <input list="admintraziprezimev" id="atpv" placeholder="Prezime voza&ccaron;a" style="width:130px">
                 <datalist id="admintraziprezimev"></datalist><br /><br />
                 <input type="submit" id="admintraziip" value="Trazi" class="buttons">
-                <input type="reset" id="onemogucikriterujume" value="Onemogu&cacute;i kriterijume" class="buttons">
             </div>
+            <br/><input type="reset" id="onemogucikriterujume" value="Onemogu&cacute;i kriterijume" class="buttons">
         </div>
         <div id="ulogovan" style="text-align:center; justify-content:center" hidden>
             <br />

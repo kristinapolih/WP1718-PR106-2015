@@ -202,9 +202,20 @@ namespace Projekat.Models
             if (korisnik.Blokiran != menjamo.Blokiran)
                 menjamo.Blokiran = korisnik.Blokiran;
 
+            Voznja v = null;
             lock (new object())
             {
-                DodajKorisnik(menjamo);
+                foreach (int id in menjamo.VoznjeIDs)
+                {
+                    if (GetSveVoznje().ContainsKey(id))
+                    {
+                        v = GetSveVoznje()[id];
+                        v.Musterija = menjamo;
+                        IzmeniVoznju(id, v);
+                    }
+                }
+
+                DodajKorisnik(menjamo, username);
             }
         }
 
@@ -245,9 +256,17 @@ namespace Projekat.Models
             if (vozac.Slobodan != menjamo.Slobodan)
                 menjamo.Slobodan = vozac.Slobodan;
 
+            Voznja v = null;
             lock (new object())
             {
-                DodajVozac(menjamo);
+                foreach (int id in menjamo.VoznjeIDs)
+                {
+                    v = GetSveVoznje()[id];
+                    v.Vozac = menjamo;
+                    IzmeniVoznju(id, v);
+                }
+                GetVozace().Remove(username);
+                DodajVozac(menjamo, username);
             }
         }
 
@@ -280,9 +299,17 @@ namespace Projekat.Models
             if (menjamo.VoznjeIDs.Count < dispecer.VoznjeIDs.Count)
                 menjamo.VoznjeIDs = dispecer.VoznjeIDs;
 
+            Voznja v = null;
             lock (new object())
             {
-                DodajDispecer(menjamo);
+                foreach (int id in menjamo.VoznjeIDs)
+                {
+                    v = GetSveVoznje()[id];
+                    v.Dispecer = menjamo;
+                    IzmeniVoznju(id, v);
+                }
+
+                DodajDispecer(menjamo, username);
             }
         }
 
@@ -308,34 +335,32 @@ namespace Projekat.Models
                 menjamo.Iznos = voznja.Iznos;
             if (voznja.Komentar != null)
             {
-                menjamo.Komentar = new Komentar();
-                menjamo.Komentar.DatumObjave = voznja.Komentar.DatumObjave;
-                menjamo.Komentar = voznja.Komentar;
+                Komentar k = new Komentar();
+                k.DatumObjave = voznja.Komentar.DatumObjave;
+                k.Korisnik = voznja.Komentar.Korisnik;
+                k.Ocena = voznja.Komentar.Ocena;
+                k.Opis = voznja.Komentar.Opis;
+                k.Voznja = voznja.Komentar.Voznja;
+                menjamo.Komentar = k;
             }
             if (voznja.LokacijaOdredista != null)
             {
-                menjamo.LokacijaOdredista = new Lokacija();
+                Lokacija lokacija = new Lokacija();
                 if (voznja.LokacijaOdredista.Adresa != null && voznja.LokacijaOdredista.GeoCoordinate != null)
                 {
-                    menjamo.LokacijaOdredista.Adresa = new Adresa();
-                    menjamo.LokacijaOdredista.Adresa.MestoIPostanskiFah = voznja.LokacijaOdredista.Adresa.MestoIPostanskiFah;
-                    menjamo.LokacijaOdredista.Adresa.UlicaIBroj = voznja.LokacijaOdredista.Adresa.UlicaIBroj;
-                    menjamo.LokacijaOdredista.GeoCoordinate = new Koordinate();
-                    menjamo.LokacijaOdredista.GeoCoordinate.Latitude = voznja.LokacijaOdredista.GeoCoordinate.Latitude;
-                    menjamo.LokacijaOdredista.GeoCoordinate.Longitude = voznja.LokacijaOdredista.GeoCoordinate.Longitude;
+                    lokacija.Adresa = voznja.LokacijaOdredista.Adresa;
+                    lokacija.GeoCoordinate = voznja.LokacijaOdredista.GeoCoordinate;
+                    menjamo.LokacijaOdredista = lokacija;
                 }
             }
             if (voznja.LokacijaPolazista != null)
             {
-                menjamo.LokacijaPolazista = new Lokacija();
+                Lokacija lokacija = new Lokacija();
                 if (voznja.LokacijaPolazista.Adresa != null && voznja.LokacijaPolazista.GeoCoordinate != null)
                 {
-                    menjamo.LokacijaPolazista.Adresa = new Adresa();
-                    menjamo.LokacijaPolazista.Adresa.MestoIPostanskiFah = voznja.LokacijaPolazista.Adresa.MestoIPostanskiFah;
-                    menjamo.LokacijaPolazista.Adresa.UlicaIBroj = voznja.LokacijaPolazista.Adresa.UlicaIBroj;
-                    menjamo.LokacijaPolazista.GeoCoordinate = new Koordinate();
-                    menjamo.LokacijaPolazista.GeoCoordinate.Latitude = voznja.LokacijaPolazista.GeoCoordinate.Latitude;
-                    menjamo.LokacijaPolazista.GeoCoordinate.Longitude = voznja.LokacijaPolazista.GeoCoordinate.Longitude;
+                    lokacija.Adresa = voznja.LokacijaPolazista.Adresa;
+                    lokacija.GeoCoordinate = voznja.LokacijaPolazista.GeoCoordinate;
+                    menjamo.LokacijaPolazista = lokacija;
                 }
             }
             if (voznja.StatusVoznje != menjamo.StatusVoznje)
@@ -397,12 +422,12 @@ namespace Projekat.Models
         }
 
 
-        public static void DodajKorisnik(Korisnik korisnik)
+        public static void DodajKorisnik(Korisnik korisnik, string oldUsername)
         {
             GetKorisnike().Add(korisnik.KorisnickoIme, korisnik);
 
             List<Korisnik> korisnici = CitajKorisnik();
-            Korisnik k = korisnici.Find(f => f.KorisnickoIme == korisnik.KorisnickoIme);
+            Korisnik k = korisnici.Find(f => f.KorisnickoIme == korisnik.KorisnickoIme || f.KorisnickoIme == oldUsername);
             if (k == null)
                 korisnici.Add(korisnik);
             else
@@ -421,13 +446,13 @@ namespace Projekat.Models
             }
         }
 
-        public static void DodajDispecer(Korisnik dispecer)
+        public static void DodajDispecer(Korisnik dispecer, string oldUsername)
         {
             GetDispecere().Add(dispecer.KorisnickoIme, dispecer);
 
             List<Korisnik> dispeceri = CitajDispecer();
 
-            Korisnik k = dispeceri.Find(f => f.KorisnickoIme == dispecer.KorisnickoIme);
+            Korisnik k = dispeceri.Find(f => f.KorisnickoIme == dispecer.KorisnickoIme || f.KorisnickoIme == oldUsername);
             if (k == null)
                 dispeceri.Add(dispecer);
             else
@@ -446,13 +471,13 @@ namespace Projekat.Models
             }
         }
 
-        public static void DodajVozac(Vozac vozac)
+        public static void DodajVozac(Vozac vozac, string oldUsername)
         {
             GetVozace().Add(vozac.KorisnickoIme, vozac);
 
             List<Vozac> vozaci = CitajVozac();
 
-            Vozac k = vozaci.Find(f => f.KorisnickoIme == vozac.KorisnickoIme);
+            Vozac k = vozaci.Find(f => f.KorisnickoIme == vozac.KorisnickoIme || f.KorisnickoIme == oldUsername);
             if (k == null)
                 vozaci.Add(vozac);
             else
