@@ -37,7 +37,7 @@
     display: inline-block;
 }
 .buttons {
-    border-color: slategray;
+    border-color: #404040;
     border-width: 2px;
     background-color: lemonchiffon;
     color: black;

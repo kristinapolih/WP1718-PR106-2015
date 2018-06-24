@@ -261,9 +261,12 @@ namespace Projekat.Models
             {
                 foreach (int id in menjamo.VoznjeIDs)
                 {
-                    v = GetSveVoznje()[id];
-                    v.Vozac = menjamo;
-                    IzmeniVoznju(id, v);
+                    if (GetSveVoznje().ContainsKey(id))
+                    {
+                        v = GetSveVoznje()[id];
+                        v.Vozac = menjamo;
+                        IzmeniVoznju(id, v);
+                    }
                 }
                 GetVozace().Remove(username);
                 DodajVozac(menjamo, username);
@@ -304,9 +307,12 @@ namespace Projekat.Models
             {
                 foreach (int id in menjamo.VoznjeIDs)
                 {
-                    v = GetSveVoznje()[id];
-                    v.Dispecer = menjamo;
-                    IzmeniVoznju(id, v);
+                    if (GetSveVoznje().ContainsKey(id))
+                    {
+                        v = GetSveVoznje()[id];
+                        v.Dispecer = menjamo;
+                        IzmeniVoznju(id, v);
+                    }
                 }
 
                 DodajDispecer(menjamo, username);
@@ -559,7 +565,7 @@ namespace Projekat.Models
                 var voznja = CitajVoznje();
                 foreach (Voznja voz in voznja)
                 {
-                    if(voz.StatusVoznje == Common.STATUS_VOZNJE.Kreirana)
+                    if(voz.StatusVoznje == Common.STATUS_VOZNJE.Kreirana || voz.StatusVoznje == Common.STATUS_VOZNJE.Formirana)
                     {
                         GetSlobodneVoznje().Add(voz.ID);
                     }

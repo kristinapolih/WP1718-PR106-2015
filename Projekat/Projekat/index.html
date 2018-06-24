@@ -40,7 +40,7 @@
                 <div class="navbar-form nav navbar-nav" style="float:right" id="login" name="login">
                     <input type="text" name="korisnickoIme" placeholder="Korisni&ccaron;ko ime" id="korisnickoIme" />
                     <input type="password" name="lozinka" placeholder="Lozinka" id="lozinka" />
-                    <input type="submit" value="Prijavite se" id="prijavise" /><br />
+                    <input type="submit" value="Prijavite se" id="prijavise" class="buttons"/><br />
                     <p id="message" style="color:crimson"></p>
                 </div>
                 <div class="navbar-form nav navbar-nav" style="float:right" id="logout" hidden>
@@ -50,7 +50,7 @@
                                 <p style="color:floralwhite; font-size:medium" id="username"></p>
                             </td>
                             <td style="padding-left:15px; padding-right:15px">
-                                <input type="submit" value="Odjavi se" id="odjavise" />
+                                <input type="submit" value="Odjavi se" id="odjavise" class="buttons" />
                             </td>
                         </tr>
                     </table>
@@ -117,7 +117,7 @@
                         <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
                     </div><br />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="Registruj se" id="registrujse">
+                    <input type="submit" value="Registruj se" id="registrujse" class="buttons">
                 </div>
             </div>
             <div align="center" id="registrovan" class="col-md-8" style="vertical-align:central; align-items:center; align-self:center" hidden>
@@ -126,9 +126,8 @@
                 <input type="text" name="korisnickoIme" placeholder="Korisni&ccaron;ko ime" id="k" /><br /><br />
                 <input type="password" name="lozinka" placeholder="Lozinka" id="l" /><br /><br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Prijavite se" id="prijav" /><br /><br />
+                <input type="submit" value="Prijavite se" id="prijav" class="buttons"/><br /><br />
             </div>
-
             <div id="dodajVozacaPolja" hidden>
                 <div id="dodajVozacaRegistracija" class="col-md-5">
                 </div>
@@ -139,7 +138,7 @@
                         <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
                     </div>
                     <div id="god">
-                        <input type="text" id="godiste" placeholder="Godiste"><br />
+                        <input type="text" id="godiste" placeholder="Godi&scaron;te"><br />
                         <p style="color:crimson" hidden>Polje ne sme biti prazno!</p><br />
                     </div>
                     <div id="tipauta">
@@ -155,13 +154,13 @@
                     <div id="mapaDodajVozaca" hidden>
                         <p style="color:crimson" hidden>Morate izabrati lokaciju!</p><br />
                     </div><br /><br /><br />
-                    <input type="submit" value="Registruj voza&ccaron;a" id="registrujvozaca">
+                    <input type="submit" value="Registruj voza&ccaron;a" id="registrujvozaca" class="buttons">
                 </div>
             </div>
             <div id="dodajVoznjuPolja" style="text-align:center; justify-content:center" class="col-md-7 col-md-offset-3" hidden>
                 <br /><br /><br /><br /><br />
                 <div id="tipautaa">
-                    <input list="tipautomobilaa" name="tipautomobilaa" placeholder="Tip automobila">
+                    <input list="tipautomobilaa" id="tipautadodajvoznju" name="tipautomobilaa" placeholder="Tip automobila">
                     <datalist id="tipautomobilaa">
                         <option value="Putni&ccaron;ki" id="putnicki" />
                         <option value="Kombi" id="kombi" />
@@ -173,7 +172,7 @@
                 <div id="mapaDodajVoznju" style="text-align:center; justify-content:center" hidden>
 
                 </div><br /><br /><br />
-                <input type="submit" value="Naru&ccaron;i vo&zcaron;nju" id="narucivoznju">
+                <input type="submit" value="Naru&ccaron;i vo&zcaron;nju" id="narucivoznju" class="buttons">
             </div>
             <div id="blok" class="row" hidden>
                 <div id="bloksvi" class="col-md-6" style="text-align:center; justify-content:center">
@@ -202,15 +201,18 @@
                         <option value="4" id="4" />
                         <option selected value="5" id="5" />
                     </datalist><br />
-                    <input type="submit" value="Dodaj komentar" id="dodajKoment">
+                    <input type="submit" value="Dodaj komentar" id="dodajKoment" class="buttons">
+                    <input type="submit" value="Napusti" id="napusti" class="buttons">
                 </div>
             </div>
             <div id="vozacOdrediste" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
                 <span class="helper"></span>
                 <div id="odrediste" style="text-align:center; justify-content:center">
                     <h1>Dodaj odredi&scaron;te</h1>
+                    <p id="mapazovacodresdisteerror" style="color:crimson; font-size:medium">Morate izabrati lokaciju!</p>
                     <div id="mapaodrediste"></div>
-                    <input type="submit" value="Dodaj lokaciju" id="dodajlokaciju">
+                    <input type="submit" value="Dodaj lokaciju" id="dodajlokaciju" class="buttons">
+                    <input type="submit" value="Napusti" id="napusti" class="buttons">
                 </div>
             </div>
             <div id="promenipolazistekorisnik" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
@@ -219,8 +221,8 @@
                     <h1>Promeni polazi&scaron;te</h1><br />
                     <p id="trnutnopolaziste">Trenutna lokacija: </p><br />
                     <div id="mapapolaziste"></div>
-                    <input type="submit" value="Dodaj lokaciju" id="dodajlokacijupolazista">
-                    <input type="submit" value="Napusti" id="napusti">
+                    <input type="submit" value="Dodaj lokaciju" id="dodajlokacijupolazista" class="buttons">
+                    <input type="submit" value="Napusti" id="napusti" class="buttons">
                 </div>
             </div>
             <div id="pogledajkoment" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
@@ -231,7 +233,7 @@
                     <p id="komdatum">Datum objave: </p><br />
                     <p id="komocena">Ocena: </p><br />
                     <p id="komkorisnik">Korisnik: </p><br />
-                    <input type="submit" value="Napusti" id="napusti">
+                    <input type="submit" value="Napusti" id="napusti" class="buttons">
                 </div>
             </div>
             <div id="dodelivoznjuvozacu" class="hover_bkgr_fricc" style="text-align:center; justify-content:center" hidden>
@@ -239,7 +241,6 @@
                 <div id="dvoznju" style="text-align:center; justify-content:center">
                     <h1>Dodeli vo&zcaron;nju</h1><br />
                     <div id="voznjevozacima"></div>
-                    <input type="submit" value="Napusti" id="napusti">
                 </div>
             </div>
             <div id="profil" class="row" hidden>
@@ -251,13 +252,13 @@
                             <p id="godauta"></p>
                             <p id="brregozn"></p>
                             <p id="brtakvoz"></p>
-                            <p id="tipautam">Tip automobila: </p>
+                            <p id="tipautam"></p>
                         </div><br /><br />
                         <h1>Lokacija</h1><br />
                         <p id="vozacmessagelok" style="color:crimson; font-size:medium"></p>
                         <p id="vozactrenlokizmena"></p>
                         <div id="profilvozacmapa"></div><br/>
-                        <input type="submit" value="Promeni lokaciju" id="vozacmenjalokaciju">
+                        <input type="submit" value="Promeni lokaciju" id="vozacmenjalokaciju" class="buttons">
                     </div>
                 </div>
                 <div id="profiliosninf" style="text-align:center; justify-content:center" class="col-md-4 col-md-offset-3" hidden>
@@ -339,7 +340,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" align="center">
-                                <input id="izmenaprofil" type="submit" value="Izmeni profil" />
+                                <input id="izmenaprofil" type="submit" value="Izmeni profil" class="buttons"/>
                             </td>
                         </tr>
                     </table>
@@ -491,7 +492,5 @@
             </div>
         </div>
     </div>
-
-    
 </body>
 </html>
