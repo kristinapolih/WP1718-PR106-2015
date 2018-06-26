@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVoznja xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Voznja>
+    <ID>13</ID>
+    <DatumIVremePorudzbine>11:06 26-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.88016307353973</Longitude>
+        <Latitude>45.243681475717949</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Dalibora Francistija 49</UlicaIBroj>
+        <MestoIPostanskiFah>undefined 21000</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Dispecer>
+      <KorisnickoIme>admin</KorisnickoIme>
+      <Lozinka>admin</Lozinka>
+      <Ime>Tomas</Ime>
+      <Prezime>Norrton</Prezime>
+      <Pol>M</Pol>
+      <JMBG>2306987605023</JMBG>
+      <Telefon>0637655325</Telefon>
+      <Email>tomas.nortton@gmail.com</Email>
+      <Uloga>Admin</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>11</int>
+        <int>12</int>
+        <int>13</int>
+        <int>14</int>
+      </VoznjeIDs>
+    </Dispecer>
+    <Iznos>0</Iznos>
+    <StatusVoznje>Formirana</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>14</ID>
+    <DatumIVremePorudzbine>11:08 26-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.85129177570343</Longitude>
+        <Latitude>45.245547307476585</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Vladimira Perica Valtera undefined</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Dispecer>
+      <KorisnickoIme>admin</KorisnickoIme>
+      <Lozinka>admin</Lozinka>
+      <Ime>Tomas</Ime>
+      <Prezime>Norrton</Prezime>
+      <Pol>M</Pol>
+      <JMBG>2306987605023</JMBG>
+      <Telefon>0637655325</Telefon>
+      <Email>tomas.nortton@gmail.com</Email>
+      <Uloga>Admin</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>11</int>
+        <int>12</int>
+        <int>13</int>
+        <int>14</int>
+      </VoznjeIDs>
+    </Dispecer>
+    <Iznos>0</Iznos>
+    <StatusVoznje>Formirana</StatusVoznje>
+  </Voznja>
+  <Voznja>
     <ID>2</ID>
     <DatumIVremePorudzbine>13:32 20-06-2018</DatumIVremePorudzbine>
     <LokacijaPolazista>
@@ -36,6 +106,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <Iznos>0</Iznos>
@@ -81,6 +152,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <Iznos>0</Iznos>
@@ -92,6 +164,48 @@
       <Ocena>0</Ocena>
     </Komentar>
     <StatusVoznje>Otkazana</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>15</ID>
+    <DatumIVremePorudzbine>11:08 26-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.84422147274017</Longitude>
+        <Latitude>45.251484323832273</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Vase Stajica 8</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Musterija>
+      <KorisnickoIme>ella</KorisnickoIme>
+      <Lozinka>ella</Lozinka>
+      <Ime>Ella</Ime>
+      <Prezime>Castle</Prezime>
+      <Pol>Z</Pol>
+      <JMBG>1605988806040</JMBG>
+      <Telefon>0656203703</Telefon>
+      <Email>ella.castle@gmail.com</Email>
+      <Uloga>Musterija</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>2</int>
+        <int>3</int>
+        <int>4</int>
+        <int>5</int>
+        <int>6</int>
+        <int>7</int>
+        <int>8</int>
+        <int>9</int>
+        <int>10</int>
+        <int>15</int>
+      </VoznjeIDs>
+    </Musterija>
+    <Iznos>0</Iznos>
+    <StatusVoznje>Kreirana</StatusVoznje>
   </Voznja>
   <Voznja>
     <ID>1</ID>
@@ -129,6 +243,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <LokacijaOdredista>
@@ -160,15 +275,17 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>12</int>
+        <int>11</int>
       </VoznjeIDs>
       <Lokacija>
         <GeoCoordinate>
-          <Longitude>19.812716245651242</Longitude>
-          <Latitude>45.243318877819178</Latitude>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
         </GeoCoordinate>
         <Adresa>
-          <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-          <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
         </Adresa>
       </Lokacija>
       <Automobil>
@@ -178,7 +295,7 @@
         <TipAutomobila>Putnicki</TipAutomobila>
       </Automobil>
       <Blokiran>false</Blokiran>
-      <Slobodan>true</Slobodan>
+      <Slobodan>false</Slobodan>
     </Vozac>
     <Iznos>540</Iznos>
     <Komentar>
@@ -226,6 +343,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <Vozac>
@@ -247,15 +365,17 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>12</int>
+        <int>11</int>
       </VoznjeIDs>
       <Lokacija>
         <GeoCoordinate>
-          <Longitude>19.812716245651242</Longitude>
-          <Latitude>45.243318877819178</Latitude>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
         </GeoCoordinate>
         <Adresa>
-          <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-          <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
         </Adresa>
       </Lokacija>
       <Automobil>
@@ -265,7 +385,7 @@
         <TipAutomobila>Putnicki</TipAutomobila>
       </Automobil>
       <Blokiran>false</Blokiran>
-      <Slobodan>true</Slobodan>
+      <Slobodan>false</Slobodan>
     </Vozac>
     <Iznos>0</Iznos>
     <Komentar>
@@ -313,6 +433,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <LokacijaOdredista>
@@ -344,15 +465,17 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>12</int>
+        <int>11</int>
       </VoznjeIDs>
       <Lokacija>
         <GeoCoordinate>
-          <Longitude>19.812716245651242</Longitude>
-          <Latitude>45.243318877819178</Latitude>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
         </GeoCoordinate>
         <Adresa>
-          <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-          <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
         </Adresa>
       </Lokacija>
       <Automobil>
@@ -362,7 +485,7 @@
         <TipAutomobila>Putnicki</TipAutomobila>
       </Automobil>
       <Blokiran>false</Blokiran>
-      <Slobodan>true</Slobodan>
+      <Slobodan>false</Slobodan>
     </Vozac>
     <Iznos>380</Iznos>
     <Komentar>
@@ -410,6 +533,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <LokacijaOdredista>
@@ -441,15 +565,17 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>12</int>
+        <int>11</int>
       </VoznjeIDs>
       <Lokacija>
         <GeoCoordinate>
-          <Longitude>19.812716245651242</Longitude>
-          <Latitude>45.243318877819178</Latitude>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
         </GeoCoordinate>
         <Adresa>
-          <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-          <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
         </Adresa>
       </Lokacija>
       <Automobil>
@@ -459,7 +585,7 @@
         <TipAutomobila>Putnicki</TipAutomobila>
       </Automobil>
       <Blokiran>false</Blokiran>
-      <Slobodan>true</Slobodan>
+      <Slobodan>false</Slobodan>
     </Vozac>
     <Iznos>800</Iznos>
     <Komentar>
@@ -507,6 +633,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <LokacijaOdredista>
@@ -538,15 +665,17 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>12</int>
+        <int>11</int>
       </VoznjeIDs>
       <Lokacija>
         <GeoCoordinate>
-          <Longitude>19.812716245651242</Longitude>
-          <Latitude>45.243318877819178</Latitude>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
         </GeoCoordinate>
         <Adresa>
-          <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-          <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
         </Adresa>
       </Lokacija>
       <Automobil>
@@ -556,7 +685,7 @@
         <TipAutomobila>Putnicki</TipAutomobila>
       </Automobil>
       <Blokiran>false</Blokiran>
-      <Slobodan>true</Slobodan>
+      <Slobodan>false</Slobodan>
     </Vozac>
     <Iznos>230</Iznos>
     <Komentar>
@@ -604,6 +733,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <LokacijaOdredista>
@@ -635,15 +765,17 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>12</int>
+        <int>11</int>
       </VoznjeIDs>
       <Lokacija>
         <GeoCoordinate>
-          <Longitude>19.812716245651242</Longitude>
-          <Latitude>45.243318877819178</Latitude>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
         </GeoCoordinate>
         <Adresa>
-          <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-          <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
         </Adresa>
       </Lokacija>
       <Automobil>
@@ -653,7 +785,7 @@
         <TipAutomobila>Putnicki</TipAutomobila>
       </Automobil>
       <Blokiran>false</Blokiran>
-      <Slobodan>true</Slobodan>
+      <Slobodan>false</Slobodan>
     </Vozac>
     <Iznos>430</Iznos>
     <Komentar>
@@ -701,6 +833,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <LokacijaOdredista>
@@ -732,15 +865,17 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>12</int>
+        <int>11</int>
       </VoznjeIDs>
       <Lokacija>
         <GeoCoordinate>
-          <Longitude>19.812716245651242</Longitude>
-          <Latitude>45.243318877819178</Latitude>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
         </GeoCoordinate>
         <Adresa>
-          <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-          <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
         </Adresa>
       </Lokacija>
       <Automobil>
@@ -750,7 +885,7 @@
         <TipAutomobila>Putnicki</TipAutomobila>
       </Automobil>
       <Blokiran>false</Blokiran>
-      <Slobodan>true</Slobodan>
+      <Slobodan>false</Slobodan>
     </Vozac>
     <Iznos>560</Iznos>
     <Komentar>
@@ -798,6 +933,7 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>15</int>
       </VoznjeIDs>
     </Musterija>
     <LokacijaOdredista>
@@ -829,15 +965,17 @@
         <int>8</int>
         <int>9</int>
         <int>10</int>
+        <int>12</int>
+        <int>11</int>
       </VoznjeIDs>
       <Lokacija>
         <GeoCoordinate>
-          <Longitude>19.812716245651242</Longitude>
-          <Latitude>45.243318877819178</Latitude>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
         </GeoCoordinate>
         <Adresa>
-          <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-          <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
         </Adresa>
       </Lokacija>
       <Automobil>
@@ -847,9 +985,171 @@
         <TipAutomobila>Putnicki</TipAutomobila>
       </Automobil>
       <Blokiran>false</Blokiran>
-      <Slobodan>true</Slobodan>
+      <Slobodan>false</Slobodan>
     </Vozac>
     <Iznos>650</Iznos>
     <StatusVoznje>Uspesna</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>12</ID>
+    <DatumIVremePorudzbine>20:35 25-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.83247339725494</Longitude>
+        <Latitude>45.24725445207801</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Gogoljeva 36</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <LokacijaOdredista>
+      <GeoCoordinate>
+        <Longitude>19.861355088651173</Longitude>
+        <Latitude>45.254943520496369</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Beogradska 5</UlicaIBroj>
+        <MestoIPostanskiFah>undefined 21132</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaOdredista>
+    <Dispecer>
+      <KorisnickoIme>admin</KorisnickoIme>
+      <Lozinka>admin</Lozinka>
+      <Ime>Tomas</Ime>
+      <Prezime>Norrton</Prezime>
+      <Pol>M</Pol>
+      <JMBG>2306987605023</JMBG>
+      <Telefon>0637655325</Telefon>
+      <Email>tomas.nortton@gmail.com</Email>
+      <Uloga>Admin</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>11</int>
+        <int>12</int>
+        <int>13</int>
+        <int>14</int>
+      </VoznjeIDs>
+    </Dispecer>
+    <Vozac>
+      <KorisnickoIme>vozac</KorisnickoIme>
+      <Lozinka>vozac</Lozinka>
+      <Ime>Michael</Ime>
+      <Prezime>Voughn</Prezime>
+      <Pol>M</Pol>
+      <JMBG>0309987456236</JMBG>
+      <Telefon>0631239875</Telefon>
+      <Email>michael.voughn@gmail.com</Email>
+      <Uloga>Vozac</Uloga>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>3</int>
+        <int>4</int>
+        <int>5</int>
+        <int>7</int>
+        <int>8</int>
+        <int>9</int>
+        <int>10</int>
+        <int>12</int>
+        <int>11</int>
+      </VoznjeIDs>
+      <Lokacija>
+        <GeoCoordinate>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
+        </GeoCoordinate>
+        <Adresa>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
+        </Adresa>
+      </Lokacija>
+      <Automobil>
+        <GodisteAutomobila>2010</GodisteAutomobila>
+        <BrojRegistarskeOznake>NS174LJ</BrojRegistarskeOznake>
+        <BrojTaksiVozila>GL175</BrojTaksiVozila>
+        <TipAutomobila>Putnicki</TipAutomobila>
+      </Automobil>
+      <Blokiran>false</Blokiran>
+      <Slobodan>false</Slobodan>
+    </Vozac>
+    <Iznos>680</Iznos>
+    <StatusVoznje>Uspesna</StatusVoznje>
+  </Voznja>
+  <Voznja>
+    <ID>11</ID>
+    <DatumIVremePorudzbine>20:33 25-06-2018</DatumIVremePorudzbine>
+    <LokacijaPolazista>
+      <GeoCoordinate>
+        <Longitude>19.844071269035339</Longitude>
+        <Latitude>45.250668587368153</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Pavla Simica 1a</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+      </Adresa>
+    </LokacijaPolazista>
+    <TipAutomobila>Putnicki</TipAutomobila>
+    <Dispecer>
+      <KorisnickoIme>admin</KorisnickoIme>
+      <Lozinka>admin</Lozinka>
+      <Ime>Tomas</Ime>
+      <Prezime>Norrton</Prezime>
+      <Pol>M</Pol>
+      <JMBG>2306987605023</JMBG>
+      <Telefon>0637655325</Telefon>
+      <Email>tomas.nortton@gmail.com</Email>
+      <Uloga>Admin</Uloga>
+      <Blokiran>false</Blokiran>
+      <VoznjeIDs>
+        <int>11</int>
+        <int>12</int>
+        <int>13</int>
+        <int>14</int>
+      </VoznjeIDs>
+    </Dispecer>
+    <Vozac>
+      <KorisnickoIme>vozac</KorisnickoIme>
+      <Lozinka>vozac</Lozinka>
+      <Ime>Michael</Ime>
+      <Prezime>Voughn</Prezime>
+      <Pol>M</Pol>
+      <JMBG>0309987456236</JMBG>
+      <Telefon>0631239875</Telefon>
+      <Email>michael.voughn@gmail.com</Email>
+      <Uloga>Vozac</Uloga>
+      <VoznjeIDs>
+        <int>1</int>
+        <int>3</int>
+        <int>4</int>
+        <int>5</int>
+        <int>7</int>
+        <int>8</int>
+        <int>9</int>
+        <int>10</int>
+        <int>12</int>
+        <int>11</int>
+      </VoznjeIDs>
+      <Lokacija>
+        <GeoCoordinate>
+          <Longitude>19.84331488609314</Longitude>
+          <Latitude>45.243062036240673</Latitude>
+        </GeoCoordinate>
+        <Adresa>
+          <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+          <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
+        </Adresa>
+      </Lokacija>
+      <Automobil>
+        <GodisteAutomobila>2010</GodisteAutomobila>
+        <BrojRegistarskeOznake>NS174LJ</BrojRegistarskeOznake>
+        <BrojTaksiVozila>GL175</BrojTaksiVozila>
+        <TipAutomobila>Putnicki</TipAutomobila>
+      </Automobil>
+      <Blokiran>false</Blokiran>
+      <Slobodan>false</Slobodan>
+    </Vozac>
+    <Iznos>0</Iznos>
+    <StatusVoznje>Prihvacena</StatusVoznje>
   </Voznja>
 </ArrayOfVoznja>

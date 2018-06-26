@@ -10,31 +10,50 @@ namespace Projekat.Controllers
         [HttpGet, Route("api/Korisnik/Login")]
         public IHttpActionResult Login([FromUri]LogIn korisnik)
         {
-            Korisnik k = new Korisnik();
-            Vozac v = new Vozac();
-            if (!Podaci.GetUlogovane().Contains(korisnik.KorisnickoIme))
+            if (korisnik.KorisnickoIme != null && korisnik.Lozinka != null)
             {
-                if (!Podaci.GetKorisnike().ContainsKey(korisnik.KorisnickoIme))
+                Korisnik k = new Korisnik();
+                Vozac v = new Vozac();
+                if (!Podaci.GetUlogovane().Contains(korisnik.KorisnickoIme))
                 {
-                    if (!Podaci.GetDispecere().ContainsKey(korisnik.KorisnickoIme))
+                    if (!Podaci.GetKorisnike().ContainsKey(korisnik.KorisnickoIme))
                     {
-                        if (!Podaci.GetVozace().ContainsKey(korisnik.KorisnickoIme))
+                        if (!Podaci.GetDispecere().ContainsKey(korisnik.KorisnickoIme))
                         {
-                            return Ok("Ne postoji korisnik sa ovim Korisnickim imenom!");
-                        }
-                        else if (Podaci.GetVozace().TryGetValue(korisnik.KorisnickoIme, out v))
-                        {
-                            if (v.Lozinka == korisnik.Lozinka)
+                            if (!Podaci.GetVozace().ContainsKey(korisnik.KorisnickoIme))
                             {
-                                if (v.Blokiran)
+                                return Ok("Ne postoji korisnik sa ovim Korisnickim imenom!");
+                            }
+                            else if (Podaci.GetVozace().TryGetValue(korisnik.KorisnickoIme, out v))
+                            {
+                                if (v.Lozinka == korisnik.Lozinka)
                                 {
-                                    return Ok("Blokirani ste!");
+                                    if (v.Blokiran)
+                                    {
+                                        return Ok("Blokirani ste!");
+                                    }
+                                    else
+                                    {
+                                        Podaci.GetUlogovane().Add(v.KorisnickoIme);
+                                        return Ok(v);
+                                    }
                                 }
                                 else
                                 {
-                                    Podaci.GetUlogovane().Add(v.KorisnickoIme);
-                                    return Ok(v);
+                                    return Ok("Pogresna Lozinka!");
                                 }
+                            }
+                            else
+                            {
+                                return Ok("Pogresna lozinka ili korisnicko ime!");
+                            }
+                        }
+                        else if (Podaci.GetDispecere().TryGetValue(korisnik.KorisnickoIme, out k))
+                        {
+                            if (k.Lozinka == korisnik.Lozinka)
+                            {
+                                Podaci.GetUlogovane().Add(k.KorisnickoIme);
+                                return Ok(k);
                             }
                             else
                             {
@@ -46,12 +65,19 @@ namespace Projekat.Controllers
                             return Ok("Pogresna lozinka ili korisnicko ime!");
                         }
                     }
-                    else if (Podaci.GetDispecere().TryGetValue(korisnik.KorisnickoIme, out k))
+                    else if (Podaci.GetKorisnike().TryGetValue(korisnik.KorisnickoIme, out k))
                     {
                         if (k.Lozinka == korisnik.Lozinka)
                         {
-                            Podaci.GetUlogovane().Add(k.KorisnickoIme);
-                            return Ok(k);
+                            if (k.Blokiran)
+                            {
+                                return Ok("Blokirani ste!");
+                            }
+                            else
+                            {
+                                Podaci.GetUlogovane().Add(k.KorisnickoIme);
+                                return Ok(k);
+                            }
                         }
                         else
                         {
@@ -63,33 +89,14 @@ namespace Projekat.Controllers
                         return Ok("Pogresna lozinka ili korisnicko ime!");
                     }
                 }
-                else if (Podaci.GetKorisnike().TryGetValue(korisnik.KorisnickoIme, out k))
-                {
-                    if (k.Lozinka == korisnik.Lozinka)
-                    {
-                        if (k.Blokiran)
-                        {
-                            return Ok("Blokirani ste!");
-                        }
-                        else
-                        {
-                            Podaci.GetUlogovane().Add(k.KorisnickoIme);
-                            return Ok(k);
-                        }
-                    }
-                    else
-                    {
-                        return Ok("Pogresna Lozinka!");
-                    }
-                }
                 else
                 {
-                    return Ok("Pogresna lozinka ili korisnicko ime!");
+                    return Ok("Vec ste ulogovani!");
                 }
             }
             else
             {
-                return Ok("Vec ste ulogovani!");
+                return Ok("null");
             }
         }
         
@@ -324,106 +331,113 @@ namespace Projekat.Controllers
         [HttpPost, Route("api/Korisnik/IzmeniKorisnika")]
         public IHttpActionResult IzmeniKorisnika(IzmenaKorisnik izmena)
         {
-            Vozac v = new Vozac();
-            Korisnik k = new Korisnik();
-            if (izmena.KorisnickoIme != izmena.StaroKorisnickoIme)
+            if (izmena.Email != null && izmena.Ime != null && izmena.JMBG != null && izmena.KorisnickoIme != null &&
+                izmena.Lozinka != null && izmena.Prezime != null && izmena.StaroKorisnickoIme != null &&
+                izmena.Telefon != null && izmena.Uloga.ToString() != null && izmena.Pol.ToString() != null)
             {
-                if (izmena.Uloga == ULOGA.Vozac && !Podaci.GetVozace().ContainsKey(izmena.KorisnickoIme))
+                Vozac v = new Vozac();
+                Korisnik k = new Korisnik();
+                if (izmena.KorisnickoIme != izmena.StaroKorisnickoIme)
                 {
-                    v.Blokiran = false;
-                    v.Email = izmena.Email;
-                    v.Ime = izmena.Ime;
-                    v.JMBG = izmena.JMBG;
-                    v.KorisnickoIme = izmena.KorisnickoIme;
-                    v.Lozinka = izmena.Lozinka;
-                    v.Pol = izmena.Pol;
-                    v.Prezime = izmena.Prezime;
-                    v.Telefon = izmena.Telefon;
-                    v.Slobodan = Podaci.GetVozace()[izmena.StaroKorisnickoIme].Slobodan;
-                    v.Uloga = ULOGA.Vozac;
-                    v.VoznjeIDs = Podaci.GetVozace()[izmena.StaroKorisnickoIme].VoznjeIDs;
-                    Podaci.IzmeniVozaca(izmena.StaroKorisnickoIme, v);
-                }
-                else if (izmena.Uloga == ULOGA.Admin && !Podaci.GetDispecere().ContainsKey(izmena.KorisnickoIme))
-                {
-                    k.Email = izmena.Email;
-                    k.Ime = izmena.Ime;
-                    k.JMBG = izmena.JMBG;
-                    k.KorisnickoIme = izmena.KorisnickoIme;
-                    k.Lozinka = izmena.Lozinka;
-                    k.Pol = izmena.Pol;
-                    k.Prezime = izmena.Prezime;
-                    k.Telefon = izmena.Telefon;
-                    k.Uloga = ULOGA.Admin;
-                    k.VoznjeIDs = Podaci.GetDispecere()[izmena.StaroKorisnickoIme].VoznjeIDs;
-                    Podaci.IzmeniDispecera(izmena.StaroKorisnickoIme, k);
-                }
-                else if (izmena.Uloga == ULOGA.Musterija && !Podaci.GetKorisnike().ContainsKey(izmena.KorisnickoIme))
-                {
-                    k.Email = izmena.Email;
-                    k.Ime = izmena.Ime;
-                    k.JMBG = izmena.JMBG;
-                    k.KorisnickoIme = izmena.KorisnickoIme;
-                    k.Lozinka = izmena.Lozinka;
-                    k.Pol = izmena.Pol;
-                    k.Prezime = izmena.Prezime;
-                    k.Telefon = izmena.Telefon;
-                    k.Uloga = ULOGA.Musterija;
-                    k.VoznjeIDs = Podaci.GetKorisnike()[izmena.StaroKorisnickoIme].VoznjeIDs;
-                    Podaci.IzmeniKorisnika(izmena.StaroKorisnickoIme, k);
+                    if (izmena.Uloga == ULOGA.Vozac && !Podaci.GetVozace().ContainsKey(izmena.KorisnickoIme))
+                    {
+                        v.Blokiran = false;
+                        v.Email = izmena.Email;
+                        v.Ime = izmena.Ime;
+                        v.JMBG = izmena.JMBG;
+                        v.KorisnickoIme = izmena.KorisnickoIme;
+                        v.Lozinka = izmena.Lozinka;
+                        v.Pol = izmena.Pol;
+                        v.Prezime = izmena.Prezime;
+                        v.Telefon = izmena.Telefon;
+                        v.Slobodan = Podaci.GetVozace()[izmena.StaroKorisnickoIme].Slobodan;
+                        v.Uloga = ULOGA.Vozac;
+                        v.VoznjeIDs = Podaci.GetVozace()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                        Podaci.IzmeniVozaca(izmena.StaroKorisnickoIme, v);
+                    }
+                    else if (izmena.Uloga == ULOGA.Admin && !Podaci.GetDispecere().ContainsKey(izmena.KorisnickoIme))
+                    {
+                        k.Email = izmena.Email;
+                        k.Ime = izmena.Ime;
+                        k.JMBG = izmena.JMBG;
+                        k.KorisnickoIme = izmena.KorisnickoIme;
+                        k.Lozinka = izmena.Lozinka;
+                        k.Pol = izmena.Pol;
+                        k.Prezime = izmena.Prezime;
+                        k.Telefon = izmena.Telefon;
+                        k.Uloga = ULOGA.Admin;
+                        k.VoznjeIDs = Podaci.GetDispecere()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                        Podaci.IzmeniDispecera(izmena.StaroKorisnickoIme, k);
+                    }
+                    else if (izmena.Uloga == ULOGA.Musterija && !Podaci.GetKorisnike().ContainsKey(izmena.KorisnickoIme))
+                    {
+                        k.Email = izmena.Email;
+                        k.Ime = izmena.Ime;
+                        k.JMBG = izmena.JMBG;
+                        k.KorisnickoIme = izmena.KorisnickoIme;
+                        k.Lozinka = izmena.Lozinka;
+                        k.Pol = izmena.Pol;
+                        k.Prezime = izmena.Prezime;
+                        k.Telefon = izmena.Telefon;
+                        k.Uloga = ULOGA.Musterija;
+                        k.VoznjeIDs = Podaci.GetKorisnike()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                        Podaci.IzmeniKorisnika(izmena.StaroKorisnickoIme, k);
+                    }
+                    else
+                        return Ok("Korisnicko ime vec postoji!");
+
                 }
                 else
-                    return Ok("Korisnicko ime vec postoji!");
-
+                {
+                    if (izmena.Uloga == ULOGA.Vozac)
+                    {
+                        v.Blokiran = false;
+                        v.Email = izmena.Email;
+                        v.Ime = izmena.Ime;
+                        v.JMBG = izmena.JMBG;
+                        v.KorisnickoIme = izmena.KorisnickoIme;
+                        v.Lozinka = izmena.Lozinka;
+                        v.Pol = izmena.Pol;
+                        v.Prezime = izmena.Prezime;
+                        v.Telefon = izmena.Telefon;
+                        v.Slobodan = Podaci.GetVozace()[izmena.StaroKorisnickoIme].Slobodan;
+                        v.Uloga = ULOGA.Vozac;
+                        v.VoznjeIDs = Podaci.GetVozace()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                        Podaci.IzmeniVozaca(izmena.StaroKorisnickoIme, v);
+                    }
+                    else if (izmena.Uloga == ULOGA.Admin)
+                    {
+                        k.Email = izmena.Email;
+                        k.Ime = izmena.Ime;
+                        k.JMBG = izmena.JMBG;
+                        k.KorisnickoIme = izmena.KorisnickoIme;
+                        k.Lozinka = izmena.Lozinka;
+                        k.Pol = izmena.Pol;
+                        k.Prezime = izmena.Prezime;
+                        k.Telefon = izmena.Telefon;
+                        k.Uloga = ULOGA.Admin;
+                        k.VoznjeIDs = Podaci.GetDispecere()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                        Podaci.IzmeniDispecera(izmena.StaroKorisnickoIme, k);
+                    }
+                    else if (izmena.Uloga == ULOGA.Musterija)
+                    {
+                        k.Email = izmena.Email;
+                        k.Ime = izmena.Ime;
+                        k.JMBG = izmena.JMBG;
+                        k.KorisnickoIme = izmena.KorisnickoIme;
+                        k.Lozinka = izmena.Lozinka;
+                        k.Pol = izmena.Pol;
+                        k.Prezime = izmena.Prezime;
+                        k.Telefon = izmena.Telefon;
+                        k.Uloga = ULOGA.Musterija;
+                        k.VoznjeIDs = Podaci.GetKorisnike()[izmena.StaroKorisnickoIme].VoznjeIDs;
+                        Podaci.IzmeniKorisnika(izmena.StaroKorisnickoIme, k);
+                    }
+                }
+                return Ok();
             }
             else
-            {
-                if (izmena.Uloga == ULOGA.Vozac)
-                {
-                    v.Blokiran = false;
-                    v.Email = izmena.Email;
-                    v.Ime = izmena.Ime;
-                    v.JMBG = izmena.JMBG;
-                    v.KorisnickoIme = izmena.KorisnickoIme;
-                    v.Lozinka = izmena.Lozinka;
-                    v.Pol = izmena.Pol;
-                    v.Prezime = izmena.Prezime;
-                    v.Telefon = izmena.Telefon;
-                    v.Slobodan = Podaci.GetVozace()[izmena.StaroKorisnickoIme].Slobodan;
-                    v.Uloga = ULOGA.Vozac;
-                    v.VoznjeIDs = Podaci.GetVozace()[izmena.StaroKorisnickoIme].VoznjeIDs;
-                    Podaci.IzmeniVozaca(izmena.StaroKorisnickoIme, v);
-                }
-                else if (izmena.Uloga == ULOGA.Admin)
-                {
-                    k.Email = izmena.Email;
-                    k.Ime = izmena.Ime;
-                    k.JMBG = izmena.JMBG;
-                    k.KorisnickoIme = izmena.KorisnickoIme;
-                    k.Lozinka = izmena.Lozinka;
-                    k.Pol = izmena.Pol;
-                    k.Prezime = izmena.Prezime;
-                    k.Telefon = izmena.Telefon;
-                    k.Uloga = ULOGA.Admin;
-                    k.VoznjeIDs = Podaci.GetDispecere()[izmena.StaroKorisnickoIme].VoznjeIDs;
-                    Podaci.IzmeniDispecera(izmena.StaroKorisnickoIme, k);
-                }
-                else if (izmena.Uloga == ULOGA.Musterija)
-                {
-                    k.Email = izmena.Email;
-                    k.Ime = izmena.Ime;
-                    k.JMBG = izmena.JMBG;
-                    k.KorisnickoIme = izmena.KorisnickoIme;
-                    k.Lozinka = izmena.Lozinka;
-                    k.Pol = izmena.Pol;
-                    k.Prezime = izmena.Prezime;
-                    k.Telefon = izmena.Telefon;
-                    k.Uloga = ULOGA.Musterija;
-                    k.VoznjeIDs = Podaci.GetKorisnike()[izmena.StaroKorisnickoIme].VoznjeIDs;
-                    Podaci.IzmeniKorisnika(izmena.StaroKorisnickoIme, k);
-                }
-            }
-            return Ok();
+                return Ok("null");
         }
 
         [HttpGet, Route("api/Korisnik/GetAutomobil")]

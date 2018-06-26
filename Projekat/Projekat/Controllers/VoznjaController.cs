@@ -12,55 +12,62 @@ namespace Projekat.Controllers
         [HttpPost, Route("api/Voznja/poruciVoznju")]
         public IHttpActionResult poruciVoznju(AdrILok adresaILokacija)
         {
-            if (Podaci.GetKorisnike().ContainsKey(adresaILokacija.KorisnickoIme) && CheckDrives(adresaILokacija.KorisnickoIme))
+            if (adresaILokacija.KorisnickoIme != null &&
+                adresaILokacija.MestoiPostanski != null && adresaILokacija.UlicaiBroj != null &&
+                adresaILokacija.xlong != 0 && adresaILokacija.ylatit != 0)
             {
-                return Ok("Ne mozete da narucite sledecu voznju!");
+                if (Podaci.GetKorisnike().ContainsKey(adresaILokacija.KorisnickoIme) && CheckDrives(adresaILokacija.KorisnickoIme))
+                {
+                    return Ok("Ne mozete da narucite sledecu voznju!");
+                }
+                else
+                {
+                    Voznja v = new Voznja();
+                    v.ID = ++Podaci.cnt;
+                    Korisnik k = new Korisnik();
+
+                    if (Podaci.GetKorisnike().ContainsKey(adresaILokacija.KorisnickoIme))
+                    {
+                        k.KorisnickoIme = adresaILokacija.KorisnickoIme;
+                        k.Pol = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].Pol;
+                        k.VoznjeIDs = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].VoznjeIDs;
+                        k.VoznjeIDs.Add(v.ID);
+                        Podaci.IzmeniKorisnika(adresaILokacija.KorisnickoIme, k);
+
+                        v.Musterija = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme];
+                        v.StatusVoznje = STATUS_VOZNJE.Kreirana;
+                    }
+                    else if (Podaci.GetDispecere().ContainsKey(adresaILokacija.KorisnickoIme))
+                    {
+                        v.Dispecer = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme];
+                        k.KorisnickoIme = adresaILokacija.KorisnickoIme;
+                        k.Pol = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme].Pol;
+                        k.VoznjeIDs = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme].VoznjeIDs;
+                        k.VoznjeIDs.Add(v.ID);
+                        Podaci.IzmeniDispecera(adresaILokacija.KorisnickoIme, k);
+                        v.StatusVoznje = STATUS_VOZNJE.Formirana;
+                    }
+                    var date = DateTime.Now;
+                    v.DatumIVremePorudzbine = (date.ToString(Podaci.format));
+                    if (adresaILokacija.TipAutomobila == TIP_AUTOMOBILA.Kombi.ToString())
+                        v.TipAutomobila = TIP_AUTOMOBILA.Kombi;
+                    else
+                        v.TipAutomobila = TIP_AUTOMOBILA.Putnicki;
+                    v.LokacijaPolazista = new Lokacija();
+                    v.LokacijaPolazista.Adresa = new Adresa();
+                    v.LokacijaPolazista.Adresa.UlicaIBroj = adresaILokacija.UlicaiBroj;
+                    v.LokacijaPolazista.Adresa.MestoIPostanskiFah = adresaILokacija.MestoiPostanski;
+                    v.LokacijaPolazista.GeoCoordinate = new Koordinate();
+                    v.LokacijaPolazista.GeoCoordinate.Longitude = adresaILokacija.xlong;
+                    v.LokacijaPolazista.GeoCoordinate.Latitude = adresaILokacija.ylatit;
+
+                    Podaci.DodajVoznje(v);
+                    Podaci.GetSlobodneVoznje().Add(v.ID);
+                }
+                return Ok();
             }
             else
-            {
-                Voznja v = new Voznja();
-                v.ID = ++Podaci.cnt;
-                Korisnik k = new Korisnik();
-                
-                if (Podaci.GetKorisnike().ContainsKey(adresaILokacija.KorisnickoIme))
-                {
-                    k.KorisnickoIme = adresaILokacija.KorisnickoIme;
-                    k.Pol = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].Pol;
-                    k.VoznjeIDs = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme].VoznjeIDs;
-                    k.VoznjeIDs.Add(v.ID);
-                    Podaci.IzmeniKorisnika(adresaILokacija.KorisnickoIme, k);
-
-                    v.Musterija = Podaci.GetKorisnike()[adresaILokacija.KorisnickoIme];
-                    v.StatusVoznje = STATUS_VOZNJE.Kreirana;
-                }
-                else if (Podaci.GetDispecere().ContainsKey(adresaILokacija.KorisnickoIme))
-                {
-                    v.Dispecer = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme];
-                    k.KorisnickoIme = adresaILokacija.KorisnickoIme;
-                    k.Pol = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme].Pol;
-                    k.VoznjeIDs = Podaci.GetDispecere()[adresaILokacija.KorisnickoIme].VoznjeIDs;
-                    k.VoznjeIDs.Add(v.ID);
-                    Podaci.IzmeniDispecera(adresaILokacija.KorisnickoIme, k);
-                    v.StatusVoznje = STATUS_VOZNJE.Formirana;
-                }
-                var date = DateTime.Now;
-                v.DatumIVremePorudzbine = (date.ToString(Podaci.format));
-                if (adresaILokacija.TipAutomobila == TIP_AUTOMOBILA.Kombi.ToString())
-                    v.TipAutomobila = TIP_AUTOMOBILA.Kombi;
-                else
-                    v.TipAutomobila = TIP_AUTOMOBILA.Putnicki;
-                v.LokacijaPolazista = new Lokacija();
-                v.LokacijaPolazista.Adresa = new Adresa();
-                v.LokacijaPolazista.Adresa.UlicaIBroj = adresaILokacija.UlicaiBroj;
-                v.LokacijaPolazista.Adresa.MestoIPostanskiFah = adresaILokacija.MestoiPostanski;
-                v.LokacijaPolazista.GeoCoordinate = new Koordinate();
-                v.LokacijaPolazista.GeoCoordinate.Longitude = adresaILokacija.xlong;
-                v.LokacijaPolazista.GeoCoordinate.Latitude = adresaILokacija.ylatit;
-                
-                Podaci.DodajVoznje(v);
-                Podaci.GetSlobodneVoznje().Add(v.ID);
-            }
-            return Ok();
+                return Ok("null");
         }
 
         public bool CheckDrives(string k)
@@ -127,17 +134,22 @@ namespace Projekat.Controllers
         [HttpPost, Route("api/Voznja/DodajKomentar")]
         public IHttpActionResult DodajKomentar(Komentar kom)
         {
-            var date = DateTime.Now;
-            kom.DatumObjave = (date.ToString(Podaci.format));
+            if (kom.Korisnik != null && kom.Ocena >= 0 && kom.Opis != null && kom.Voznja != 0)
+            {
+                var date = DateTime.Now;
+                kom.DatumObjave = (date.ToString(Podaci.format));
 
-            Voznja v = new Voznja();
-            v.StatusVoznje = Podaci.GetSveVoznje()[kom.Voznja].StatusVoznje;
-            v.Komentar = kom;
-            if (kom.Ocena == 0 || kom.Ocena.CompareTo(null) == 0)
-                kom.Ocena = 0;
-            Podaci.IzmeniVoznju(kom.Voznja, v);
+                Voznja v = new Voznja();
+                v.StatusVoznje = Podaci.GetSveVoznje()[kom.Voznja].StatusVoznje;
+                v.Komentar = kom;
+                if (kom.Ocena == 0 || kom.Ocena.CompareTo(null) == 0)
+                    kom.Ocena = 0;
+                Podaci.IzmeniVoznju(kom.Voznja, v);
 
-            return Ok();
+                return Ok();
+            }
+            else
+                return Ok("null");
         }
 
 
@@ -165,79 +177,104 @@ namespace Projekat.Controllers
         [HttpGet, Route("api/Voznja/UnesiOdrediste")]
         public IHttpActionResult UnesiOdrediste([FromUri]AdrILok a)
         {
-            Voznja v = new Voznja();
-            v.LokacijaOdredista = new Lokacija();
-            v.LokacijaOdredista.Adresa = new Adresa();
-            v.LokacijaOdredista.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
-            v.LokacijaOdredista.Adresa.UlicaIBroj = a.UlicaiBroj;
-            v.LokacijaOdredista.GeoCoordinate = new Koordinate();
-            v.LokacijaOdredista.GeoCoordinate.Latitude = a.ylatit;
-            v.LokacijaOdredista.GeoCoordinate.Longitude = a.xlong;
-            v.StatusVoznje = STATUS_VOZNJE.Prihvacena;
-            Podaci.IzmeniVoznju(a.IDVoznje, v);
+            if (a.MestoiPostanski != null && a.UlicaiBroj != null && a.xlong != 0 && a.ylatit != 0)
+            {
+                Voznja v = new Voznja();
+                v.LokacijaOdredista = new Lokacija();
+                v.LokacijaOdredista.Adresa = new Adresa();
+                v.LokacijaOdredista.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
+                v.LokacijaOdredista.Adresa.UlicaIBroj = a.UlicaiBroj;
+                v.LokacijaOdredista.GeoCoordinate = new Koordinate();
+                v.LokacijaOdredista.GeoCoordinate.Latitude = a.ylatit;
+                v.LokacijaOdredista.GeoCoordinate.Longitude = a.xlong;
+                v.StatusVoznje = STATUS_VOZNJE.Prihvacena;
+                Podaci.IzmeniVoznju(a.IDVoznje, v);
 
-            Vozac vozac = new Vozac();
-            vozac.KorisnickoIme = a.KorisnickoIme;
-            vozac.Lokacija = new Lokacija ();
-            vozac.Lokacija.Adresa = new Adresa();
-            vozac.Lokacija.GeoCoordinate = new Koordinate();
-            vozac.Lokacija.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
-            vozac.Lokacija.Adresa.UlicaIBroj = a.UlicaiBroj;
-            vozac.Lokacija.GeoCoordinate.Latitude = a.ylatit;
-            vozac.Lokacija.GeoCoordinate.Longitude = a.xlong;
-            vozac.Slobodan = false;
-            Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
+                Vozac vozac = new Vozac();
+                vozac.KorisnickoIme = a.KorisnickoIme;
+                vozac.Lokacija = new Lokacija();
+                vozac.Lokacija.Adresa = new Adresa();
+                vozac.Lokacija.GeoCoordinate = new Koordinate();
+                vozac.Lokacija.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
+                vozac.Lokacija.Adresa.UlicaIBroj = a.UlicaiBroj;
+                vozac.Lokacija.GeoCoordinate.Latitude = a.ylatit;
+                vozac.Lokacija.GeoCoordinate.Longitude = a.xlong;
+                vozac.Slobodan = false;
+                Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
 
-            return Ok();
+                return Ok();
+            }
+            else
+                return Ok("null");
         }
 
 
         [HttpGet, Route("api/Voznja/PrihvatiVoznju")]
         public IHttpActionResult PrihvatiVoznju([FromUri]AdrILok a)
         {
-            Podaci.GetSlobodneVozace().Remove(a.KorisnickoIme);
-            Podaci.GetSlobodneVoznje().Remove(a.IDVoznje);
+            if (a.KorisnickoIme != null && a.IDVoznje > 0)
+            {
+                if (Podaci.GetVozace()[a.KorisnickoIme].Slobodan == true)
+                {
+                    Podaci.GetSlobodneVozace().Remove(a.KorisnickoIme);
+                    Podaci.GetSlobodneVoznje().Remove(a.IDVoznje);
 
-            Vozac vozac = new Vozac();
-            vozac.Slobodan = false;
-            vozac.VoznjeIDs = Podaci.GetVozace()[a.KorisnickoIme].VoznjeIDs;
-            vozac.VoznjeIDs.Add(a.IDVoznje);
-            Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
+                    Vozac vozac = new Vozac();
+                    vozac.Slobodan = false;
+                    vozac.VoznjeIDs = Podaci.GetVozace()[a.KorisnickoIme].VoznjeIDs;
+                    vozac.VoznjeIDs.Add(a.IDVoznje);
+                    Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
 
-            Voznja v = new Voznja();
-            v.Vozac = new Vozac();
-            v.Vozac = Podaci.GetVozace()[a.KorisnickoIme];
-            v.StatusVoznje = STATUS_VOZNJE.Prihvacena;
-            Podaci.IzmeniVoznju(a.IDVoznje, v);
+                    Voznja v = new Voznja();
+                    v.Vozac = new Vozac();
+                    v.Vozac = Podaci.GetVozace()[a.KorisnickoIme];
+                    v.StatusVoznje = STATUS_VOZNJE.Prihvacena;
+                    Podaci.IzmeniVoznju(a.IDVoznje, v);
 
-            return Ok();
+                    return Ok();
+                }
+                else
+                    return Ok("zauzet");
+            }
+            else
+                return Ok("null");
         }
 
 
         [HttpGet, Route("api/Voznja/ZavrsiVoznju")]
         public IHttpActionResult ZavrsiVoznju([FromUri]AdrILok a)
         {
-            Podaci.GetSlobodneVozace().Add(a.KorisnickoIme);
-
-            Voznja v = new Voznja();
-            v.Vozac = Podaci.GetVozace()[a.KorisnickoIme];
-            if (a.Status.Contains("Neus"))
-                v.StatusVoznje = STATUS_VOZNJE.Neuspesna;
-            else
-                v.StatusVoznje = STATUS_VOZNJE.Uspesna;
-            v.Iznos = a.Cena;
-            if (v.StatusVoznje == STATUS_VOZNJE.Neuspesna)
+            if (a.Status.ToString() != null)
             {
-                v.Iznos = 0;
-                v.LokacijaOdredista = null;
+                Podaci.GetSlobodneVozace().Add(a.KorisnickoIme);
+
+                Voznja v = new Voznja();
+                v.Vozac = Podaci.GetVozace()[a.KorisnickoIme];
+                if (a.Status.Contains("Neus"))
+                    v.StatusVoznje = STATUS_VOZNJE.Neuspesna;
+                else
+                {
+                    v.StatusVoznje = STATUS_VOZNJE.Uspesna;
+                    if(a.Cena < 0)
+                    {
+                        return Ok("cena");
+                    }
+                }
+                v.Iznos = a.Cena;
+                if (v.StatusVoznje == STATUS_VOZNJE.Neuspesna)
+                {
+                    v.Iznos = 0;
+                    v.LokacijaOdredista = null;
+                }
+                Podaci.IzmeniVoznju(a.IDVoznje, v);
+
+                Vozac vozac = new Vozac();
+                vozac.Slobodan = true;
+                Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
+                return Ok();
             }
-            Podaci.IzmeniVoznju(a.IDVoznje, v);
-
-            Vozac vozac = new Vozac();
-            vozac.Slobodan = true;
-            Podaci.IzmeniVozaca(a.KorisnickoIme, vozac);
-
-            return Ok();
+            else
+                return Ok("status");
         }
 
 
@@ -493,21 +530,28 @@ namespace Projekat.Controllers
         [HttpPost, Route("api/Voznja/PromeniLokaciju")]
         public IHttpActionResult PromeniLokaciju(AdrILok a)
         {
-            Voznja v = new Voznja();
-            Lokacija l = new Lokacija();
-            l.Adresa = new Adresa();
-            l.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
-            l.Adresa.UlicaIBroj = a.UlicaiBroj;
-            l.GeoCoordinate = new Koordinate();
-            l.GeoCoordinate.Latitude = a.ylatit;
-            l.GeoCoordinate.Longitude = a.xlong;
-            v.LokacijaPolazista = l;
-            v.ID = a.IDVoznje;
-            v.TipAutomobila = Podaci.GetSveVoznje()[a.IDVoznje].TipAutomobila;
+            if (a.KorisnickoIme != null && a.IDVoznje > 0 &&
+                a.MestoiPostanski != null && a.UlicaiBroj != null &&
+                a.xlong != 0 && a.ylatit != 0)
+            {
+                Voznja v = new Voznja();
+                Lokacija l = new Lokacija();
+                l.Adresa = new Adresa();
+                l.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
+                l.Adresa.UlicaIBroj = a.UlicaiBroj;
+                l.GeoCoordinate = new Koordinate();
+                l.GeoCoordinate.Latitude = a.ylatit;
+                l.GeoCoordinate.Longitude = a.xlong;
+                v.LokacijaPolazista = l;
+                v.ID = a.IDVoznje;
+                v.TipAutomobila = Podaci.GetSveVoznje()[a.IDVoznje].TipAutomobila;
 
-            Podaci.IzmeniVoznju(a.IDVoznje,v );
+                Podaci.IzmeniVoznju(a.IDVoznje, v);
 
-            return Ok();
+                return Ok();
+            }
+            else
+                return Ok("null");
         }
 
         [HttpGet, Route("api/Voznja/PromeniVozilo")]
@@ -738,22 +782,27 @@ namespace Projekat.Controllers
         [HttpGet, Route("api/Voznja/VozacMenjaLokaciju")]
         public IHttpActionResult VozacMenjaLokaciju([FromUri]AdrILok a)
         {
-            Vozac v = new Vozac();
-            v.KorisnickoIme = a.KorisnickoIme;
-            v.Pol = Podaci.GetVozace()[a.KorisnickoIme].Pol;
-            v.Slobodan = Podaci.GetVozace()[a.KorisnickoIme].Slobodan;
-            v.Blokiran = false;
-            Lokacija l = new Lokacija();
-            l.Adresa = new Adresa();
-            l.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
-            l.Adresa.UlicaIBroj = a.UlicaiBroj;
-            l.GeoCoordinate = new Koordinate();
-            l.GeoCoordinate.Latitude = a.ylatit;
-            l.GeoCoordinate.Longitude = a.xlong;
-            v.Lokacija = l;
+            if (a.MestoiPostanski != null && a.UlicaiBroj != null && a.xlong != 0 && a.ylatit != 0 && a.KorisnickoIme != null)
+            {
+                Vozac v = new Vozac();
+                v.KorisnickoIme = a.KorisnickoIme;
+                v.Pol = Podaci.GetVozace()[a.KorisnickoIme].Pol;
+                v.Slobodan = Podaci.GetVozace()[a.KorisnickoIme].Slobodan;
+                v.Blokiran = false;
+                Lokacija l = new Lokacija();
+                l.Adresa = new Adresa();
+                l.Adresa.MestoIPostanskiFah = a.MestoiPostanski;
+                l.Adresa.UlicaIBroj = a.UlicaiBroj;
+                l.GeoCoordinate = new Koordinate();
+                l.GeoCoordinate.Latitude = a.ylatit;
+                l.GeoCoordinate.Longitude = a.xlong;
+                v.Lokacija = l;
 
-            Podaci.IzmeniVozaca(a.KorisnickoIme, v);
-            return Ok();
+                Podaci.IzmeniVozaca(a.KorisnickoIme, v);
+                return Ok();
+            }
+            else
+                return Ok("null");
         }
     }
 }

@@ -516,6 +516,9 @@
                         else if (result === "Blokirani ste!") {
                             $("#message").html("Blokirani ste!");
                         }
+                        else if (result === "null") {
+                            $("#message").html("Unesite ponovo podatke!");
+                        }
                         else {
                             if (result.Uloga === 0) {
                                 $("#uloga").html(`<option value="Voza&ccaron;" id="vozac" />`);
@@ -566,9 +569,16 @@
                         $("#errorMessageReg").html("Korisni&ccaron;ko ime vec postoji");
                         $("#korisnicko").css("border-color", "crimson");
                         $("#kor br").hide();
+                        $("#errorMessageReg").show();
                         $("#korisnicko").focus();
                     }
+                    else if (data === "null") {
+                        $("#errorMessageReg").html("Unesite ponovo podatke!");
+                        $("#korisnicko").css("border-color", "crimson");
+                        $("#errorMessageReg").show();
+                    }
                     else {
+                        $("#errorMessageReg").hide();
                         $("#login").hide();
                         $("#registracijaIOpis").hide();
                         $("#registrovan").show();
@@ -627,6 +637,9 @@
                         }
                         else if (result === "Vec ste ulogovani!") {
                             $("#mess").html("Ve&cacute; ste ulogovani!");
+                        }
+                        else if (result === "null") {
+                            $("#mess").html("Unesite ponovo");
                         }
                         else {
                             if (result.Uloga === 2) {
@@ -760,6 +773,9 @@
                         $("#kor br").hide();
                         $("#korisnicko").focus();
                     }
+                    else if (result === "null") {
+                        $("#dodajVozacaRegistracija #errorMessageReg").html("Unesite ponovo podatke!");
+                    }
                 }
             });
 
@@ -768,18 +784,23 @@
                 data: auto,
                 type: "POST",
                 success: function (result) {
-                    $("#login").hide();
-                    $("#registracijaIOpis").hide();
-                    $("#registrovan").hide();
-                    $("#dodajVozacaPolja").hide();
-                    $("#map").hide();
-                    $("#logout").show();
-                    $("#ulogovan").show();
-                    $("#profilButton").show();
-                    var divheader = $("#divheader").html();
-                    sessionStorage.setItem("divheader", divheader);
-                    var divbody = $("#divbody").html();
-                    sessionStorage.setItem("divbody", divbody);
+                    if (result === "null") {
+                        $("#dodajVozacaRegistracija #errorMessageReg").html("Unesite ponovo podatke!");
+                    }
+                    else {
+                        $("#login").hide();
+                        $("#registracijaIOpis").hide();
+                        $("#registrovan").hide();
+                        $("#dodajVozacaPolja").hide();
+                        $("#map").hide();
+                        $("#logout").show();
+                        $("#ulogovan").show();
+                        $("#profilButton").show();
+                        var divheader = $("#divheader").html();
+                        sessionStorage.setItem("divheader", divheader);
+                        var divbody = $("#divbody").html();
+                        sessionStorage.setItem("divbody", divbody);
+                    }
                 }
             });
             $("#mapaDodajVozaca").html("");
@@ -838,6 +859,9 @@
             $("#errormapadodajvoznju").show();
             upis = false;
         }
+        else if (lok.TipAutomobila === null || lok.TipAutomobila === "null") {
+            lok.TipAutomobila = "Putnicki";
+        }
         if (upis) {
             $.ajax({
                 url: "api/Voznja/poruciVoznju",
@@ -846,6 +870,10 @@
                 success: function (result) {
                     if (result === "Ne mozete da narucite sledecu voznju!") {
                         $("#ulogovanMessage").html("Ne mo&zcaron;ete da naru&ccaron;ite vo&zcaron;nju, prethodna nije zavr&scaron;ena!");
+                        $("#ulogovanMessage").show();
+                    }
+                    if (result === "null") {
+                        $("#ulogovanMessage").html("Unesite ponovo podatke!");
                         $("#ulogovanMessage").show();
                     }
                     $("#login").hide();
@@ -883,6 +911,7 @@
         $("#divtabelapretrage").hide();
         $("#profil").hide();
         $("#errorBlokiraj").html("");
+        $("#errorOdlokiraj").html("");
 
         BlokReload();
         UnblokReload();
@@ -1207,13 +1236,19 @@
 
         $.get("/api/Voznja/VozacMenjaLokaciju", lok)
             .done(function (result) {
-                $("#vozacmessagelok").html("Lokacija uspe&scaron;no promenjena!");
-                $("#vozacmessagelok").show();
-                $("#vozacOdrediste").hide();
-                $("#pogledajkomentar").hide();
-                $("#korisnikkomentar").hide();
-                $("#profilvozacmapa").html("");
-                UcitajProfil();
+                if (result === "null") {
+                    $("#vozacmessagelok").html("Unesite ponovo podatke!");
+                    $("#vozacmessagelok").show();
+                }
+                else {
+                    $("#vozacmessagelok").html("Lokacija uspe&scaron;no promenjena!");
+                    $("#vozacmessagelok").show();
+                    $("#vozacOdrediste").hide();
+                    $("#pogledajkomentar").hide();
+                    $("#korisnikkomentar").hide();
+                    $("#profilvozacmapa").html("");
+                    UcitajProfil();
+                }
             });
     });
 
@@ -1243,6 +1278,10 @@
                         $("#profiliosninf #izmenaerrormessage").html("Korisni&ccaron;ko ime ve&cacute; postoji!");
                         $("#profiliosninf #izmenaerrormessage").show();
                         $("#izmenakimev").focus();
+                    }
+                    else if (result === "null") {
+                        $("#profiliosninf #izmenaerrormessage").html("Unesite ponovo podatke!");
+                        $("#profiliosninf #izmenaerrormessage").show();
                     }
                     else {
                         $("#profiliosninf #izmenaerrormessage").html("Uspe&scaron;no ste izmenili profil!");
@@ -1751,18 +1790,24 @@
 
         $.post("/api/Voznja/PromeniLokaciju", lok)
             .done(function (result) {
-                $("#ulogovanMessage").html("Polazi" + `&scaron;` + "te uspe" + `&scaron;` + "no promenjeno!");
-                $("#ulogovanMessage").show();
-                $("#vozacOdrediste").hide();
-                $("#pogledajkomentar").hide();
-                $("#korisnikkomentar").hide();
-                $("#promenipolazistekorisnik").hide();
-                $("#vozacOdrediste").hide();
-                $("#dodelivoznjuvozacu").hide();
-                $("#mapapolaziste").html("");
-                $("#trnutnopolaziste").html("Trenutna lokacija: ");
-                $(this).hide();
-                PocetnaStrana();
+                if (result !== "null") {
+                    $("#ulogovanMessage").html("Polazi" + `&scaron;` + "te uspe" + `&scaron;` + "no promenjeno!");
+                    $("#ulogovanMessage").show();
+                    $("#vozacOdrediste").hide();
+                    $("#pogledajkomentar").hide();
+                    $("#korisnikkomentar").hide();
+                    $("#promenipolazistekorisnik").hide();
+                    $("#vozacOdrediste").hide();
+                    $("#dodelivoznjuvozacu").hide();
+                    $("#mapapolaziste").html("");
+                    $("#trnutnopolaziste").html("Trenutna lokacija: ");
+                    $(this).hide();
+                    PocetnaStrana();
+                }
+                else {
+                    $("#ulogovanMessage").html("Unesite ponovo podatke!");
+                    $("#ulogovanMessage").show();
+                }
             });
     });
 
@@ -1790,14 +1835,20 @@
         if (upis) {
             $.get("/api/Voznja/UnesiOdrediste", lok)
                 .done(function (result) {
-                    $("#ulogovanMessage").html("Odredi" + `&scaron;` + "te uspe" + `&scaron;` + "no dodato!");
-                    $("#ulogovanMessage").show();
-                    $("#vozacOdrediste").hide();
-                    $("#pogledajkomentar").hide();
-                    $("#korisnikkomentar").hide();
-                    $("#mapaodrediste").html("");
-                    $(this).hide();
-                    PocetnaStrana();
+                    if (result === "null") {
+                        $("#ulogovanMessage").html("Ponovo unesite podatke!");
+                        $("#ulogovanMessage").show();
+                    }
+                    else {
+                        $("#ulogovanMessage").html("Odredi" + `&scaron;` + "te uspe" + `&scaron;` + "no dodato!");
+                        $("#ulogovanMessage").show();
+                        $("#vozacOdrediste").hide();
+                        $("#pogledajkomentar").hide();
+                        $("#korisnikkomentar").hide();
+                        $("#mapaodrediste").html("");
+                        $(this).hide();
+                        PocetnaStrana();
+                    }
                 });
         }
     });
@@ -1832,14 +1883,31 @@
             Cena: $("#iznos").val(),
             Status: sessionStorage.getItem("status")
         };
-
-        $.get("/api/Voznja/ZavrsiVoznju", lok)
-            .done(function (result) {
-                $("#ulogovanMessage").html("Vo" + `&zcaron;` + "nja uspe" + `&scaron;` + "no zavr" + `&scaron;` + "ena!");
-                $("#ulogovanMessage").show();
-                $("#iznos").val("");
-                PocetnaStrana();
-            });
+        let upis = true;
+        if (lok.Status === null || lok.Status === "null") {
+            $("#ulogovanMessage").html("Morate izabrati status!");
+            $("#ulogovanMessage").show();
+            upis = false;
+        }
+        if (upis) {
+            $.get("/api/Voznja/ZavrsiVoznju", lok)
+                .done(function (result) {
+                    if (result === "status") {
+                        $("#ulogovanMessage").html("Morate izabrati status!");
+                        $("#ulogovanMessage").show();
+                    }
+                    else if (result === "cena") {
+                        $("#ulogovanMessage").html("Morate uneti cenu!");
+                        $("#ulogovanMessage").show();
+                    }
+                    else {
+                        $("#ulogovanMessage").html("Vo" + `&zcaron;` + "nja uspe" + `&scaron;` + "no zavr" + `&scaron;` + "ena!");
+                        $("#ulogovanMessage").show();
+                        $("#iznos").val("");
+                        PocetnaStrana();
+                    }
+                });
+        }
     });
 
     $(document).on("click", "#dodajkomentar", function () {
@@ -1884,6 +1952,10 @@
 
         $.post("/api/Voznja/DodajKomentar", komentar)
             .done(function (result) {
+                if (result != "null") {
+                    $("#ulogovanMessage").html("Unesite ponovo podatke!");
+                    $("#ulogovanMessage").show();
+                }
                 $("#ulogovanMessage").html("Komentar uspe" + `&scaron;` + "no dodat!");
                 $("#ulogovanMessage").show();
                 PocetnaStrana();
@@ -1906,9 +1978,19 @@
 
         $.get("/api/Voznja/PrihvatiVoznju", data)
             .done(function (result) {
-                $("#ulogovanMessage").html("Vo" + `&zcaron;` + "nja uspe" + `&scaron;` + "no prihva" + `&cacute;` + "ena!");
-                $("#ulogovanMessage").show();
-                PocetnaStrana();
+                if (result === "null") {
+                    $("#ulogovanMessage").html("Unesite ponovo podatke!");
+                    $("#ulogovanMessage").show();
+                }
+                if (result === "zauzet") {
+                    $("#ulogovanMessage").html("Niste zavr&scaron;ili prethodnu vo&zcaron;nju!");
+                    $("#ulogovanMessage").show();
+                }
+                else {
+                    $("#ulogovanMessage").html("Vo" + `&zcaron;` + "nja uspe" + `&scaron;` + "no prihva" + `&cacute;` + "ena!");
+                    $("#ulogovanMessage").show();
+                    PocetnaStrana();
+                }
             });
     });
 

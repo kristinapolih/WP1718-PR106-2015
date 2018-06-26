@@ -19,15 +19,17 @@
       <int>8</int>
       <int>9</int>
       <int>10</int>
+      <int>12</int>
+      <int>11</int>
     </VoznjeIDs>
     <Lokacija>
       <GeoCoordinate>
-        <Longitude>19.812716245651242</Longitude>
-        <Latitude>45.243318877819178</Latitude>
+        <Longitude>19.84331488609314</Longitude>
+        <Latitude>45.243062036240673</Latitude>
       </GeoCoordinate>
       <Adresa>
-        <UlicaIBroj>Bogdana Suputa 55</UlicaIBroj>
-        <MestoIPostanskiFah>Novi Sad 21000</MestoIPostanskiFah>
+        <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
       </Adresa>
     </Lokacija>
     <Automobil>
@@ -37,6 +39,6 @@
       <TipAutomobila>Putnicki</TipAutomobila>
     </Automobil>
     <Blokiran>false</Blokiran>
-    <Slobodan>true</Slobodan>
+    <Slobodan>false</Slobodan>
   </Vozac>
 </ArrayOfVozac>

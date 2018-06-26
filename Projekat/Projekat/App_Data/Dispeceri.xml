@@ -10,6 +10,7 @@
     <Telefon>063438752</Telefon>
     <Email>elizabennet@hushmail.com</Email>
     <Uloga>Admin</Uloga>
+    <Blokiran>false</Blokiran>
     <VoznjeIDs />
   </Korisnik>
   <Korisnik>
@@ -22,6 +23,12 @@
     <Telefon>0637655325</Telefon>
     <Email>tomas.nortton@gmail.com</Email>
     <Uloga>Admin</Uloga>
-    <VoznjeIDs />
+    <Blokiran>false</Blokiran>
+    <VoznjeIDs>
+      <int>11</int>
+      <int>12</int>
+      <int>13</int>
+      <int>14</int>
+    </VoznjeIDs>
   </Korisnik>
 </ArrayOfKorisnik>
