@@ -13,11 +13,17 @@ namespace Projekat.Models.Common
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public static char GetNumber()
+        public static string GetNumber()
         {
+            int length = 3;
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+            /*
+            random = new System.Random();
             int num = random.Next(0, 10); 
             char let = (char)num;
-            return let;
+            return let;*/
         }
     }
 }

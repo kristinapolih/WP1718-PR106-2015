@@ -38,4 +38,73 @@
       <int>15</int>
     </VoznjeIDs>
   </Korisnik>
+  <Korisnik>
+    <KorisnickoIme>katherineb</KorisnickoIme>
+    <Lozinka>katherineb</Lozinka>
+    <Ime>Katherine</Ime>
+    <Prezime>Beckett</Prezime>
+    <Pol>M</Pol>
+    <JMBG>2607978565945</JMBG>
+    <Telefon>0635698472</Telefon>
+    <Email>katherinebecket@gmail.com</Email>
+    <Uloga>Musterija</Uloga>
+    <Blokiran>false</Blokiran>
+    <VoznjeIDs>
+      <int>17</int>
+    </VoznjeIDs>
+  </Korisnik>
+  <Korisnik>
+    <KorisnickoIme>SB</KorisnickoIme>
+    <Lozinka>sb</Lozinka>
+    <Ime>Seeley</Ime>
+    <Prezime>Booth</Prezime>
+    <Pol>M</Pol>
+    <JMBG>2909975256435</JMBG>
+    <Telefon>0691563245</Telefon>
+    <Email>seeleyBooth@gmail.com</Email>
+    <Uloga>Musterija</Uloga>
+    <Blokiran>false</Blokiran>
+    <VoznjeIDs />
+  </Korisnik>
+  <Korisnik>
+    <KorisnickoIme>spencer</KorisnickoIme>
+    <Lozinka>spencer</Lozinka>
+    <Ime>Spencer</Ime>
+    <Prezime>Reid</Prezime>
+    <Pol>M</Pol>
+    <JMBG>2510974162534</JMBG>
+    <Telefon>0624567892</Telefon>
+    <Email>spencer@gmail.com</Email>
+    <Uloga>Musterija</Uloga>
+    <Blokiran>false</Blokiran>
+    <VoznjeIDs />
+  </Korisnik>
+  <Korisnik>
+    <KorisnickoIme>tony</KorisnickoIme>
+    <Lozinka>tony</Lozinka>
+    <Ime>Tony</Ime>
+    <Prezime>Stark</Prezime>
+    <Pol>M</Pol>
+    <JMBG>2505972564872</JMBG>
+    <Telefon>0632589645</Telefon>
+    <Email>ironman@gmail.com</Email>
+    <Uloga>Musterija</Uloga>
+    <Blokiran>false</Blokiran>
+    <VoznjeIDs />
+  </Korisnik>
+  <Korisnik>
+    <KorisnickoIme>groot</KorisnickoIme>
+    <Lozinka>groot</Lozinka>
+    <Ime>Groot</Ime>
+    <Prezime>Groot</Prezime>
+    <Pol>M</Pol>
+    <JMBG>0302987562530</JMBG>
+    <Telefon>0625968547</Telefon>
+    <Email>IAmGroot@gmail.com</Email>
+    <Uloga>Musterija</Uloga>
+    <Blokiran>false</Blokiran>
+    <VoznjeIDs>
+      <int>19</int>
+    </VoznjeIDs>
+  </Korisnik>
 </ArrayOfKorisnik>

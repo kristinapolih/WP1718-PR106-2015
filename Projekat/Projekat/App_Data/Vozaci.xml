@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVozac xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Vozac>
+    <KorisnickoIme>vozac5</KorisnickoIme>
+    <Lozinka>vozac5</Lozinka>
+    <Ime>Patrick</Ime>
+    <Prezime>Gabaldon</Prezime>
+    <Pol>M</Pol>
+    <JMBG>0309993564859</JMBG>
+    <Telefon>0614978562</Telefon>
+    <Email>patrick.gabaldon@yahoo.com</Email>
+    <Uloga>Vozac</Uloga>
+    <VoznjeIDs />
+    <Lokacija>
+      <GeoCoordinate>
+        <Longitude>19.843859374523166</Longitude>
+        <Latitude>45.2569335960207</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Trifkovicev trg 1</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </Lokacija>
+    <Automobil>
+      <GodisteAutomobila>2011</GodisteAutomobila>
+      <BrojRegistarskeOznake>NS149EE</BrojRegistarskeOznake>
+      <BrojTaksiVozila>ZH798</BrojTaksiVozila>
+      <TipAutomobila>Putnicki</TipAutomobila>
+    </Automobil>
+    <Blokiran>false</Blokiran>
+    <Slobodan>true</Slobodan>
+  </Vozac>
+  <Vozac>
     <KorisnickoIme>vozac</KorisnickoIme>
     <Lozinka>vozac</Lozinka>
     <Ime>Michael</Ime>
@@ -24,18 +54,147 @@
     </VoznjeIDs>
     <Lokacija>
       <GeoCoordinate>
-        <Longitude>19.84331488609314</Longitude>
-        <Latitude>45.243062036240673</Latitude>
+        <Longitude>19.87851619720459</Longitude>
+        <Latitude>45.247617024857021</Latitude>
       </GeoCoordinate>
       <Adresa>
-        <UlicaIBroj>Dr Ivana Ribara 7</UlicaIBroj>
-        <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
+        <UlicaIBroj>Preradoviceva 55</UlicaIBroj>
+        <MestoIPostanskiFah>Petrovaradin Municipality 21000</MestoIPostanskiFah>
       </Adresa>
     </Lokacija>
     <Automobil>
       <GodisteAutomobila>2010</GodisteAutomobila>
       <BrojRegistarskeOznake>NS174LJ</BrojRegistarskeOznake>
       <BrojTaksiVozila>GL175</BrojTaksiVozila>
+      <TipAutomobila>Putnicki</TipAutomobila>
+    </Automobil>
+    <Blokiran>false</Blokiran>
+    <Slobodan>true</Slobodan>
+  </Vozac>
+  <Vozac>
+    <KorisnickoIme>vozac3</KorisnickoIme>
+    <Lozinka>vozac3</Lozinka>
+    <Ime>Sydney</Ime>
+    <Prezime>Bristow</Prezime>
+    <Pol>M</Pol>
+    <JMBG>0212978152634</JMBG>
+    <Telefon>0656203703</Telefon>
+    <Email>Sydney.Bristow@gmail.com</Email>
+    <Uloga>Vozac</Uloga>
+    <VoznjeIDs>
+      <int>19</int>
+    </VoznjeIDs>
+    <Lokacija>
+      <GeoCoordinate>
+        <Longitude>19.84422147274017</Longitude>
+        <Latitude>45.250570396077819</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Pavla Simica 1</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </Lokacija>
+    <Automobil>
+      <GodisteAutomobila>2010</GodisteAutomobila>
+      <BrojRegistarskeOznake>NS918HG</BrojRegistarskeOznake>
+      <BrojTaksiVozila>HF265</BrojTaksiVozila>
+      <TipAutomobila>Putnicki</TipAutomobila>
+    </Automobil>
+    <Blokiran>false</Blokiran>
+    <Slobodan>true</Slobodan>
+  </Vozac>
+  <Vozac>
+    <KorisnickoIme>vozac2</KorisnickoIme>
+    <Lozinka>vozac2</Lozinka>
+    <Ime>Jessica</Ime>
+    <Prezime>Jones</Prezime>
+    <Pol>M</Pol>
+    <JMBG>3001978564859</JMBG>
+    <Telefon>0614556894</Telefon>
+    <Email>jessicajones@gmail.com</Email>
+    <Uloga>Vozac</Uloga>
+    <VoznjeIDs>
+      <int>13</int>
+      <int>16</int>
+    </VoznjeIDs>
+    <Lokacija>
+      <GeoCoordinate>
+        <Longitude>19.851469472050663</Longitude>
+        <Latitude>45.252103671470991</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Jovana Boskovica 14</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </Lokacija>
+    <Automobil>
+      <GodisteAutomobila>2003</GodisteAutomobila>
+      <BrojRegistarskeOznake>NS198JA</BrojRegistarskeOznake>
+      <BrojTaksiVozila>TL078</BrojTaksiVozila>
+      <TipAutomobila>Putnicki</TipAutomobila>
+    </Automobil>
+    <Blokiran>false</Blokiran>
+    <Slobodan>false</Slobodan>
+  </Vozac>
+  <Vozac>
+    <KorisnickoIme>vozac1</KorisnickoIme>
+    <Lozinka>vozac1</Lozinka>
+    <Ime>Frank</Ime>
+    <Prezime>Cesller</Prezime>
+    <Pol>M</Pol>
+    <JMBG>2605987564859</JMBG>
+    <Telefon>0645978564</Telefon>
+    <Email>francesller@gmail.com</Email>
+    <Uloga>Vozac</Uloga>
+    <VoznjeIDs>
+      <int>14</int>
+    </VoznjeIDs>
+    <Lokacija>
+      <GeoCoordinate>
+        <Longitude>19.84605610370636</Longitude>
+        <Latitude>45.250970713350569</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Milete Jaksica 16</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21101</MestoIPostanskiFah>
+      </Adresa>
+    </Lokacija>
+    <Automobil>
+      <GodisteAutomobila>2004</GodisteAutomobila>
+      <BrojRegistarskeOznake>NS757QD</BrojRegistarskeOznake>
+      <BrojTaksiVozila>VS559</BrojTaksiVozila>
+      <TipAutomobila>Putnicki</TipAutomobila>
+    </Automobil>
+    <Blokiran>false</Blokiran>
+    <Slobodan>false</Slobodan>
+  </Vozac>
+  <Vozac>
+    <KorisnickoIme>vozac4</KorisnickoIme>
+    <Lozinka>vozac4</Lozinka>
+    <Ime>Sylvy</Ime>
+    <Prezime>White</Prezime>
+    <Pol>M</Pol>
+    <JMBG>1511987425623</JMBG>
+    <Telefon>06375236412</Telefon>
+    <Email>Sylvy.White@gmail.com</Email>
+    <Uloga>Vozac</Uloga>
+    <VoznjeIDs>
+      <int>18</int>
+    </VoznjeIDs>
+    <Lokacija>
+      <GeoCoordinate>
+        <Longitude>19.827554225921634</Longitude>
+        <Latitude>45.237494331934585</Latitude>
+      </GeoCoordinate>
+      <Adresa>
+        <UlicaIBroj>Narodnog fronta 76</UlicaIBroj>
+        <MestoIPostanskiFah>Novi Sad 21102</MestoIPostanskiFah>
+      </Adresa>
+    </Lokacija>
+    <Automobil>
+      <GodisteAutomobila>2009</GodisteAutomobila>
+      <BrojRegistarskeOznake>NS047XT</BrojRegistarskeOznake>
+      <BrojTaksiVozila>YV886</BrojTaksiVozila>
       <TipAutomobila>Putnicki</TipAutomobila>
     </Automobil>
     <Blokiran>false</Blokiran>

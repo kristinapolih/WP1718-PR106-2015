@@ -48,12 +48,12 @@ namespace Projekat.Models
 
         public string GetNewNumberOfTaxi()
         {
-            return (Common.Random.GetLetter(2) + Common.Random.GetNumber() + Common.Random.GetNumber() + Common.Random.GetNumber()).ToString();
+            return (Common.Random.GetLetter(2) + Common.Random.GetNumber()).ToString();
         }
 
         public string GetNewRegOfTaxi()
         {
-            return ("NS" + Common.Random.GetNumber() + Common.Random.GetNumber() + Common.Random.GetNumber() + Common.Random.GetLetter(2)).ToString();
+            return ("NS" + Common.Random.GetNumber() + Common.Random.GetLetter(2)).ToString();
         }
     }
 }

@@ -433,12 +433,67 @@
                 $("#divtabelapretrage").hide();
                 $("#vozac").html("");
                 $("#profil").hide();
+                RemoveRed();
                 var divheader = $("#divheader").html();
                 sessionStorage.setItem("divheader", divheader);
                 var divbody = $("#divbody").html();
                 sessionStorage.setItem("divbody", divbody);
             }
         });
+    }
+
+    function RemoveRed() {
+        $("#korisnicko").css("border-color", "none");
+        $("#kor p").hide();
+        $("#kor br").show();
+        $("#Lozinka").css("border-color", "none");
+        $("#loz p").hide();
+        $("#loz br").show();
+        $("#ponovljenaLozinka").css("border-color", "none");
+        $("#ploz p").hide();
+        $("#ploz br").show();
+        $("#ime").css("border-color", "none");
+        $("#im p").hide();
+        $("#im br").show();
+        $("#prezime").css("border-color", "none");
+        $("#prez p").hide();
+        $("#prez br").show();
+        $("#jmbg").css("border-color", "none");
+        $("#jm p").hide();
+        $("#jm br").show();
+        $("#telefon").css("border-color", "none");
+        $("#tel p").hide();
+        $("#tel br").show();
+        $("#email").css("border-color", "none");
+        $("#em p").hide();
+        $("#em br").show();
+    }
+
+    function RemoveRedVozac() {
+        $("#dodajVozacaRegistracija #korisnicko").css("border-color", "none");
+        $("#dodajVozacaRegistracija #kor p").hide();
+        $("#dodajVozacaRegistracija #kor br").show();
+        $("#dodajVozacaRegistracija #Lozinka").css("border-color", "none");
+        $("#dodajVozacaRegistracija #loz p").hide();
+        $("#dodajVozacaRegistracija #loz br").show();
+        $("#dodajVozacaRegistracija #ponovljenaLozinka").css("border-color", "none");
+        $("#dodajVozacaRegistracija #ploz p").hide();
+        $("#dodajVozacaRegistracija #ploz br").show();
+        $("#dodajVozacaRegistracija #ime").css("border-color", "none");
+        $("#dodajVozacaRegistracija #im p").hide();
+        $("#dodajVozacaRegistracija #im br").show();
+        $("#dodajVozacaRegistracija #prezime").css("border-color", "none");
+        $("#dodajVozacaRegistracija #prez p").hide();
+        $("#dodajVozacaRegistracija #prez br").show();
+        $("#dodajVozacaRegistracija #jmbg").css("border-color", "none");
+        $("#dodajVozacaRegistracija #jm p").hide();
+        $("#dodajVozacaRegistracija #jm br").show();
+        $("#dodajVozacaRegistracija #telefon").css("border-color", "none");
+        $("#dodajVozacaRegistracija #tel p").hide();
+        $("#dodajVozacaRegistracija #tel br").show();
+        $("#dodajVozacaRegistracija #email").css("border-color", "none");
+        $("#dodajVozacaRegistracija #em p").hide();
+        $("#dodajVozacaRegistracija #em br").show();
     }
 
     function BlokiraneOdjavi() {
@@ -525,11 +580,37 @@
                                 $("#dodajVozacaButton").show();
                                 $("#dodajVoznjuButton").show();
                                 $("#blokiraj").show();
+                                $("#tablevozac").html("");
+                                $("#tableklijent").html("");
+                                $("#profilvozacmapa").html("");
+                                $("#mapapolaziste").html("");
+                                $("#mapaodrediste").html("");
+                                $("#mapaDodajVoznju").html("");
+                                $("#mapaDodajVozaca").html("");
+                                $("#pv").html("");
+                            }
+                            if (result.Uloga === 1) {
+                                $("#tableklijent").html("");
+                                $("#tableadmin").html("");
+                                $("#profilvozacmapa").html("");
+                                $("#mapapolaziste").html("");
+                                $("#mapaodrediste").html("");
+                                $("#mapaDodajVoznju").html("");
+                                $("#mapaDodajVozaca").html("");
                             }
                             if (result.Uloga === 2) {
                                 $("#dodajVoznjuButton").show();
+                                $("#tablevozac").html("");
+                                $("#tableadmin").html("");
+                                $("#profilvozacmapa").html("");
+                                $("#mapapolaziste").html("");
+                                $("#mapaodrediste").html("");
+                                $("#mapaDodajVoznju").html("");
+                                $("#mapaDodajVozaca").html("");
+                                $("#pv").html("");
                             }
                             $("#message").html("");
+                            $("#ulogovanMessage").html("");
                             $("#username").text(result.KorisnickoIme);
                             $("#login").hide();
                             $("#logout").show();
@@ -642,18 +723,26 @@
                             $("#mess").html("Unesite ponovo");
                         }
                         else {
-                            if (result.Uloga === 2) {
                                 $("#dodajVoznjuButton").show();
-                            }
+                                $("#tablevozac").html("");
+                                $("#tableadmin").html("");
+                                $("#profilvozacmapa").html("");
+                                $("#mapapolaziste").html("");
+                                $("#mapaodrediste").html("");
+                                $("#mapaDodajVoznju").html("");
+                                $("#mapaDodajVozaca").html("");
+                            
+                            $("#message").html("");
+                            $("#ulogovanMessage").html("");
                             $("#username").text(result.KorisnickoIme);
                             $("#login").hide();
                             $("#logout").show();
                             $("#registracijaIOpis").hide();
                             $("#ulogovan").show();
                             $("#profilButton").show();
-                            $("#mess").html("");
+
                             sessionStorage.setItem("user", result.KorisnickoIme);
-                            sessionStorage.setItem(result.KorisnickoIme, result);
+                            sessionStorage.setItem(result.KorisnickoIme, result.Uloga);
                             let divheader = $("#divheader").html();
                             sessionStorage.setItem("divheader", divheader);
                             let divbody = $("#divbody").html();
@@ -686,6 +775,14 @@
         $("#registrovan").hide();
         $("#registracijaIOpis").hide();
         $("#profil").hide();
+        $("#tipautaaa").html("");
+        $("#vozackorime").html("");
+        $("#godiste").html("");
+        $("#god p").hide();
+        $("#god br").show();
+        $("#godiste").css("border-color", "none");
+        $("#dodajlokacijuvozacregistracija").hide();
+        RemoveRedVozac();
 
         var stringMapa = "<div id=\"map\"></div>";
         $("#mapaDodajVozaca").html(stringMapa);
@@ -735,7 +832,7 @@
             }
         }
         if (LokAdr.xx === null || LokAdr.yy === null || LokAdr.ulica_broj === null || LokAdr.grad === null) {
-            $("#map p").show();
+            $("#dodajVozacaLokacijaAutomobil #dodajlokacijuvozacregistracija").show();
             upis = false;
         }
 
@@ -762,11 +859,8 @@
                 MestoiPostanski: LokAdr.grad
             };
 
-            $.ajax({
-                url: "api/Musterija/RegistracijaVozaca",
-                data: data,
-                type: "POST",
-                success: function (result) {
+            $.post("/api/Musterija/RegistracijaVozaca", data)
+                .done(function (result) {
                     if (result === "Korisnicko ime vec postoji") {
                         $("#dodajVozacaRegistracija #errorMessageReg").html("Korisni&ccaron;ko ime ve&cacute; postoji!");
                         $("#korisnicko").css("border-color", "crimson");
@@ -776,33 +870,31 @@
                     else if (result === "null") {
                         $("#dodajVozacaRegistracija #errorMessageReg").html("Unesite ponovo podatke!");
                     }
-                }
-            });
-
-            $.ajax({
-                url: "api/Musterija/ail",
-                data: auto,
-                type: "POST",
-                success: function (result) {
-                    if (result === "null") {
-                        $("#dodajVozacaRegistracija #errorMessageReg").html("Unesite ponovo podatke!");
-                    }
                     else {
-                        $("#login").hide();
-                        $("#registracijaIOpis").hide();
-                        $("#registrovan").hide();
-                        $("#dodajVozacaPolja").hide();
-                        $("#map").hide();
-                        $("#logout").show();
-                        $("#ulogovan").show();
-                        $("#profilButton").show();
-                        var divheader = $("#divheader").html();
-                        sessionStorage.setItem("divheader", divheader);
-                        var divbody = $("#divbody").html();
-                        sessionStorage.setItem("divbody", divbody);
+                        $.post("/api/Musterija/ail", auto)
+                            .done(function (result) {
+                                if (result === "null") {
+                                    $("#dodajVozacaRegistracija #errorMessageReg").html("Unesite ponovo podatke!");
+                                }
+                                else {
+                                    $("#login").hide();
+                                    $("#registracijaIOpis").hide();
+                                    $("#registrovan").hide();
+                                    $("#dodajVozacaPolja").hide();
+                                    $("#map").hide();
+                                    $("#logout").show();
+                                    $("#profilButton").show();
+                                    PocetnaStrana();
+                                    $("#ulogovanMessage").html("Voza&ccaron; kreiran.");
+                                    var divheader = $("#divheader").html();
+                                    sessionStorage.setItem("divheader", divheader);
+                                    var divbody = $("#divbody").html();
+                                    sessionStorage.setItem("divbody", divbody);
+                                }
+                            });
                     }
-                }
-            });
+                });
+            
             $("#mapaDodajVozaca").html("");
             sessionStorage.setItem("divmap", false);
         }
@@ -1155,6 +1247,17 @@
     }); 
 
     function UcitajProfil(poruka) {
+        $("#izmenakimev").val("");
+        $("#izmenalozv").val("");
+        $("#izmenaplozv").val("");
+        $("#izmenaimev").val("");
+        $("#izmenaprezimev").val("");
+            $("#polm").prop("checked", false);
+            $("#polz").prop("checked", false);
+        $("#izmenajmbgv").val("");
+        $("#izmenatelefonv").val("");
+        $("#izmenakemailv").val("");
+
         let user = sessionStorage.getItem("user");
         let uloga = sessionStorage.getItem(user);
         let data = {
@@ -1221,7 +1324,6 @@
                     $("#izmenatelefonv").val(result.Telefon);
                     $("#izmenakemailv").val(result.Email);
                 }
-
             });
     }
 
@@ -1884,7 +1986,7 @@
             Status: sessionStorage.getItem("status")
         };
         let upis = true;
-        if (lok.Status === null || lok.Status === "null") {
+        if (lok.Status === null || lok.Status === "null" || lok.Status === "") {
             $("#ulogovanMessage").html("Morate izabrati status!");
             $("#ulogovanMessage").show();
             upis = false;

@@ -29,6 +29,8 @@
       <int>12</int>
       <int>13</int>
       <int>14</int>
+      <int>16</int>
+      <int>18</int>
     </VoznjeIDs>
   </Korisnik>
 </ArrayOfKorisnik>

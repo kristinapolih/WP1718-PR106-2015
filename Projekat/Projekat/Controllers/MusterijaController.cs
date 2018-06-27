@@ -46,7 +46,7 @@ namespace Projekat.Controllers
         public IHttpActionResult RegistracijaVozaca(Vozac vozac)
         {
             if (vozac.Email != null && vozac.Ime != null && vozac.JMBG != null && vozac.KorisnickoIme != null && vozac.Lozinka != null &&
-                vozac.Prezime != null && vozac.Telefon != null && vozac.Uloga.ToString() != null && vozac.Pol.ToString() != null)
+                vozac.Prezime != null && vozac.Telefon != null && vozac.Pol.ToString() != null)
             {
                 if (Podaci.GetKorisnike().ContainsKey(vozac.KorisnickoIme))
                 {
@@ -65,6 +65,8 @@ namespace Projekat.Controllers
                     voz = new Vozac();
                     voz = vozac;
                     voz.Slobodan = true;
+                    voz.Blokiran = false;
+                    voz.Uloga = ULOGA.Vozac;
                     Podaci.DodajVozac(voz, voz.KorisnickoIme);
                     Podaci.GetSlobodneVozace().Add(voz.KorisnickoIme);
 
@@ -79,11 +81,12 @@ namespace Projekat.Controllers
         [HttpPost, Route("api/Musterija/ail")]
         public IHttpActionResult ail(AdrILok adresaILokacija)
         {
-            if (adresaILokacija.Cena != 0 && adresaILokacija.GodisteAutomobila != null && adresaILokacija.KorisnickoIme != null &&
+            if (adresaILokacija.GodisteAutomobila != null && adresaILokacija.KorisnickoIme != null &&
                 adresaILokacija.MestoiPostanski != null && adresaILokacija.UlicaiBroj != null &&
                 adresaILokacija.xlong != 0 && adresaILokacija.ylatit != 0)
             {
-                Vozac v = Podaci.GetVozace()[adresaILokacija.KorisnickoIme];
+                Vozac v = new Vozac();
+                Podaci.GetVozace().TryGetValue(adresaILokacija.KorisnickoIme, out v);
 
                 Automobil a = new Automobil();
                 a.GodisteAutomobila = adresaILokacija.GodisteAutomobila;
