@@ -443,57 +443,60 @@
     }
 
     function RemoveRed() {
-        $("#korisnicko").css("border-color", "none");
+        $("#korisnicko").css("border-color", "lightgray");
         $("#kor p").hide();
         $("#kor br").show();
-        $("#Lozinka").css("border-color", "none");
+        $("#lozin").css("border-color", "lightgray");
         $("#loz p").hide();
         $("#loz br").show();
-        $("#ponovljenaLozinka").css("border-color", "none");
+        $("#ponovljenaLozinka").css("border-color", "lightgray");
         $("#ploz p").hide();
         $("#ploz br").show();
-        $("#ime").css("border-color", "none");
+        $("#ime").css("border-color", "lightgray");
         $("#im p").hide();
         $("#im br").show();
-        $("#prezime").css("border-color", "none");
+        $("#prezime").css("border-color", "lightgray");
         $("#prez p").hide();
         $("#prez br").show();
-        $("#jmbg").css("border-color", "none");
+        $("#jmbg").css("border-color", "lightgray");
         $("#jm p").hide();
         $("#jm br").show();
-        $("#telefon").css("border-color", "none");
+        $("#telefon").css("border-color", "lightgray");
         $("#tel p").hide();
         $("#tel br").show();
-        $("#email").css("border-color", "none");
+        $("#email").css("border-color", "lightgray");
         $("#em p").hide();
         $("#em br").show();
     }
 
     function RemoveRedVozac() {
-        $("#dodajVozacaRegistracija #korisnicko").css("border-color", "none");
+        $("#dodajVozacaRegistracija #korisnicko").css("border-color", "lightgray");
         $("#dodajVozacaRegistracija #kor p").hide();
         $("#dodajVozacaRegistracija #kor br").show();
-        $("#dodajVozacaRegistracija #Lozinka").css("border-color", "none");
+        $("#dodajVozacaRegistracija #lozin").css("border-color", "lightgray");
         $("#dodajVozacaRegistracija #loz p").hide();
         $("#dodajVozacaRegistracija #loz br").show();
-        $("#dodajVozacaRegistracija #ponovljenaLozinka").css("border-color", "none");
+        $("#dodajVozacaRegistracija #ponovljenaLozinka").css("border-color", "lightgray");
         $("#dodajVozacaRegistracija #ploz p").hide();
         $("#dodajVozacaRegistracija #ploz br").show();
-        $("#dodajVozacaRegistracija #ime").css("border-color", "none");
+        $("#dodajVozacaRegistracija #ime").css("border-color", "lightgray");
         $("#dodajVozacaRegistracija #im p").hide();
         $("#dodajVozacaRegistracija #im br").show();
-        $("#dodajVozacaRegistracija #prezime").css("border-color", "none");
+        $("#dodajVozacaRegistracija #prezime").css("border-color", "lightgray");
         $("#dodajVozacaRegistracija #prez p").hide();
         $("#dodajVozacaRegistracija #prez br").show();
-        $("#dodajVozacaRegistracija #jmbg").css("border-color", "none");
+        $("#dodajVozacaRegistracija #jmbg").css("border-color", "lightgray");
         $("#dodajVozacaRegistracija #jm p").hide();
         $("#dodajVozacaRegistracija #jm br").show();
-        $("#dodajVozacaRegistracija #telefon").css("border-color", "none");
+        $("#dodajVozacaRegistracija #telefon").css("border-color", "lightgray");
         $("#dodajVozacaRegistracija #tel p").hide();
         $("#dodajVozacaRegistracija #tel br").show();
-        $("#dodajVozacaRegistracija #email").css("border-color", "none");
+        $("#dodajVozacaRegistracija #email").css("border-color", "lightgray");
         $("#dodajVozacaRegistracija #em p").hide();
         $("#dodajVozacaRegistracija #em br").show();
+        $("#dodajVozacaLokacijaAutomobil #godiste").css("border-color", "lightgray");
+        $("#dodajVozacaLokacijaAutomobil #god p").hide();
+        $("#dodajVozacaLokacijaAutomobil #god br").show();
     }
 
     function BlokiraneOdjavi() {
